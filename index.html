@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Programação Espiritual</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+<style>
+/* ============ FONTES ============ */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ============ RESET ============ */
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background .35s ease, color .35s ease;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, .serif { font-family: 'Lora', Georgia, serif; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea, select { font-family: inherit; color: inherit; }
+a { color: inherit; }
+::selection { background: var(--accent); color: var(--accent-contrast); }
+
+/* ============ TEMAS (tokens) ============ */
+:root, .theme-branco {
+  --bg: #FAFAF7;
+  --bg-elev: #FFFFFF;
+  --bg-sunken: #F1EEE6;
+  --text: #1A1A1A;
+  --text-dim: #6B6459;
+  --text-faint: #A39C8F;
+  --border: #E4DFD3;
+  --border-strong: #CFC7B5;
+  --accent: #8B6F47;
+  --accent-soft: #E9DFCC;
+  --accent-contrast: #FFFFFF;
+  --danger: #B3452F;
+  --danger-soft: #F3DAD2;
+  --success: #4F7A5B;
+  --shadow: 0 1px 2px rgba(30,20,10,.04), 0 8px 24px rgba(30,20,10,.06);
+  --scrollbar: #D8D1C1;
+}
+.theme-preto {
+  --bg: #121212;
+  --bg-elev: #1B1B1B;
+  --bg-sunken: #0C0C0C;
+  --text: #F0F0EC;
+  --text-dim: #A6A29A;
+  --text-faint: #6E6A62;
+  --border: #2C2C2A;
+  --border-strong: #3D3D3A;
+  --accent: #C9A227;
+  --accent-soft: #3A3016;
+  --accent-contrast: #121212;
+  --danger: #D96A50;
+  --danger-soft: #3A2019;
+  --success: #6FAE81;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.4);
+  --scrollbar: #3A3A38;
+}
+.theme-roxo {
+  --bg: #0F0B14;
+  --bg-elev: #1A1420;
+  --bg-sunken: #0A0710;
+  --text: #F0EAF5;
+  --text-dim: #A99DB8;
+  --text-faint: #6E6280;
+  --border: #2B2136;
+  --border-strong: #3D2F4B;
+  --accent: #9B6FD9;
+  --accent-soft: #2C1F42;
+  --accent-contrast: #FFFFFF;
+  --danger: #E0708A;
+  --danger-soft: #3A1F2C;
+  --success: #6FAE8E;
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 28px rgba(60,20,90,.25);
+  --scrollbar: #3D2F4B;
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 8px; }
+
+/* ============ LAYOUT SHELL ============ */
+#app {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* ---- Sidebar (lombada de livro) ---- */
+#sidebar {
+  width: 264px;
+  flex-shrink: 0;
+  background: var(--bg-elev);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+  transition: transform .3s ease;
+}
+#sidebar-header {
+  padding: 22px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+#sidebar-header .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#sidebar-header .brand-mark {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+#sidebar-header h1 {
+  font-size: 16.5px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: .01em;
+}
+#sidebar-header .tagline {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  margin-top: 3px;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+
+#nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-align: left;
+  width: 100%;
+  transition: background .15s ease, color .15s ease;
+  position: relative;
+}
+.nav-item .ic { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-item:hover { background: var(--bg-sunken); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+.nav-item .count {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-faint);
+  background: var(--bg-sunken);
+  padding: 1px 7px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.nav-item.active .count { background: var(--bg-elev); color: var(--accent); }
+
+#sidebar-footer {
+  padding: 14px 12px 18px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.theme-switcher {
+  display: flex;
+  gap: 8px;
+  padding: 0 6px;
+}
+.theme-dot {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  transition: transform .15s ease, border-color .15s ease;
+}
+.theme-dot:hover { transform: scale(1.08); }
+.theme-dot.active { border-color: var(--accent); }
+.theme-dot[data-theme="branco"] { background: #FAFAF7; }
+.theme-dot[data-theme="preto"] { background: #121212; }
+.theme-dot[data-theme="roxo"] { background: linear-gradient(135deg,#0F0B14 50%,#9B6FD9 50%); }
+
+.footer-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--text-dim);
+  width: 100%;
+}
+.footer-btn:hover { background: var(--bg-sunken); color: var(--text); }
+
+/* Mobile menu toggle */
+#menu-toggle {
+  display: none;
+  position: fixed;
+  top: 14px; left: 14px;
+  z-index: 40;
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  align-items: center; justify-content: center;
+  font-size: 18px;
+}
+#sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.4);
+  z-index: 15;
+}
+
+/* ---- Main content ---- */
+#main {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+.view {
+  display: none;
+  padding: 32px 40px 80px;
+  max-width: 980px;
+  margin: 0 auto;
+  animation: fadeIn .25s ease;
+}
+.view.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
+
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+.view-header h2 {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.view-header .sub {
+  color: var(--text-dim);
+  font-size: 13.5px;
+  margin-top: 5px;
+}
+
+/* ============ BOTÕES ============ */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all .15s ease;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--accent); color: var(--accent-contrast); }
+.btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.btn-ghost { background: var(--bg-sunken); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--bg-elev); border-color: var(--border-strong); }
+.btn-danger { background: var(--danger-soft); color: var(--danger); }
+.btn-danger:hover { filter: brightness(1.1); }
+.btn-icon {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--bg-sunken);
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.btn-icon:hover { background: var(--bg-elev); color: var(--text); border: 1px solid var(--border); }
+.btn-sm { padding: 7px 12px; font-size: 12.5px; border-radius: 8px; }
+
+/* ============ SEARCH BAR ============ */
+.searchbar {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 15px;
+  margin-bottom: 22px;
+}
+.searchbar input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-size: 14px; color: var(--text);
+}
+.searchbar input::placeholder { color: var(--text-faint); }
+.searchbar .ic { color: var(--text-faint); font-size: 15px; }
+
+/* ============ CARDS ============ */
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.card:hover { border-color: var(--border-strong); box-shadow: var(--shadow); }
+
+.category-block { margin-bottom: 28px; }
+.category-head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.category-head h3 {
+  font-size: 15.5px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+}
+.category-head .count-badge {
+  font-size: 11px; color: var(--text-faint); font-weight: 500;
+}
+.category-head .spacer { flex: 1; }
+
+.verse-card {
+  display: flex; gap: 14px;
+  align-items: flex-start;
+}
+.verse-card .fav-btn {
+  font-size: 17px; margin-top: 1px; flex-shrink: 0;
+  color: var(--text-faint);
+  transition: transform .15s ease, color .15s ease;
+}
+.verse-card .fav-btn.is-fav { color: var(--accent); }
+.verse-card .fav-btn:hover { transform: scale(1.15); }
+.verse-card .body { flex: 1; min-width: 0; }
+.verse-card .ref {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  font-size: 15.5px;
+  margin-bottom: 4px;
+}
+.verse-card .note {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.verse-card .actions {
+  display: flex; gap: 6px; flex-shrink: 0;
+}
+
+/* Favorito destacado */
+.favorite-banner {
+  background: linear-gradient(135deg, var(--accent-soft), var(--bg-elev));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.favorite-banner .label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--accent); font-weight: 700; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.favorite-banner .ref { font-family:'Lora',serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.favorite-banner .note { font-size: 13.5px; color: var(--text-dim); line-height: 1.55; white-space: pre-wrap; }
+.favorite-banner-empty {
+  border: 1.5px dashed var(--border-strong);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+  color: var(--text-faint);
+  font-size: 13.5px;
+  text-align: center;
+}
+
+/* ============ EMPTY STATE ============ */
+.empty-state {
+  text-align: center;
+  padding: 70px 20px;
+  color: var(--text-faint);
+}
+.empty-state .ic { font-size: 40px; margin-bottom: 14px; opacity: .7; }
+.empty-state .title { font-size: 15.5px; font-weight: 600; color: var(--text-dim); margin-bottom: 6px; }
+.empty-state .desc { font-size: 13px; max-width: 320px; margin: 0 auto 18px; line-height: 1.6; }
+
+/* ============ MODAL ============ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,8,6,.55);
+  backdrop-filter: blur(3px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 100;
+  padding: 5vh 16px 16px;
+  overflow-y: auto;
+}
+.modal-overlay.active { display: flex; animation: fadeIn .18s ease; }
+.modal {
+  background: var(--bg-elev);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  width: 100%; max-width: 520px;
+  padding: 26px;
+  box-shadow: var(--shadow);
+  margin-bottom: 5vh;
+}
+.modal.modal-lg { max-width: 760px; }
+.modal-title {
+  font-size: 18px; font-weight: 600; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.modal-title .close-x { color: var(--text-faint); font-size: 20px; padding: 4px; }
+.modal-title .close-x:hover { color: var(--text); }
+
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; font-size: 12.5px; font-weight: 600;
+  color: var(--text-dim); margin-bottom: 7px;
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.field input, .field textarea, .field select {
+  width: 100%;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 13px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .15s ease;
+}
+.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
+.field textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+.field .hint { font-size: 11.5px; color: var(--text-faint); margin-top: 5px; }
+.field-row { display: flex; gap: 12px; }
+.field-row .field { flex: 1; }
+
+.modal-actions {
+  display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px;
+}
+
+/* ============ CALENDÁRIO ============ */
+.cal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.cal-header h3 { font-size: 18px; font-weight: 600; text-transform: capitalize; }
+.cal-nav { display: flex; gap: 8px; }
+.cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 26px;
+}
+.cal-dow {
+  text-align: center; font-size: 11px; font-weight: 700;
+  color: var(--text-faint); text-transform: uppercase;
+  padding-bottom: 6px;
+}
+.cal-day {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 500;
+  position: relative;
+  cursor: pointer;
+  transition: all .15s ease;
+  min-height: 44px;
+}
+.cal-day:hover { border-color: var(--accent); }
+.cal-day.empty { visibility: hidden; }
+.cal-day.today { border-color: var(--accent); border-width: 2px; font-weight: 700; }
+.cal-day.selected { background: var(--accent); color: var(--accent-contrast); }
+.cal-day .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); position: absolute; bottom: 6px; }
+.cal-day.selected .dot { background: var(--accent-contrast); }
+
+.event-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  margin-bottom: 8px;
+}
+.event-item .check {
+  width: 21px; height: 21px; border-radius: 6px;
+  border: 2px solid var(--border-strong);
+  flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: transparent;
+  transition: all .15s ease;
+}
+.event-item.done .check { background: var(--success); border-color: var(--success); color: #fff; }
+.event-item.done .ev-title { text-decoration: line-through; color: var(--text-faint); }
+.event-item .body { flex: 1; min-width: 0; }
+.event-item .ev-title { font-weight: 600; font-size: 14px; }
+.event-item .ev-meta { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+.event-item .ev-desc { font-size: 12.5px; color: var(--text-dim); margin-top: 5px; line-height: 1.5; white-space: pre-wrap; }
+.tag-pill {
+  display: inline-block; font-size: 10.5px; font-weight: 700;
+  padding: 2px 8px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: .03em;
+  margin-right: 5px;
+}
+.tag-compromisso { background: #DCE8F5; color: #2C5F8A; }
+.tag-estudo { background: #E4DFF5; color: #5B4C9C; }
+.tag-meta { background: #E1F0DC; color: #3F7A3F; }
+.theme-preto .tag-compromisso, .theme-roxo .tag-compromisso { background: #1A2E42; color: #7FB4E0; }
+.theme-preto .tag-estudo, .theme-roxo .tag-estudo { background: #2A2242; color: #B4A3E8; }
+.theme-preto .tag-meta, .theme-roxo .tag-meta { background: #1F3320; color: #8FCB8A; }
+
+/* ============ STATUS BADGES (designações) ============ */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; padding: 3px 10px;
+  border-radius: 20px; text-transform: uppercase; letter-spacing: .03em;
+}
+.status-pendente { background: #F6DAD3; color: #9C2C1B; }
+.status-preparando { background: var(--bg-sunken); color: var(--text-dim); border: 1px solid var(--border-strong); }
+.status-concluida { background: #DCF0D8; color: #2E7A34; }
+.theme-preto .status-pendente, .theme-roxo .status-pendente { background: #3A1D18; color: #E88C78; }
+.theme-preto .status-preparando, .theme-roxo .status-preparando { background: var(--bg-sunken); color: var(--text-dim); border: 1px solid var(--border-strong); }
+.theme-preto .status-concluida, .theme-roxo .status-concluida { background: #17301B; color: #7ED384; }
+.list-row.status-border-pendente { border-left: 3px solid var(--danger); }
+.list-row.status-border-concluida { border-left: 3px solid var(--success); }
+.list-row.status-border-preparando { border-left: 3px solid var(--border-strong); }
+
+/* ============ LISTA (personagens / designações / doc list) ============ */
+.list-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 18px;
+  border-radius: 13px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  margin-bottom: 9px;
+  transition: border-color .15s ease;
+}
+.list-row:hover { border-color: var(--border-strong); }
+.list-row .avatar {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--accent-soft); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Lora', serif; font-weight: 700; font-size: 16px;
+  flex-shrink: 0;
+}
+.list-row .body { flex: 1; min-width: 0; cursor: pointer; }
+.list-row .title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.list-row .name { font-weight: 600; font-size: 14.5px; }
+.list-row .meta { font-size: 12px; color: var(--text-faint); margin-top: 3px; }
+.list-row .snippet { font-size: 12.5px; color: var(--text-dim); margin-top: 5px; line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.list-row .actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* ============ DOCUMENT EDITOR (pesquisas / roteiros) ============ */
+.doc-layout { display: flex; gap: 22px; align-items: flex-start; }
+.doc-sidebar {
+  width: 260px; flex-shrink: 0;
+}
+.doc-editor {
+  flex: 1; min-width: 0;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  min-height: 500px;
+}
+.doc-editor .doc-title-input {
+  width: 100%; background: transparent; border: none; outline: none;
+  font-family: 'Lora', serif; font-size: 24px; font-weight: 700;
+  margin-bottom: 4px;
+}
+.doc-editor .doc-meta { font-size: 12px; color: var(--text-faint); margin-bottom: 18px; }
+.doc-editor .doc-body {
+  width: 100%; min-height: 400px; background: transparent; border: none; outline: none;
+  font-size: 14.5px; line-height: 1.8; resize: vertical; color: var(--text);
+}
+.doc-editor .doc-body::placeholder { color: var(--text-faint); }
+.doc-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.doc-view-mode {
+  font-family: 'Lora', serif; font-size: 24px; font-weight: 700;
+  margin-bottom: 4px;
+}
+.doc-view-body {
+  font-size: 14.5px; line-height: 1.8; white-space: pre-wrap;
+  color: var(--text);
+}
+.doc-view-body.is-empty { color: var(--text-faint); font-style: italic; }
+.doc-list-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 13px; border-radius: 10px;
+  cursor: pointer; margin-bottom: 4px;
+  font-size: 13.5px; font-weight: 500;
+  color: var(--text-dim);
+  border: 1px solid transparent;
+}
+.doc-list-item:hover { background: var(--bg-sunken); }
+.doc-list-item.active { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.doc-list-item .dli-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.doc-list-item .dli-del { opacity: 0; flex-shrink: 0; font-size: 13px; }
+.doc-list-item:hover .dli-del { opacity: .6; }
+.doc-list-item .dli-del:hover { opacity: 1 !important; color: var(--danger); }
+.autosave-indicator {
+  font-size: 11.5px; color: var(--text-faint);
+  display: flex; align-items: center; gap: 6px;
+}
+.autosave-indicator .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
+
+/* ============ REORDENAR ABAS ============ */
+.reorder-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 4px; }
+.reorder-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-sunken);
+  font-size: 13.5px; font-weight: 600;
+}
+.reorder-item .ic { font-size: 15px; }
+.reorder-item .lbl { flex: 1; }
+.reorder-item .reorder-btns { display: flex; gap: 4px; }
+.reorder-item .reorder-btns button {
+  width: 26px; height: 26px; border-radius: 7px;
+  background: var(--bg-elev); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.reorder-item .reorder-btns button:hover:not(:disabled) { color: var(--accent); border-color: var(--accent); }
+.reorder-item .reorder-btns button:disabled { opacity: .3; cursor: default; }
+
+/* ============ TOAST ============ */
+#toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120%);
+  background: var(--text); color: var(--bg);
+  padding: 12px 20px; border-radius: 12px;
+  font-size: 13.5px; font-weight: 500;
+  box-shadow: var(--shadow);
+  z-index: 200;
+  transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .3s ease;
+  display: flex; align-items: center; gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+}
+#toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ============ PÁGINA INICIAL ============ */
+.hero-card {
+  background: linear-gradient(135deg, var(--accent-soft), var(--bg-elev) 70%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 32px;
+  margin-bottom: 26px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-card .hero-icon { font-size: 34px; margin-bottom: 14px; }
+.hero-card .hero-greeting { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+.hero-card h2 { font-size: 26px; margin-bottom: 8px; }
+.hero-card .hero-sub { font-size: 13.5px; color: var(--text-dim); line-height: 1.6; max-width: 480px; }
+.hero-verse { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+.hero-verse .label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); font-weight: 700; margin-bottom: 6px; }
+.hero-verse .ref { font-family: 'Lora', serif; font-weight: 700; font-size: 15.5px; }
+
+.stat-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px; margin-bottom: 26px;
+}
+.stat-card {
+  background: var(--bg-elev); border: 1px solid var(--border); border-radius: 14px;
+  padding: 16px 16px;
+}
+.stat-card .num { font-family: 'Lora', serif; font-size: 24px; font-weight: 700; color: var(--accent); }
+.stat-card .lbl { font-size: 11.5px; color: var(--text-faint); margin-top: 2px; text-transform: uppercase; letter-spacing: .03em; }
+
+.profile-card {
+  background: var(--bg-elev); border: 1px solid var(--border); border-radius: 16px;
+  padding: 22px 24px; margin-bottom: 20px;
+}
+.profile-card .profile-head {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+}
+.profile-card .profile-head h3 { font-size: 15.5px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.profile-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px 20px; }
+.profile-field .k { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-faint); font-weight: 700; margin-bottom: 3px; }
+.profile-field .v { font-size: 14.5px; font-weight: 500; }
+.profile-field .v.empty { color: var(--text-faint); font-weight: 400; font-style: italic; }
+
+.quick-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 10px; margin-bottom: 10px; }
+.quick-link {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-elev); border: 1px solid var(--border); border-radius: 13px;
+  padding: 14px 16px; font-size: 13.5px; font-weight: 600;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.quick-link:hover { border-color: var(--accent); transform: translateY(-1px); }
+.quick-link .ic { font-size: 18px; }
+
+/* Onboarding overlay */
+#onboarding-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: var(--bg);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+}
+#onboarding-overlay.active { display: flex; }
+.onboarding-box {
+  max-width: 460px; width: 100%;
+  margin: auto;
+  padding: 10px 0 40px;
+}
+.onboarding-box .ob-icon { font-size: 40px; margin-bottom: 16px; text-align: center; }
+.onboarding-box h2 { font-size: 22px; text-align: center; margin-bottom: 8px; }
+.onboarding-box .ob-sub { font-size: 13.5px; color: var(--text-dim); text-align: center; margin-bottom: 28px; line-height: 1.6; }
+.onboarding-box .field label { color: var(--text-dim); }
+
+/* ============ RELATÓRIO DE CAMPO ============ */
+.month-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.month-nav h3 { font-size: 17px; font-weight: 600; text-transform: capitalize; }
+.month-summary-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr));
+  gap: 10px; margin-bottom: 24px;
+}
+.month-summary-grid .stat-card { text-align: center; }
+.field-log-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; border-radius: 13px; border: 1px solid var(--border);
+  background: var(--bg-elev); margin-bottom: 8px;
+}
+.field-log-item .fl-date {
+  width: 52px; flex-shrink: 0; text-align: center;
+  background: var(--accent-soft); color: var(--accent);
+  border-radius: 10px; padding: 6px 4px;
+  font-family: 'Lora', serif;
+}
+.field-log-item .fl-date .day { font-size: 17px; font-weight: 700; line-height: 1; }
+.field-log-item .fl-date .mon { font-size: 9.5px; text-transform: uppercase; letter-spacing: .03em; }
+.field-log-item .fl-body { flex: 1; display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; }
+.field-log-item .fl-metric { display: flex; flex-direction: column; }
+.field-log-item .fl-metric .m-num { font-weight: 700; font-size: 14.5px; }
+.field-log-item .fl-metric .m-lbl { font-size: 10.5px; color: var(--text-faint); text-transform: uppercase; letter-spacing: .03em; }
+.field-log-item .actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* Confirm modal customizado */
+.confirm-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+/* ============ SUB-ABAS (dentro de uma mesma view) ============ */
+.subtabs {
+  display: flex; gap: 6px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.subtab-item {
+  padding: 10px 16px;
+  font-size: 13.5px; font-weight: 600;
+  color: var(--text-dim);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color .15s ease, border-color .15s ease;
+}
+.subtab-item:hover { color: var(--text); }
+.subtab-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+.subtab-panel { display: none; }
+.subtab-panel.active { display: block; animation: fadeIn .2s ease; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 860px) {
+  #sidebar {
+    position: fixed; inset: 0 auto 0 0;
+    transform: translateX(-100%);
+    height: 100vh;
+    height: 100dvh;
+  }
+  #sidebar.open { transform: translateX(0); }
+  #sidebar-overlay.show { display: block; }
+  #menu-toggle { display: flex; }
+  .view { padding: 74px 18px 70px; }
+  .doc-layout { flex-direction: column; }
+  .doc-sidebar { width: 100%; }
+  .view-header h2 { font-size: 21px; }
+  .cal-day { font-size: 11.5px; }
+  .subtab-item { padding: 9px 12px; font-size: 12.5px; }
+}
+</style>
+</head>
+<body class="theme-branco">
+
+<div id="app">
+
+  <button id="menu-toggle" aria-label="Abrir menu">☰</button>
+  <div id="sidebar-overlay"></div>
+
+  <!-- ================= SIDEBAR ================= -->
+  <nav id="sidebar">
+    <div id="sidebar-header">
+      <div class="brand">
+        <div class="brand-mark">📖</div>
+        <div>
+          <h1>Programação<br>Espiritual</h1>
+        </div>
+      </div>
+    </div>
+
+    <div id="nav"></div>
+
+    <div id="sidebar-footer">
+      <div class="theme-switcher">
+        <button class="theme-dot" data-theme="branco" title="Tema branco">🤍</button>
+        <button class="theme-dot" data-theme="preto" title="Tema preto">🖤</button>
+        <button class="theme-dot" data-theme="roxo" title="Tema roxo">🟣</button>
+      </div>
+      <button class="footer-btn" id="btn-reorder"><span class="ic">↕️</span> Reordenar abas</button>
+      <button class="footer-btn" id="btn-export"><span class="ic">⬇️</span> Exportar backup</button>
+      <button class="footer-btn" id="btn-import"><span class="ic">⬆️</span> Importar backup</button>
+      <input type="file" id="import-file" accept=".json" style="display:none">
+      <div class="autosave-indicator"><span class="dot"></span> Salvo automaticamente</div>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN ================= -->
+  <main id="main">
+
+    <!-- ===== PÁGINA INICIAL ===== -->
+    <section class="view" id="view-inicio">
+      <div id="inicio-container"></div>
+    </section>
+
+    <!-- ===== RELATÓRIO DE CAMPO ===== -->
+    <section class="view" id="view-campo">
+      <div class="view-header">
+        <div>
+          <h2>Relatório de campo</h2>
+          <div class="sub">Registre seu envolvimento espiritual mês a mês</div>
+        </div>
+        <button class="btn btn-primary" id="btn-new-campo">+ Registrar dia</button>
+      </div>
+      <div id="campo-summary"></div>
+      <div id="campo-container"></div>
+    </section>
+
+    <!-- ===== TEXTOS IMPORTANTES ===== -->
+    <section class="view" id="view-textos">
+      <div class="view-header">
+        <div>
+          <h2>Textos importantes</h2>
+          <div class="sub">Suas referências e anotações organizadas por categoria</div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-ghost" id="btn-new-categoria">+ Categoria</button>
+          <button class="btn btn-primary" id="btn-new-texto">+ Texto</button>
+        </div>
+      </div>
+      <div class="searchbar">
+        <span class="ic">🔍</span>
+        <input type="text" id="search-textos" placeholder="Pesquisar por referência, anotação ou categoria...">
+      </div>
+      <div id="favorite-slot"></div>
+      <div id="textos-container"></div>
+    </section>
+
+    <!-- ===== CALENDÁRIO E DESIGNAÇÕES (com sub-abas) ===== -->
+    <section class="view" id="view-calendario">
+      <div class="view-header">
+        <div>
+          <h2>Calendário e designações</h2>
+          <div class="sub">Compromissos, estudos, metas e apresentações</div>
+        </div>
+      </div>
+
+      <div class="subtabs">
+        <button class="subtab-item active" data-subtab="cal-sub-calendario">📅 Calendário</button>
+        <button class="subtab-item" data-subtab="cal-sub-designacoes">🎤 Designações</button>
+      </div>
+
+      <div class="subtab-panel active" id="cal-sub-calendario">
+        <div class="cal-header">
+          <div class="cal-nav">
+            <button class="btn-icon" id="cal-prev">‹</button>
+            <button class="btn-icon" id="cal-today">•</button>
+            <button class="btn-icon" id="cal-next">›</button>
+          </div>
+          <h3 id="cal-month-label"></h3>
+          <button class="btn btn-primary btn-sm" id="btn-new-evento">+ Compromisso</button>
+        </div>
+        <div class="cal-grid" id="cal-dow-row"></div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div id="cal-day-events"></div>
+      </div>
+
+      <div class="subtab-panel" id="cal-sub-designacoes">
+        <div class="view-header" style="margin-bottom:14px;">
+          <div class="sub" style="margin-top:0;">Discursos, leituras e apresentações</div>
+          <button class="btn btn-primary btn-sm" id="btn-new-designacao">+ Designação</button>
+        </div>
+        <div class="searchbar">
+          <span class="ic">🔍</span>
+          <input type="text" id="search-designacoes" placeholder="Pesquisar por título ou observação...">
+        </div>
+        <div id="designacoes-container"></div>
+      </div>
+    </section>
+
+    <!-- ===== PESQUISAS (com sub-abas: pesquisas / exemplos bons / exemplos ruins) ===== -->
+    <section class="view" id="view-pesquisas">
+      <div class="view-header">
+        <div>
+          <h2>Pesquisas</h2>
+          <div class="sub">Estudos completos e exemplos bíblicos</div>
+        </div>
+      </div>
+
+      <div class="subtabs">
+        <button class="subtab-item active" data-subtab="pq-sub-pesquisas">🔎 Pesquisas</button>
+        <button class="subtab-item" data-subtab="pq-sub-bons">🌟 Exemplos bons</button>
+        <button class="subtab-item" data-subtab="pq-sub-ruins">⚠️ Exemplos ruins</button>
+      </div>
+
+      <div class="subtab-panel active" id="pq-sub-pesquisas">
+        <div class="view-header" style="margin-bottom:14px;">
+          <div class="sub" style="margin-top:0;">Textos completos de estudo, organizados por título</div>
+          <button class="btn btn-primary btn-sm" id="btn-new-pesquisa">+ Nova pesquisa</button>
+        </div>
+        <div id="pesquisas-container"></div>
+      </div>
+
+      <div class="subtab-panel" id="pq-sub-bons">
+        <div class="view-header" style="margin-bottom:14px;">
+          <div class="sub" style="margin-top:0;">Personagens cujas atitudes valem ser imitadas</div>
+          <button class="btn btn-primary btn-sm" id="btn-new-bom">+ Personagem</button>
+        </div>
+        <div class="searchbar">
+          <span class="ic">🔍</span>
+          <input type="text" id="search-bons" placeholder="Pesquisar personagem, referência ou lição...">
+        </div>
+        <div id="bons-container"></div>
+      </div>
+
+      <div class="subtab-panel" id="pq-sub-ruins">
+        <div class="view-header" style="margin-bottom:14px;">
+          <div class="sub" style="margin-top:0;">Personagens cujos erros servem de alerta</div>
+          <button class="btn btn-primary btn-sm" id="btn-new-ruim">+ Personagem</button>
+        </div>
+        <div class="searchbar">
+          <span class="ic">🔍</span>
+          <input type="text" id="search-ruins" placeholder="Pesquisar personagem, referência ou lição...">
+        </div>
+        <div id="ruins-container"></div>
+      </div>
+    </section>
+
+    <!-- ===== ROTEIROS ===== -->
+    <section class="view" id="view-roteiros">
+      <div class="view-header">
+        <div>
+          <h2>Roteiros de apresentações</h2>
+          <div class="sub">Roteiros completos para discursos e partes</div>
+        </div>
+        <button class="btn btn-primary" id="btn-new-roteiro">+ Novo roteiro</button>
+      </div>
+      <div id="roteiros-container"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ================= MODAL GENÉRICO ================= -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-box"></div>
+</div>
+
+<div id="toast"></div>
+
+<!-- ================= ONBOARDING (primeiro uso) ================= -->
+<div id="onboarding-overlay">
+  <div class="onboarding-box">
+    <div class="ob-icon">📖</div>
+    <h2>Bem-vindo(a)!</h2>
+    <div class="ob-sub">Antes de começar, conte um pouco sobre você. Esses dados ficam salvos apenas neste dispositivo.</div>
+    <form id="form-onboarding">
+      <div class="field">
+        <label>Nome completo *</label>
+        <input type="text" id="ob-nome" placeholder="Seu nome completo" required>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>E-mail</label><input type="email" id="ob-email" placeholder="seuemail@exemplo.com"></div>
+        <div class="field"><label>Telefone</label><input type="tel" id="ob-telefone" placeholder="(00) 00000-0000"></div>
+      </div>
+      <div class="field">
+        <label>Data de nascimento</label>
+        <input type="date" id="ob-nascimento">
+      </div>
+      <div class="field">
+        <label>Data de início no app</label>
+        <input type="date" id="ob-inicio">
+        <div class="hint">Preenchida automaticamente com a data de hoje — pode alterar se quiser.</div>
+      </div>
+      <div class="modal-actions" style="justify-content:center;">
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:13px;">Começar a usar o app</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   PROGRAMAÇÃO ESPIRITUAL — app 100% offline
+   Persistência: localStorage (banco de dados do próprio navegador/dispositivo)
+   ========================================================================= */
+
+// Captura qualquer erro inesperado para nunca deixar o app "travado"
+// silenciosamente sem o usuário entender o que houve.
+window.addEventListener('error', (e) => {
+  console.error('Erro capturado:', e.error || e.message);
+  try { showToast('Ocorreu um erro. Tente novamente.', '⚠️'); } catch (_) {}
+});
+
+const DB_KEY = 'prog_espiritual_db_v1';
+
+const emptyDB = () => ({
+  perfil: null,     // {nome, email, telefone, nascimento, inicioApp}
+  categorias: [],   // {id, nome}
+  textos: [],       // {id, categoriaId, referencia, anotacao, favorito, criadoEm}
+  bons: [],         // {id, nome, referencia, resumo, licoes, criadoEm}
+  ruins: [],        // {id, nome, referencia, resumo, licoes, criadoEm}
+  eventos: [],      // {id, data(YYYY-MM-DD), tipo, titulo, descricao, concluido}
+  designacoes: [],  // {id, titulo, data, duracao, observacoes, status}
+  pesquisas: [],    // {id, titulo, corpo, atualizadoEm}
+  roteiros: [],     // {id, titulo, corpo, atualizadoEm}
+  registrosCampo: [], // {id, data, horas, revisitas, estudos, obs, criadoEm}
+  ordemAbas: null,  // array de view ids na ordem escolhida pelo usuário (null = padrão)
+  tema: 'branco'
+});
+
+// Detecta se localStorage está realmente disponível e gravável
+// (em modo privado de alguns navegadores, ou em certos WebViews,
+// localStorage existe mas lança erro ao tentar usar — precisamos
+// de um plano B em memória para o app nunca "travar" silenciosamente).
+let storageAvailable = true;
+let memoryFallback = {};
+
+function testStorage() {
+  try {
+    const testKey = '__test_prog_espiritual__';
+    localStorage.setItem(testKey, '1');
+    localStorage.removeItem(testKey);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+storageAvailable = testStorage();
+
+let db = loadDB();
+
+function loadDB() {
+  try {
+    if (!storageAvailable) return emptyDB();
+    const raw = localStorage.getItem(DB_KEY);
+    if (!raw) return emptyDB();
+    const parsed = JSON.parse(raw);
+    return Object.assign(emptyDB(), parsed);
+  } catch (e) {
+    console.error('Erro ao carregar dados, iniciando vazio.', e);
+    return emptyDB();
+  }
+}
+
+function saveDB() {
+  try {
+    if (storageAvailable) {
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
+    } else {
+      memoryFallback = db;
+    }
+    pulseAutosave();
+  } catch (e) {
+    console.error('Erro ao salvar. Tentando modo de memória temporária.', e);
+    storageAvailable = false;
+    memoryFallback = db;
+    showToast('Aviso: não foi possível salvar permanentemente neste navegador', '⚠️');
+  }
+  updateCounts();
+}
+
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+function escapeHTML(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function nl2br(str) { return escapeHTML(str).replace(/\n/g, '<br>'); }
+
+/* ============================== TOAST ============================== */
+let toastTimer;
+function showToast(msg, icon = '✓') {
+  const t = document.getElementById('toast');
+  t.innerHTML = `<span>${icon}</span><span>${escapeHTML(msg)}</span>`;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+function pulseAutosave() {
+  const el = document.querySelector('.autosave-indicator');
+  if (!el) return;
+  el.style.opacity = '1';
+}
+
+/* ============================== TEMA ============================== */
+function applyTheme(theme) {
+  db.tema = theme;
+  document.body.className = 'theme-' + theme;
+  document.querySelectorAll('.theme-dot').forEach(d => {
+    d.classList.toggle('active', d.dataset.theme === theme);
+  });
+  saveDB();
+}
+document.querySelectorAll('.theme-dot').forEach(dot => {
+  dot.addEventListener('click', () => applyTheme(dot.dataset.theme));
+});
+
+/* ============================== NAVEGAÇÃO ============================== */
+// Definição fixa de todas as 6 abas principais (id, ícone, rótulo, se tem contador)
+const NAV_DEFS = {
+  inicio:     { icon: '🏠', label: 'Página inicial',      count: null },
+  campo:      { icon: '🧭', label: 'Relatório de campo',  count: null },
+  textos:     { icon: '📖', label: 'Textos importantes',  count: 'textos' },
+  calendario: { icon: '📅', label: 'Calendário e designações', count: null },
+  pesquisas:  { icon: '🔎', label: 'Pesquisas',           count: null },
+  roteiros:   { icon: '📝', label: 'Roteiros',            count: 'roteiros' }
+};
+const DEFAULT_ORDER = ['inicio', 'campo', 'textos', 'calendario', 'pesquisas', 'roteiros'];
+const views = DEFAULT_ORDER;
+
+function getTabOrder() {
+  const saved = db.ordemAbas;
+  if (Array.isArray(saved) && saved.length) {
+    // garante que todas as abas existam (proteção contra versões antigas salvas)
+    const valid = saved.filter(v => DEFAULT_ORDER.includes(v));
+    const missing = DEFAULT_ORDER.filter(v => !valid.includes(v));
+    return [...valid, ...missing];
+  }
+  return [...DEFAULT_ORDER];
+}
+
+function renderNav() {
+  const nav = document.getElementById('nav');
+  const order = getTabOrder();
+  const currentActive = document.querySelector('.nav-item.active')?.dataset.view || 'inicio';
+  nav.innerHTML = order.map(id => {
+    const def = NAV_DEFS[id];
+    const countHTML = def.count ? `<span class="count" id="count-${def.count}">0</span>` : '';
+    return `<button class="nav-item" data-view="${id}"><span class="ic">${def.icon}</span><span>${def.label}</span>${countHTML}</button>`;
+  }).join('');
+  nav.querySelectorAll('.nav-item').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === currentActive);
+    btn.addEventListener('click', () => goToView(btn.dataset.view));
+  });
+  updateCounts();
+}
+
+function goToView(name) {
+  views.forEach(v => {
+    document.getElementById('view-' + v).classList.toggle('active', v === name);
+  });
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === name);
+  });
+  document.getElementById('main').scrollTop = 0;
+  closeSidebarMobile();
+  renderAll();
+}
+
+/* Sub-abas (dentro de Calendário/Designações e Pesquisas/Bons/Ruins) */
+function initSubtabs() {
+  document.querySelectorAll('.subtab-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.subtab;
+      const parent = btn.closest('.view');
+      parent.querySelectorAll('.subtab-item').forEach(b => b.classList.toggle('active', b === btn));
+      parent.querySelectorAll('.subtab-panel').forEach(p => p.classList.toggle('active', p.id === targetId));
+    });
+  });
+}
+
+/* Reordenar abas */
+document.getElementById('btn-reorder').addEventListener('click', openReorderModal);
+
+function openReorderModal() {
+  const order = getTabOrder();
+  renderReorderModalContent(order);
+}
+
+function renderReorderModalContent(order) {
+  openModal(`
+    <div class="modal-title"><span>Reordenar abas</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <p style="font-size:12.5px; color:var(--text-dim); margin-bottom:14px;">Use as setas para mudar a posição de cada aba no menu lateral.</p>
+    <div class="reorder-list" id="reorder-list">
+      ${order.map((id, idx) => {
+        const def = NAV_DEFS[id];
+        return `
+        <div class="reorder-item">
+          <span class="ic">${def.icon}</span>
+          <span class="lbl">${def.label}</span>
+          <div class="reorder-btns">
+            <button type="button" onclick="moveTab('${id}', -1)" ${idx === 0 ? 'disabled' : ''} title="Mover para cima">↑</button>
+            <button type="button" onclick="moveTab('${id}', 1)" ${idx === order.length - 1 ? 'disabled' : ''} title="Mover para baixo">↓</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" onclick="resetTabOrder()">Restaurar padrão</button>
+      <button type="button" class="btn btn-primary" onclick="closeModal()">Concluído</button>
+    </div>
+  `);
+}
+
+function moveTab(id, direction) {
+  const order = getTabOrder();
+  const idx = order.indexOf(id);
+  const newIdx = idx + direction;
+  if (newIdx < 0 || newIdx >= order.length) return;
+  [order[idx], order[newIdx]] = [order[newIdx], order[idx]];
+  db.ordemAbas = order;
+  saveDB();
+  renderNav();
+  renderReorderModalContent(order);
+}
+
+function resetTabOrder() {
+  db.ordemAbas = null;
+  saveDB();
+  renderNav();
+  renderReorderModalContent(getTabOrder());
+  showToast('Ordem padrão restaurada');
+}
+
+/* Mobile sidebar */
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebar-overlay');
+document.getElementById('menu-toggle').addEventListener('click', () => {
+  sidebar.classList.add('open');
+  overlay.classList.add('show');
+});
+overlay.addEventListener('click', closeSidebarMobile);
+function closeSidebarMobile() {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+}
+
+/* ============================== MODAL HELPERS ============================== */
+const modalOverlay = document.getElementById('modal-overlay');
+const modalBox = document.getElementById('modal-box');
+
+function openModal(html, opts = {}) {
+  modalBox.className = 'modal' + (opts.large ? ' modal-lg' : '');
+  modalBox.innerHTML = html;
+  modalOverlay.classList.add('active');
+  const firstInput = modalBox.querySelector('input, textarea, select');
+  if (firstInput) setTimeout(() => firstInput.focus(), 50);
+}
+function closeModal() {
+  modalOverlay.classList.remove('active');
+  modalBox.innerHTML = '';
+}
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) closeModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// Modal de confirmação próprio (substitui window.confirm, que pode ser
+// bloqueado silenciosamente em alguns navegadores embutidos/PWA).
+function confirmAction(message, onConfirm, opts = {}) {
+  openModal(`
+    <div class="modal-title"><span>${opts.title || 'Confirmar ação'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <p style="font-size:13.5px; color:var(--text-dim); line-height:1.6;">${escapeHTML(message)}</p>
+    <div class="confirm-actions">
+      <button type="button" class="btn btn-ghost" id="confirm-cancel-btn">Cancelar</button>
+      <button type="button" class="btn ${opts.danger === false ? 'btn-primary' : 'btn-danger'}" id="confirm-ok-btn">${opts.okLabel || 'Confirmar'}</button>
+    </div>
+  `);
+  document.getElementById('confirm-cancel-btn').addEventListener('click', closeModal);
+  document.getElementById('confirm-ok-btn').addEventListener('click', () => {
+    closeModal();
+    onConfirm();
+  });
+}
+
+/* ============================== RENDER DISPATCH ============================== */
+function renderAll() {
+  updateCounts();
+  renderInicio();
+  renderCampo();
+  renderTextos();
+  renderBons();
+  renderRuins();
+  renderCalendario();
+  renderDesignacoes();
+  renderPesquisas();
+  renderRoteiros();
+}
+
+function updateCounts() {
+  const elTextos = document.getElementById('count-textos');
+  const elRoteiros = document.getElementById('count-roteiros');
+  if (elTextos) elTextos.textContent = db.textos.length;
+  if (elRoteiros) elRoteiros.textContent = db.roteiros.length;
+}
+
+/* =========================================================================
+   1) TEXTOS IMPORTANTES
+   ========================================================================= */
+let textosSearchTerm = '';
+
+document.getElementById('search-textos').addEventListener('input', (e) => {
+  textosSearchTerm = e.target.value.trim().toLowerCase();
+  renderTextos();
+});
+
+document.getElementById('btn-new-categoria').addEventListener('click', () => {
+  openModal(`
+    <div class="modal-title"><span>Nova categoria</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-categoria">
+      <div class="field">
+        <label>Nome da categoria</label>
+        <input type="text" id="cat-nome" placeholder="Ex.: Promessas para o futuro, Fé, Oração" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Criar categoria</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-categoria').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('cat-nome').value.trim();
+    if (!nome) return;
+    db.categorias.push({ id: uid(), nome });
+    saveDB();
+    closeModal();
+    renderTextos();
+    showToast('Categoria criada');
+  });
+});
+
+document.getElementById('btn-new-texto').addEventListener('click', () => openTextoModal());
+
+function openTextoModal(textoId = null) {
+  const editing = textoId ? db.textos.find(t => t.id === textoId) : null;
+  if (db.categorias.length === 0) {
+    openModal(`
+      <div class="modal-title"><span>Crie uma categoria primeiro</span><button class="close-x" onclick="closeModal()">✕</button></div>
+      <p style="font-size:13.5px; color:var(--text-dim); line-height:1.6;">Antes de adicionar um texto, crie ao menos uma categoria (ex.: Promessas para o futuro, Fé, Oração).</p>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="closeModal(); document.getElementById('btn-new-categoria').click();">Criar categoria</button>
+      </div>
+    `);
+    return;
+  }
+  const catOptions = db.categorias.map(c =>
+    `<option value="${c.id}" ${editing && editing.categoriaId === c.id ? 'selected' : ''}>${escapeHTML(c.nome)}</option>`
+  ).join('');
+
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar texto' : 'Novo texto'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-texto">
+      <div class="field">
+        <label>Categoria</label>
+        <select id="texto-categoria">${catOptions}</select>
+      </div>
+      <div class="field">
+        <label>Referência bíblica</label>
+        <input type="text" id="texto-ref" placeholder="Ex.: Isaías 41:10" value="${escapeHTML(editing?.referencia || '')}" required>
+      </div>
+      <div class="field">
+        <label>Anotação</label>
+        <textarea id="texto-nota" placeholder="Sua anotação, reflexão ou aplicação pessoal...">${escapeHTML(editing?.anotacao || '')}</textarea>
+      </div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deleteTexto('${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `);
+
+  document.getElementById('form-texto').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const categoriaId = document.getElementById('texto-categoria').value;
+    const referencia = document.getElementById('texto-ref').value.trim();
+    const anotacao = document.getElementById('texto-nota').value.trim();
+    if (!referencia) return;
+
+    if (editing) {
+      editing.categoriaId = categoriaId;
+      editing.referencia = referencia;
+      editing.anotacao = anotacao;
+      showToast('Texto atualizado');
+    } else {
+      db.textos.push({
+        id: uid(), categoriaId, referencia, anotacao,
+        favorito: false, criadoEm: Date.now()
+      });
+      showToast('Texto adicionado');
+    }
+    saveDB();
+    closeModal();
+    renderTextos();
+  });
+}
+
+function deleteTexto(id) {
+  confirmAction('Excluir este texto? Essa ação não pode ser desfeita.', () => {
+    db.textos = db.textos.filter(t => t.id !== id);
+    saveDB();
+    renderTextos();
+    showToast('Texto excluído', '🗑️');
+  });
+}
+
+function toggleFavoritoTexto(id) {
+  const alreadyFav = db.textos.find(t => t.id === id)?.favorito;
+  db.textos.forEach(t => t.favorito = false);
+  const t = db.textos.find(t => t.id === id);
+  if (t) t.favorito = !alreadyFav;
+  saveDB();
+  renderTextos();
+}
+
+function renderTextos() {
+  const container = document.getElementById('textos-container');
+  const favSlot = document.getElementById('favorite-slot');
+  const term = textosSearchTerm;
+
+  // favorito banner
+  const fav = db.textos.find(t => t.favorito);
+  if (fav) {
+    const cat = db.categorias.find(c => c.id === fav.categoriaId);
+    favSlot.innerHTML = `
+      <div class="favorite-banner">
+        <div class="label">⭐ Texto favorito ${cat ? '· ' + escapeHTML(cat.nome) : ''}</div>
+        <div class="ref">${escapeHTML(fav.referencia)}</div>
+        ${fav.anotacao ? `<div class="note">${nl2br(fav.anotacao)}</div>` : ''}
+      </div>`;
+  } else if (db.textos.length > 0) {
+    favSlot.innerHTML = `<div class="favorite-banner-empty">Nenhum texto favorito ainda. Toque na estrela de um texto para destacá-lo aqui.</div>`;
+  } else {
+    favSlot.innerHTML = '';
+  }
+
+  if (db.textos.length === 0 && db.categorias.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">📖</div>
+        <div class="title">Sua biblioteca está vazia</div>
+        <div class="desc">Crie categorias como "Promessas para o futuro", "Fé" ou "Oração" e comece a adicionar seus textos importantes.</div>
+      </div>`;
+    return;
+  }
+
+  // filtro
+  const matches = (t, cat) => {
+    if (!term) return true;
+    return t.referencia.toLowerCase().includes(term) ||
+      (t.anotacao || '').toLowerCase().includes(term) ||
+      (cat?.nome || '').toLowerCase().includes(term);
+  };
+
+  let html = '';
+  let anyVisible = false;
+
+  db.categorias.forEach(cat => {
+    const items = db.textos.filter(t => t.categoriaId === cat.id && matches(t, cat));
+    if (term && items.length === 0) return;
+    anyVisible = true;
+    html += `
+      <div class="category-block">
+        <div class="category-head">
+          <h3>📁 ${escapeHTML(cat.nome)} <span class="count-badge">${items.length}</span></h3>
+          <div class="spacer"></div>
+          <button class="btn-icon" onclick="renameCategoria('${cat.id}')" title="Renomear categoria">✏️</button>
+          <button class="btn-icon" onclick="deleteCategoria('${cat.id}')" title="Excluir categoria">🗑️</button>
+        </div>
+        ${items.length === 0 ? `<div style="font-size:12.5px;color:var(--text-faint);padding:4px 2px 8px;">Nenhum texto nesta categoria ainda.</div>` : ''}
+        ${items.map(t => textoCardHTML(t)).join('')}
+      </div>`;
+  });
+
+  // textos sem categoria (segurança, caso categoria tenha sido apagada)
+  const orfaos = db.textos.filter(t => !db.categorias.find(c => c.id === t.categoriaId) && matches(t));
+  if (orfaos.length) {
+    anyVisible = true;
+    html += `
+      <div class="category-block">
+        <div class="category-head"><h3>📁 Sem categoria <span class="count-badge">${orfaos.length}</span></h3></div>
+        ${orfaos.map(t => textoCardHTML(t)).join('')}
+      </div>`;
+  }
+
+  if (term && !anyVisible) {
+    html = `<div class="empty-state"><div class="ic">🔍</div><div class="title">Nada encontrado</div><div class="desc">Tente pesquisar por outra palavra-chave.</div></div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function textoCardHTML(t) {
+  return `
+    <div class="card verse-card">
+      <button class="fav-btn ${t.favorito ? 'is-fav' : ''}" onclick="toggleFavoritoTexto('${t.id}')" title="Marcar como favorito">${t.favorito ? '★' : '☆'}</button>
+      <div class="body">
+        <div class="ref">${escapeHTML(t.referencia)}</div>
+        ${t.anotacao ? `<div class="note">${nl2br(t.anotacao)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="openTextoModal('${t.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deleteTexto('${t.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>`;
+}
+
+function renameCategoria(id) {
+  const cat = db.categorias.find(c => c.id === id);
+  if (!cat) return;
+  openModal(`
+    <div class="modal-title"><span>Renomear categoria</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-rename-cat">
+      <div class="field"><label>Nome da categoria</label><input type="text" id="rename-cat-nome" value="${escapeHTML(cat.nome)}" required></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-rename-cat').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const novoNome = document.getElementById('rename-cat-nome').value.trim();
+    if (!novoNome) return;
+    cat.nome = novoNome;
+    saveDB();
+    closeModal();
+    renderTextos();
+    showToast('Categoria renomeada');
+  });
+}
+
+function deleteCategoria(id) {
+  const qtd = db.textos.filter(t => t.categoriaId === id).length;
+  const msg = qtd > 0
+    ? `Esta categoria tem ${qtd} texto(s). Excluir a categoria também excluirá esses textos. Deseja continuar?`
+    : 'Excluir esta categoria?';
+  confirmAction(msg, () => {
+    db.textos = db.textos.filter(t => t.categoriaId !== id);
+    db.categorias = db.categorias.filter(c => c.id !== id);
+    saveDB();
+    renderTextos();
+    showToast('Categoria excluída', '🗑️');
+  });
+}
+
+/* =========================================================================
+   2) EXEMPLOS BONS  &  3) EXEMPLOS RUINS  (mesmo sistema, tipo parametrizado)
+   ========================================================================= */
+let bonsSearch = '', ruinsSearch = '';
+document.getElementById('search-bons').addEventListener('input', e => { bonsSearch = e.target.value.trim().toLowerCase(); renderBons(); });
+document.getElementById('search-ruins').addEventListener('input', e => { ruinsSearch = e.target.value.trim().toLowerCase(); renderRuins(); });
+document.getElementById('btn-new-bom').addEventListener('click', () => openPersonagemModal('bons'));
+document.getElementById('btn-new-ruim').addEventListener('click', () => openPersonagemModal('ruins'));
+
+function openPersonagemModal(tipo, id = null) {
+  const list = db[tipo];
+  const editing = id ? list.find(p => p.id === id) : null;
+  const isGood = tipo === 'bons';
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar personagem' : (isGood ? 'Novo exemplo bom' : 'Novo exemplo ruim')}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-personagem">
+      <div class="field-row">
+        <div class="field"><label>Nome</label><input type="text" id="pers-nome" placeholder="Ex.: ${isGood ? 'Rute' : 'Acã'}" value="${escapeHTML(editing?.nome || '')}" required></div>
+        <div class="field"><label>Referência</label><input type="text" id="pers-ref" placeholder="Ex.: ${isGood ? 'Rute 1:16' : 'Josué 7'}" value="${escapeHTML(editing?.referencia || '')}"></div>
+      </div>
+      <div class="field"><label>Resumo</label><textarea id="pers-resumo" placeholder="O que aconteceu...">${escapeHTML(editing?.resumo || '')}</textarea></div>
+      <div class="field"><label>${isGood ? 'Lições a imitar' : 'Lições / alertas'}</label><textarea id="pers-licoes" placeholder="${isGood ? 'O que podemos aprender e imitar...' : 'O que devemos evitar...'}">${escapeHTML(editing?.licoes || '')}</textarea></div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deletePersonagem('${tipo}','${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-personagem').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('pers-nome').value.trim();
+    if (!nome) return;
+    const data = {
+      nome,
+      referencia: document.getElementById('pers-ref').value.trim(),
+      resumo: document.getElementById('pers-resumo').value.trim(),
+      licoes: document.getElementById('pers-licoes').value.trim()
+    };
+    if (editing) {
+      Object.assign(editing, data);
+      showToast('Personagem atualizado');
+    } else {
+      list.push({ id: uid(), ...data, criadoEm: Date.now() });
+      showToast('Personagem adicionado');
+    }
+    saveDB();
+    closeModal();
+    tipo === 'bons' ? renderBons() : renderRuins();
+  });
+}
+
+function deletePersonagem(tipo, id) {
+  confirmAction('Excluir este personagem?', () => {
+    db[tipo] = db[tipo].filter(p => p.id !== id);
+    saveDB();
+    tipo === 'bons' ? renderBons() : renderRuins();
+    showToast('Excluído', '🗑️');
+  });
+}
+
+// Modal somente-leitura — abre o texto completo sem campos editáveis
+// e sem acionar o teclado, ideal para reler resumos/lições longas.
+function openPersonagemViewModal(tipo, id) {
+  const p = db[tipo].find(x => x.id === id);
+  if (!p) return;
+  const isGood = tipo === 'bons';
+  openModal(`
+    <div class="modal-title">
+      <span>👁️ Visualizando</span>
+      <button class="close-x" onclick="closeModal()">✕</button>
+    </div>
+    <div class="doc-view-mode">${escapeHTML(p.nome)}</div>
+    ${p.referencia ? `<div class="doc-meta">${escapeHTML(p.referencia)}</div>` : ''}
+    <div style="margin-top:16px;">
+      <div class="field-row" style="margin:0;">
+        <div style="flex:1;">
+          <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:7px; text-transform:uppercase; letter-spacing:.04em;">Resumo</label>
+          <div class="doc-view-body ${!p.resumo ? 'is-empty' : ''}">${p.resumo ? nl2br(p.resumo) : 'Sem resumo.'}</div>
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:7px; text-transform:uppercase; letter-spacing:.04em;">${isGood ? 'Lições a imitar' : 'Lições / alertas'}</label>
+        <div class="doc-view-body ${!p.licoes ? 'is-empty' : ''}">${p.licoes ? nl2br(p.licoes) : 'Sem lições registradas.'}</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" onclick="closeModal()">Fechar</button>
+      <button type="button" class="btn btn-primary" onclick="closeModal(); openPersonagemModal('${tipo}','${p.id}')">✏️ Editar</button>
+    </div>
+  `, { large: true });
+}
+
+function renderPersonagens(tipo, containerId, search) {
+  const container = document.getElementById(containerId);
+  const list = db[tipo];
+  if (list.length === 0) {
+    const isGood = tipo === 'bons';
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">${isGood ? '🌟' : '⚠️'}</div>
+        <div class="title">Nenhum personagem cadastrado</div>
+        <div class="desc">Adicione ${isGood ? 'exemplos bons' : 'exemplos ruins'} da Bíblia com nome, referência, resumo e lições.</div>
+      </div>`;
+    return;
+  }
+  const filtered = list.filter(p =>
+    !search ||
+    p.nome.toLowerCase().includes(search) ||
+    (p.referencia || '').toLowerCase().includes(search) ||
+    (p.resumo || '').toLowerCase().includes(search) ||
+    (p.licoes || '').toLowerCase().includes(search)
+  );
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="ic">🔍</div><div class="title">Nada encontrado</div></div>`;
+    return;
+  }
+  container.innerHTML = filtered.sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR')).map(p => `
+    <div class="list-row">
+      <div class="avatar">${escapeHTML((p.nome[0] || '?').toUpperCase())}</div>
+      <div class="body" onclick="openPersonagemViewModal('${tipo}','${p.id}')">
+        <div class="title-row">
+          <span class="name">${escapeHTML(p.nome)}</span>
+          ${p.referencia ? `<span class="meta">${escapeHTML(p.referencia)}</span>` : ''}
+        </div>
+        ${p.resumo ? `<div class="snippet"><strong>Resumo:</strong> ${escapeHTML(p.resumo)}</div>` : ''}
+        ${p.licoes ? `<div class="snippet"><strong>Lições:</strong> ${escapeHTML(p.licoes)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="openPersonagemViewModal('${tipo}','${p.id}')" title="Visualizar">👁️</button>
+        <button class="btn-icon" onclick="openPersonagemModal('${tipo}','${p.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deletePersonagem('${tipo}','${p.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+function renderBons() { renderPersonagens('bons', 'bons-container', bonsSearch); }
+function renderRuins() { renderPersonagens('ruins', 'ruins-container', ruinsSearch); }
+
+/* =========================================================================
+   4) CALENDÁRIO & PROGRAMAÇÃO ESPIRITUAL
+   ========================================================================= */
+let calViewDate = new Date();
+let calSelectedDate = fmtDate(new Date());
+
+function fmtDate(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+document.getElementById('cal-prev').addEventListener('click', () => { calViewDate.setMonth(calViewDate.getMonth()-1); renderCalendario(); });
+document.getElementById('cal-next').addEventListener('click', () => { calViewDate.setMonth(calViewDate.getMonth()+1); renderCalendario(); });
+document.getElementById('cal-today').addEventListener('click', () => { calViewDate = new Date(); calSelectedDate = fmtDate(new Date()); renderCalendario(); });
+
+document.getElementById('btn-new-evento').addEventListener('click', () => openEventoModal());
+
+const DOW = ['dom','seg','ter','qua','qui','sex','sáb'];
+const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+
+function renderCalendario() {
+  document.getElementById('cal-month-label').textContent = `${MESES[calViewDate.getMonth()]} de ${calViewDate.getFullYear()}`;
+  const dowRow = document.getElementById('cal-dow-row');
+  dowRow.innerHTML = DOW.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+  const year = calViewDate.getFullYear();
+  const month = calViewDate.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const todayStr = fmtDate(new Date());
+
+  let cells = '';
+  for (let i = 0; i < firstDay; i++) cells += `<div class="cal-day empty"></div>`;
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const hasEvents = db.eventos.some(e => e.data === dateStr);
+    const isToday = dateStr === todayStr;
+    const isSelected = dateStr === calSelectedDate;
+    cells += `<div class="cal-day ${isToday?'today':''} ${isSelected?'selected':''}" onclick="selectCalDay('${dateStr}')">
+      <span>${day}</span>
+      ${hasEvents ? '<span class="dot"></span>' : ''}
+    </div>`;
+  }
+  document.getElementById('cal-grid').innerHTML = cells;
+  renderDayEvents();
+}
+
+function selectCalDay(dateStr) {
+  calSelectedDate = dateStr;
+  renderCalendario();
+}
+
+function renderDayEvents() {
+  const container = document.getElementById('cal-day-events');
+  const events = db.eventos.filter(e => e.data === calSelectedDate)
+    .sort((a,b) => (a.criadoEm||0)-(b.criadoEm||0));
+
+  const [y,m,d] = calSelectedDate.split('-').map(Number);
+  const label = new Date(y, m-1, d).toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+
+  let html = `<h3 style="font-size:14px; font-weight:600; color:var(--text-dim); margin-bottom:12px; text-transform:capitalize;">${label}</h3>`;
+
+  if (events.length === 0) {
+    html += `<div class="empty-state" style="padding:36px 20px;"><div class="ic">📅</div><div class="title">Nenhum compromisso neste dia</div><div class="desc">Toque em "+ Compromisso" para adicionar um estudo, meta ou compromisso espiritual.</div></div>`;
+  } else {
+    html += events.map(ev => `
+      <div class="event-item ${ev.concluido ? 'done' : ''}">
+        <div class="check" onclick="toggleEventoConcluido('${ev.id}')">${ev.concluido ? '✓' : ''}</div>
+        <div class="body" onclick="openEventoModal('${ev.id}')">
+          <div class="ev-title"><span class="tag-pill tag-${ev.tipo}">${tipoLabel(ev.tipo)}</span>${escapeHTML(ev.titulo)}</div>
+          ${ev.descricao ? `<div class="ev-desc">${nl2br(ev.descricao)}</div>` : ''}
+        </div>
+        <div class="actions">
+          <button class="btn-icon" onclick="deleteEvento('${ev.id}')" title="Excluir">🗑️</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  container.innerHTML = html;
+}
+
+function tipoLabel(t) {
+  return { compromisso: 'Compromisso', estudo: 'Estudo', meta: 'Meta' }[t] || t;
+}
+
+function toggleEventoConcluido(id) {
+  const ev = db.eventos.find(e => e.id === id);
+  if (ev) ev.concluido = !ev.concluido;
+  saveDB();
+  renderCalendario();
+}
+
+function deleteEvento(id) {
+  confirmAction('Excluir este compromisso?', () => {
+    db.eventos = db.eventos.filter(e => e.id !== id);
+    saveDB();
+    renderCalendario();
+    showToast('Excluído', '🗑️');
+  });
+}
+
+function openEventoModal(id = null) {
+  const editing = id ? db.eventos.find(e => e.id === id) : null;
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar compromisso' : 'Novo compromisso'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-evento">
+      <div class="field-row">
+        <div class="field"><label>Data</label><input type="date" id="ev-data" value="${editing?.data || calSelectedDate}" required></div>
+        <div class="field"><label>Tipo</label>
+          <select id="ev-tipo">
+            <option value="compromisso" ${editing?.tipo==='compromisso'?'selected':''}>Compromisso</option>
+            <option value="estudo" ${editing?.tipo==='estudo'?'selected':''}>Estudo</option>
+            <option value="meta" ${editing?.tipo==='meta'?'selected':''}>Meta espiritual</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Título</label><input type="text" id="ev-titulo" placeholder="Ex.: Leitura da Bíblia — Salmos" value="${escapeHTML(editing?.titulo || '')}" required></div>
+      <div class="field"><label>Observações</label><textarea id="ev-desc" placeholder="Detalhes, objetivo, notas...">${escapeHTML(editing?.descricao || '')}</textarea></div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deleteEvento('${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-evento').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = document.getElementById('ev-data').value;
+    const tipo = document.getElementById('ev-tipo').value;
+    const titulo = document.getElementById('ev-titulo').value.trim();
+    const descricao = document.getElementById('ev-desc').value.trim();
+    if (!titulo || !data) return;
+    if (editing) {
+      Object.assign(editing, { data, tipo, titulo, descricao });
+      showToast('Compromisso atualizado');
+    } else {
+      db.eventos.push({ id: uid(), data, tipo, titulo, descricao, concluido: false, criadoEm: Date.now() });
+      showToast('Compromisso adicionado');
+    }
+    calSelectedDate = data;
+    calViewDate = new Date(data + 'T00:00:00');
+    saveDB();
+    closeModal();
+    renderCalendario();
+  });
+}
+
+/* =========================================================================
+   5) PRÓXIMAS DESIGNAÇÕES
+   ========================================================================= */
+let designacoesSearch = '';
+document.getElementById('search-designacoes').addEventListener('input', e => { designacoesSearch = e.target.value.trim().toLowerCase(); renderDesignacoes(); });
+document.getElementById('btn-new-designacao').addEventListener('click', () => openDesignacaoModal());
+
+function openDesignacaoModal(id = null) {
+  const editing = id ? db.designacoes.find(d => d.id === id) : null;
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar designação' : 'Nova designação'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-designacao">
+      <div class="field"><label>Título</label><input type="text" id="des-titulo" placeholder="Ex.: Discurso — A fé que agrada a Deus" value="${escapeHTML(editing?.titulo || '')}" required></div>
+      <div class="field-row">
+        <div class="field"><label>Data</label><input type="date" id="des-data" value="${editing?.data || ''}"></div>
+        <div class="field"><label>Duração</label><input type="text" id="des-duracao" placeholder="Ex.: 15 min" value="${escapeHTML(editing?.duracao || '')}"></div>
+      </div>
+      <div class="field"><label>Status</label>
+        <select id="des-status">
+          <option value="pendente" ${editing?.status==='pendente'?'selected':''}>Pendente</option>
+          <option value="preparando" ${editing?.status==='preparando'?'selected':''}>Preparando</option>
+          <option value="concluida" ${editing?.status==='concluida'?'selected':''}>Concluída</option>
+        </select>
+      </div>
+      <div class="field"><label>Observações</label><textarea id="des-obs" placeholder="Material de apoio, pontos principais...">${escapeHTML(editing?.observacoes || '')}</textarea></div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deleteDesignacao('${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-designacao').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const titulo = document.getElementById('des-titulo').value.trim();
+    if (!titulo) return;
+    const data = {
+      titulo,
+      data: document.getElementById('des-data').value,
+      duracao: document.getElementById('des-duracao').value.trim(),
+      status: document.getElementById('des-status').value,
+      observacoes: document.getElementById('des-obs').value.trim()
+    };
+    if (editing) {
+      Object.assign(editing, data);
+      showToast('Designação atualizada');
+    } else {
+      db.designacoes.push({ id: uid(), ...data, criadoEm: Date.now() });
+      showToast('Designação adicionada');
+    }
+    saveDB();
+    closeModal();
+    renderDesignacoes();
+  });
+}
+
+function deleteDesignacao(id) {
+  confirmAction('Excluir esta designação?', () => {
+    db.designacoes = db.designacoes.filter(d => d.id !== id);
+    saveDB();
+    renderDesignacoes();
+    showToast('Excluída', '🗑️');
+  });
+}
+
+function statusLabel(s) {
+  return { pendente: 'Pendente', preparando: 'Preparando', concluida: 'Concluída' }[s] || s;
+}
+
+function renderDesignacoes() {
+  const container = document.getElementById('designacoes-container');
+  if (db.designacoes.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">🎤</div>
+        <div class="title">Nenhuma designação registrada</div>
+        <div class="desc">Registre discursos, leituras e apresentações com data, duração e status.</div>
+      </div>`;
+    return;
+  }
+  const term = designacoesSearch;
+  const filtered = db.designacoes.filter(d =>
+    !term || d.titulo.toLowerCase().includes(term) || (d.observacoes||'').toLowerCase().includes(term)
+  ).sort((a,b) => (a.data||'9999').localeCompare(b.data||'9999'));
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="ic">🔍</div><div class="title">Nada encontrado</div></div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(d => `
+    <div class="list-row status-border-${d.status}">
+      <div class="avatar">🎤</div>
+      <div class="body" onclick="openDesignacaoModal('${d.id}')">
+        <div class="title-row">
+          <span class="name">${escapeHTML(d.titulo)}</span>
+          <span class="status-badge status-${d.status}">${statusLabel(d.status)}</span>
+        </div>
+        <div class="meta">${d.data ? formatDateBR(d.data) : 'Sem data'} ${d.duracao ? '· ' + escapeHTML(d.duracao) : ''}</div>
+        ${d.observacoes ? `<div class="snippet">${escapeHTML(d.observacoes)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="openDesignacaoModal('${d.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deleteDesignacao('${d.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function formatDateBR(iso) {
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+/* =========================================================================
+   6) PESQUISAS   &   7) ROTEIROS  (editor de texto tipo documento)
+   ========================================================================= */
+let activeDoc = { pesquisas: null, roteiros: null };
+let docMode = { pesquisas: 'editar', roteiros: 'editar' }; // 'editar' | 'visualizar'
+let saveDocTimer = null;
+
+document.getElementById('btn-new-pesquisa').addEventListener('click', () => createDoc('pesquisas'));
+document.getElementById('btn-new-roteiro').addEventListener('click', () => createDoc('roteiros'));
+
+function createDoc(tipo) {
+  const doc = { id: uid(), titulo: 'Sem título', corpo: '', atualizadoEm: Date.now() };
+  db[tipo].push(doc);
+  activeDoc[tipo] = doc.id;
+  docMode[tipo] = 'editar';
+  saveDB();
+  tipo === 'pesquisas' ? renderPesquisas() : renderRoteiros();
+  setTimeout(() => {
+    const titleInput = document.querySelector(`#view-${tipo === 'pesquisas' ? 'pesquisas' : 'roteiros'} .doc-title-input`);
+    if (titleInput) { titleInput.focus(); titleInput.select(); }
+  }, 60);
+}
+
+function deleteDoc(tipo, id) {
+  confirmAction('Excluir este documento? Essa ação não pode ser desfeita.', () => {
+    db[tipo] = db[tipo].filter(d => d.id !== id);
+    if (activeDoc[tipo] === id) {
+      activeDoc[tipo] = db[tipo][0]?.id || null;
+    }
+    saveDB();
+    tipo === 'pesquisas' ? renderPesquisas() : renderRoteiros();
+    showToast('Documento excluído', '🗑️');
+  });
+}
+
+function selectDoc(tipo, id) {
+  activeDoc[tipo] = id;
+  docMode[tipo] = 'editar';
+  tipo === 'pesquisas' ? renderPesquisas() : renderRoteiros();
+}
+
+function setDocMode(tipo, mode) {
+  docMode[tipo] = mode;
+  tipo === 'pesquisas' ? renderPesquisas() : renderRoteiros();
+}
+
+function saveDocField(tipo, id, field, value) {
+  const doc = db[tipo].find(d => d.id === id);
+  if (!doc) return;
+  doc[field] = value;
+  doc.atualizadoEm = Date.now();
+  clearTimeout(saveDocTimer);
+  saveDocTimer = setTimeout(() => {
+    saveDB();
+    // atualiza apenas a lista lateral (título / data) sem perder o foco do editor
+    updateDocSidebarOnly(tipo);
+  }, 350);
+}
+
+function updateDocSidebarOnly(tipo) {
+  const listEl = document.getElementById(`${tipo}-doc-list`);
+  if (!listEl) return;
+  listEl.innerHTML = docListItemsHTML(tipo);
+}
+
+function docListItemsHTML(tipo) {
+  const list = [...db[tipo]].sort((a,b) => b.atualizadoEm - a.atualizadoEm);
+  return list.map(d => `
+    <div class="doc-list-item ${activeDoc[tipo] === d.id ? 'active' : ''}" onclick="selectDoc('${tipo}','${d.id}')">
+      <span class="dli-title">${escapeHTML(d.titulo || 'Sem título')}</span>
+      <span class="dli-del" onclick="event.stopPropagation(); deleteDoc('${tipo}','${d.id}')">✕</span>
+    </div>
+  `).join('');
+}
+
+function renderDocView(tipo, containerId, emptyIcon, emptyTitle, emptyDesc) {
+  const container = document.getElementById(containerId);
+  const list = db[tipo];
+
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">${emptyIcon}</div>
+        <div class="title">${emptyTitle}</div>
+        <div class="desc">${emptyDesc}</div>
+      </div>`;
+    return;
+  }
+
+  if (!activeDoc[tipo] || !list.find(d => d.id === activeDoc[tipo])) {
+    activeDoc[tipo] = [...list].sort((a,b) => b.atualizadoEm - a.atualizadoEm)[0].id;
+  }
+  const doc = list.find(d => d.id === activeDoc[tipo]);
+  const mode = docMode[tipo] || 'editar';
+
+  const editorHTML = mode === 'visualizar' ? `
+    <div class="doc-toolbar">
+      <button class="btn btn-ghost btn-sm" onclick="setDocMode('${tipo}','editar')">✏️ Editar</button>
+    </div>
+    <div class="doc-view-mode">${escapeHTML(doc.titulo || 'Sem título')}</div>
+    <div class="doc-meta">Atualizado em ${new Date(doc.atualizadoEm).toLocaleString('pt-BR')}</div>
+    <div class="doc-view-body ${!doc.corpo ? 'is-empty' : ''}">${doc.corpo ? nl2br(doc.corpo) : 'Este documento ainda não tem conteúdo.'}</div>
+  ` : `
+    <div class="doc-toolbar">
+      <button class="btn btn-ghost btn-sm" onclick="setDocMode('${tipo}','visualizar')">👁️ Visualizar</button>
+    </div>
+    <input type="text" class="doc-title-input" value="${escapeHTML(doc.titulo)}"
+      placeholder="Título do documento"
+      oninput="saveDocField('${tipo}','${doc.id}','titulo', this.value)">
+    <div class="doc-meta">Atualizado em ${new Date(doc.atualizadoEm).toLocaleString('pt-BR')}</div>
+    <textarea class="doc-body" placeholder="Escreva aqui o conteúdo completo..."
+      oninput="saveDocField('${tipo}','${doc.id}','corpo', this.value); this.style.height='auto'; this.style.height=this.scrollHeight+'px';"
+      onfocus="this.style.height='auto'; this.style.height=this.scrollHeight+'px';"
+    >${escapeHTML(doc.corpo)}</textarea>
+  `;
+
+  container.innerHTML = `
+    <div class="doc-layout">
+      <div class="doc-sidebar">
+        <div class="searchbar" style="margin-bottom:14px;">
+          <span class="ic">🔍</span>
+          <input type="text" placeholder="Pesquisar título..." oninput="filterDocList('${tipo}', this.value)">
+        </div>
+        <div id="${tipo}-doc-list">${docListItemsHTML(tipo)}</div>
+      </div>
+      <div class="doc-editor">
+        ${editorHTML}
+      </div>
+    </div>
+  `;
+  // auto-grow textarea on initial render (apenas no modo edição)
+  const ta = container.querySelector('.doc-body');
+  if (ta) { ta.style.height = 'auto'; ta.style.height = Math.max(400, ta.scrollHeight) + 'px'; }
+}
+
+function filterDocList(tipo, term) {
+  term = term.trim().toLowerCase();
+  const listEl = document.getElementById(`${tipo}-doc-list`);
+  const list = [...db[tipo]].sort((a,b) => b.atualizadoEm - a.atualizadoEm)
+    .filter(d => !term || d.titulo.toLowerCase().includes(term) || (d.corpo||'').toLowerCase().includes(term));
+  listEl.innerHTML = list.map(d => `
+    <div class="doc-list-item ${activeDoc[tipo] === d.id ? 'active' : ''}" onclick="selectDoc('${tipo}','${d.id}')">
+      <span class="dli-title">${escapeHTML(d.titulo || 'Sem título')}</span>
+      <span class="dli-del" onclick="event.stopPropagation(); deleteDoc('${tipo}','${d.id}')">✕</span>
+    </div>
+  `).join('') || `<div style="font-size:12.5px;color:var(--text-faint);padding:10px;">Nada encontrado.</div>`;
+}
+
+function renderPesquisas() {
+  renderDocView('pesquisas', 'pesquisas-container', '🔎', 'Nenhuma pesquisa criada',
+    'Crie pesquisas completas com editor de texto e organize por título.');
+}
+function renderRoteiros() {
+  renderDocView('roteiros', 'roteiros-container', '📝', 'Nenhum roteiro criado',
+    'Escreva roteiros completos de apresentações e organize por título.');
+}
+
+/* =========================================================================
+   ONBOARDING (primeiro uso) + PÁGINA INICIAL
+   ========================================================================= */
+function checkOnboarding() {
+  if (!db.perfil) {
+    const overlay = document.getElementById('onboarding-overlay');
+    overlay.classList.add('active');
+    const inicioInput = document.getElementById('ob-inicio');
+    inicioInput.value = fmtDate(new Date());
+    return true;
+  }
+  return false;
+}
+
+document.getElementById('form-onboarding').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const nome = document.getElementById('ob-nome').value.trim();
+  if (!nome) return;
+  db.perfil = {
+    nome,
+    email: document.getElementById('ob-email').value.trim(),
+    telefone: document.getElementById('ob-telefone').value.trim(),
+    nascimento: document.getElementById('ob-nascimento').value,
+    inicioApp: document.getElementById('ob-inicio').value || fmtDate(new Date())
+  };
+  saveDB();
+  document.getElementById('onboarding-overlay').classList.remove('active');
+  renderAll();
+  showToast('Bem-vindo(a), ' + nome.split(' ')[0] + '!', '📖');
+});
+
+function openPerfilModal() {
+  const p = db.perfil || {};
+  openModal(`
+    <div class="modal-title"><span>Editar meus dados</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-perfil">
+      <div class="field">
+        <label>Nome completo *</label>
+        <input type="text" id="perfil-nome" value="${escapeHTML(p.nome || '')}" required>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>E-mail</label><input type="email" id="perfil-email" value="${escapeHTML(p.email || '')}"></div>
+        <div class="field"><label>Telefone</label><input type="tel" id="perfil-telefone" value="${escapeHTML(p.telefone || '')}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Data de nascimento</label><input type="date" id="perfil-nascimento" value="${p.nascimento || ''}"></div>
+        <div class="field"><label>Início no app</label><input type="date" id="perfil-inicio" value="${p.inicioApp || ''}"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-perfil').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('perfil-nome').value.trim();
+    if (!nome) return;
+    db.perfil = {
+      nome,
+      email: document.getElementById('perfil-email').value.trim(),
+      telefone: document.getElementById('perfil-telefone').value.trim(),
+      nascimento: document.getElementById('perfil-nascimento').value,
+      inicioApp: document.getElementById('perfil-inicio').value
+    };
+    saveDB();
+    closeModal();
+    renderInicio();
+    showToast('Dados atualizados');
+  });
+}
+
+function saudacaoPorHorario() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Bom dia';
+  if (h < 18) return 'Boa tarde';
+  return 'Boa noite';
+}
+
+function diasDesde(dataISO) {
+  if (!dataISO) return null;
+  const then = new Date(dataISO + 'T00:00:00');
+  const now = new Date();
+  const diff = Math.floor((now - then) / (1000 * 60 * 60 * 24));
+  return diff >= 0 ? diff : 0;
+}
+
+function renderInicio() {
+  const container = document.getElementById('inicio-container');
+  if (!container) return;
+  const p = db.perfil || {};
+  const primeiroNome = (p.nome || '').split(' ')[0];
+  const dias = diasDesde(p.inicioApp);
+  const fav = db.textos.find(t => t.favorito);
+
+  container.innerHTML = `
+    <div class="hero-card">
+      <div class="hero-icon">📖</div>
+      <div class="hero-greeting">${saudacaoPorHorario()}${primeiroNome ? ', ' + escapeHTML(primeiroNome) : ''}</div>
+      <h2>Programação Espiritual</h2>
+      <div class="hero-sub">Seu espaço pessoal de estudo, organização e crescimento espiritual. Tudo que você registrar aqui fica guardado neste dispositivo, pronto para consultar quando precisar.</div>
+      ${fav ? `
+        <div class="hero-verse">
+          <div class="label">⭐ Seu texto favorito</div>
+          <div class="ref">${escapeHTML(fav.referencia)}</div>
+        </div>` : ''}
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num">${dias !== null ? dias : '—'}</div><div class="lbl">Dias no app</div></div>
+      <div class="stat-card"><div class="num">${db.textos.length}</div><div class="lbl">Textos salvos</div></div>
+      <div class="stat-card"><div class="num">${db.registrosCampo.length}</div><div class="lbl">Dias de campo</div></div>
+    </div>
+
+    <div class="profile-card">
+      <div class="profile-head">
+        <h3>👤 Meus dados</h3>
+        <button class="btn btn-ghost btn-sm" onclick="openPerfilModal()">✏️ Editar</button>
+      </div>
+      <div class="profile-fields">
+        <div class="profile-field"><div class="k">Nome completo</div><div class="v ${!p.nome ? 'empty' : ''}">${escapeHTML(p.nome) || 'Não informado'}</div></div>
+        <div class="profile-field"><div class="k">E-mail</div><div class="v ${!p.email ? 'empty' : ''}">${escapeHTML(p.email) || 'Não informado'}</div></div>
+        <div class="profile-field"><div class="k">Telefone</div><div class="v ${!p.telefone ? 'empty' : ''}">${escapeHTML(p.telefone) || 'Não informado'}</div></div>
+        <div class="profile-field"><div class="k">Data de nascimento</div><div class="v ${!p.nascimento ? 'empty' : ''}">${p.nascimento ? formatDateBR(p.nascimento) : 'Não informado'}</div></div>
+        <div class="profile-field"><div class="k">Início no app</div><div class="v ${!p.inicioApp ? 'empty' : ''}">${p.inicioApp ? formatDateBR(p.inicioApp) : 'Não informado'}</div></div>
+      </div>
+    </div>
+
+    <div class="quick-links">
+      <button class="quick-link" onclick="goToView('campo')"><span class="ic">🧭</span> Relatório de campo</button>
+      <button class="quick-link" onclick="goToView('textos')"><span class="ic">📖</span> Textos importantes</button>
+      <button class="quick-link" onclick="goToView('calendario')"><span class="ic">📅</span> Calendário</button>
+      <button class="quick-link" onclick="goToView('pesquisas')"><span class="ic">🔎</span> Pesquisas</button>
+    </div>
+  `;
+}
+
+/* =========================================================================
+   RELATÓRIO DE CAMPO
+   ========================================================================= */
+let campoViewDate = new Date();
+
+document.getElementById('btn-new-campo').addEventListener('click', () => openCampoModal());
+
+function openCampoModal(id = null) {
+  const editing = id ? db.registrosCampo.find(r => r.id === id) : null;
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar registro' : 'Registrar dia de campo'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-campo">
+      <div class="field-row">
+        <div class="field"><label>Data do campo</label><input type="date" id="campo-data" value="${editing?.data || fmtDate(new Date())}" required></div>
+        <div class="field"><label>Horas feitas no dia</label><input type="number" step="0.25" min="0" id="campo-horas" placeholder="Ex.: 2" value="${editing?.horas ?? ''}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Revisitas</label><input type="number" min="0" id="campo-revisitas" placeholder="0" value="${editing?.revisitas ?? ''}"></div>
+        <div class="field"><label>Estudos</label><input type="number" min="0" id="campo-estudos" placeholder="0" value="${editing?.estudos ?? ''}"></div>
+      </div>
+      <div class="field"><label>Observações</label><textarea id="campo-obs" placeholder="Notas sobre o dia (opcional)...">${escapeHTML(editing?.obs || '')}</textarea></div>
+      <div class="hint" style="margin:-6px 0 16px;">Todos os campos numéricos são opcionais — deixe em branco ou 0 se não se aplicar.</div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deleteCampo('${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Registrar'}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-campo').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = document.getElementById('campo-data').value;
+    if (!data) return;
+    const horas = parseFloat(document.getElementById('campo-horas').value) || 0;
+    const revisitas = parseInt(document.getElementById('campo-revisitas').value) || 0;
+    const estudos = parseInt(document.getElementById('campo-estudos').value) || 0;
+    const obs = document.getElementById('campo-obs').value.trim();
+    if (editing) {
+      Object.assign(editing, { data, horas, revisitas, estudos, obs });
+      showToast('Registro atualizado');
+    } else {
+      db.registrosCampo.push({ id: uid(), data, horas, revisitas, estudos, obs, criadoEm: Date.now() });
+      showToast('Dia registrado');
+    }
+    campoViewDate = new Date(data + 'T00:00:00');
+    saveDB();
+    closeModal();
+    renderCampo();
+  });
+}
+
+function deleteCampo(id) {
+  confirmAction('Excluir este registro de campo?', () => {
+    db.registrosCampo = db.registrosCampo.filter(r => r.id !== id);
+    saveDB();
+    renderCampo();
+    showToast('Registro excluído', '🗑️');
+  });
+}
+
+function renderCampo() {
+  const container = document.getElementById('campo-container');
+  const summaryEl = document.getElementById('campo-summary');
+  if (!container || !summaryEl) return;
+
+  const year = campoViewDate.getFullYear();
+  const month = campoViewDate.getMonth();
+  const monthPrefix = `${year}-${String(month + 1).padStart(2, '0')}`;
+
+  const registrosMes = db.registrosCampo
+    .filter(r => r.data && r.data.startsWith(monthPrefix))
+    .sort((a, b) => b.data.localeCompare(a.data));
+
+  const totalHoras = registrosMes.reduce((sum, r) => sum + (r.horas || 0), 0);
+  const totalRevisitas = registrosMes.reduce((sum, r) => sum + (r.revisitas || 0), 0);
+  const totalEstudos = registrosMes.reduce((sum, r) => sum + (r.estudos || 0), 0);
+
+  summaryEl.innerHTML = `
+    <div class="month-nav">
+      <button class="btn-icon" onclick="campoChangeMonth(-1)">‹</button>
+      <h3>${MESES[month]} de ${year}</h3>
+      <button class="btn-icon" onclick="campoChangeMonth(1)">›</button>
+    </div>
+    <div class="month-summary-grid">
+      <div class="stat-card"><div class="num">${formatHoras(totalHoras)}</div><div class="lbl">Horas no mês</div></div>
+      <div class="stat-card"><div class="num">${totalRevisitas}</div><div class="lbl">Revisitas</div></div>
+      <div class="stat-card"><div class="num">${totalEstudos}</div><div class="lbl">Estudos</div></div>
+      <div class="stat-card"><div class="num">${registrosMes.length}</div><div class="lbl">Dias registrados</div></div>
+    </div>
+  `;
+
+  if (registrosMes.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">🧭</div>
+        <div class="title">Nenhum registro neste mês</div>
+        <div class="desc">Toque em "+ Registrar dia" para anotar suas horas, revisitas e estudos.</div>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = registrosMes.map(r => {
+    const [, , d] = r.data.split('-');
+    return `
+    <div class="field-log-item">
+      <div class="fl-date"><div class="day">${d}</div><div class="mon">${MESES[month].slice(0,3)}</div></div>
+      <div class="fl-body" onclick="openCampoModal('${r.id}')" style="cursor:pointer; flex:1;">
+        <div class="fl-metric"><span class="m-num">${formatHoras(r.horas || 0)}</span><span class="m-lbl">Horas</span></div>
+        <div class="fl-metric"><span class="m-num">${r.revisitas || 0}</span><span class="m-lbl">Revisitas</span></div>
+        <div class="fl-metric"><span class="m-num">${r.estudos || 0}</span><span class="m-lbl">Estudos</span></div>
+        ${r.obs ? `<div style="flex-basis:100%; font-size:12.5px; color:var(--text-dim); margin-top:4px;">${escapeHTML(r.obs)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="openCampoModal('${r.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deleteCampo('${r.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function formatHoras(h) {
+  if (Number.isInteger(h)) return h + 'h';
+  return h.toFixed(2).replace(/\.?0+$/, '') + 'h';
+}
+
+function campoChangeMonth(delta) {
+  campoViewDate.setMonth(campoViewDate.getMonth() + delta);
+  renderCampo();
+}
+
+/* =========================================================================
+   EXPORTAR / IMPORTAR BACKUP (extra de segurança, mantém tudo local)
+   ========================================================================= */
+document.getElementById('btn-export').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const dataStr = new Date().toISOString().slice(0,10);
+  a.href = url;
+  a.download = `programacao-espiritual-backup-${dataStr}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('Backup exportado');
+});
+
+document.getElementById('btn-import').addEventListener('click', () => {
+  document.getElementById('import-file').click();
+});
+document.getElementById('import-file').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const imported = JSON.parse(ev.target.result);
+      confirmAction('Importar este backup vai substituir todos os dados atuais do app. Deseja continuar?', () => {
+        db = Object.assign(emptyDB(), imported);
+        saveDB();
+        applyTheme(db.tema || 'branco');
+        renderAll();
+        showToast('Backup importado com sucesso');
+      });
+    } catch (err) {
+      showToast('Arquivo inválido. Selecione um backup exportado por este app.', '⚠️');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+/* =========================================================================
+   INICIALIZAÇÃO
+   ========================================================================= */
+function init() {
+  applyTheme(db.tema || 'branco');
+  renderNav();
+  initSubtabs();
+  checkOnboarding();
+  goToView('inicio');
+}
+init();
+
+</script>
+</body>
+</html>
