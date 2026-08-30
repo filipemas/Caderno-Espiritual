@@ -1,0 +1,4550 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Programação Espiritual</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+<style>
+/* ============ FONTES ============ */
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ============ RESET ============ */
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legado */
+}
+html::-webkit-scrollbar { display: none; } /* Chrome/WebView Android */
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background .35s ease, color .35s ease;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, .serif { font-family: 'Lora', Georgia, serif; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea, select { font-family: inherit; color: inherit; }
+a { color: inherit; }
+::selection { background: var(--accent); color: var(--accent-contrast); }
+
+/* ============ TEMAS (tokens) ============ */
+:root, .theme-branco {
+  --bg: #FAFAF7;
+  --bg-elev: #FFFFFF;
+  --bg-sunken: #F1EEE6;
+  --text: #1A1A1A;
+  --text-dim: #6B6459;
+  --text-faint: #A39C8F;
+  --border: #E4DFD3;
+  --border-strong: #CFC7B5;
+  --accent: #8B6F47;
+  --accent-soft: #E9DFCC;
+  --accent-contrast: #FFFFFF;
+  --danger: #B3452F;
+  --danger-soft: #F3DAD2;
+  --success: #4F7A5B;
+  --shadow: 0 1px 2px rgba(30,20,10,.04), 0 8px 24px rgba(30,20,10,.06);
+  --scrollbar: #D8D1C1;
+}
+.theme-preto {
+  --bg: #121212;
+  --bg-elev: #1B1B1B;
+  --bg-sunken: #0C0C0C;
+  --text: #F0F0EC;
+  --text-dim: #A6A29A;
+  --text-faint: #6E6A62;
+  --border: #2C2C2A;
+  --border-strong: #3D3D3A;
+  --accent: #C9A227;
+  --accent-soft: #3A3016;
+  --accent-contrast: #121212;
+  --danger: #D96A50;
+  --danger-soft: #3A2019;
+  --success: #6FAE81;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.4);
+  --scrollbar: #3A3A38;
+}
+.theme-roxo {
+  --bg: #0F0B14;
+  --bg-elev: #1A1420;
+  --bg-sunken: #0A0710;
+  --text: #F0EAF5;
+  --text-dim: #A99DB8;
+  --text-faint: #6E6280;
+  --border: #2B2136;
+  --border-strong: #3D2F4B;
+  --accent: #9B6FD9;
+  --accent-soft: #2C1F42;
+  --accent-contrast: #FFFFFF;
+  --danger: #E0708A;
+  --danger-soft: #3A1F2C;
+  --success: #6FAE8E;
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 28px rgba(60,20,90,.25);
+  --scrollbar: #3D2F4B;
+}
+
+/* 🌲 Verde Floresta + Azul Marinho + Branco — moderno e tranquilo */
+.theme-floresta {
+  --bg: #F6F8F6;
+  --bg-elev: #FFFFFF;
+  --bg-sunken: #EAF0EA;
+  --text: #16241C;
+  --text-dim: #4A5F52;
+  --text-faint: #8CA096;
+  --border: #DCE6DE;
+  --border-strong: #C2D2C6;
+  --accent: #1F5E3E;
+  --accent-soft: #DCEDE1;
+  --accent-contrast: #FFFFFF;
+  --danger: #B3452F;
+  --danger-soft: #F3DAD2;
+  --success: #1F5E3E;
+  --shadow: 0 1px 2px rgba(10,30,20,.05), 0 8px 24px rgba(10,30,20,.07);
+  --scrollbar: #C2D2C6;
+}
+
+/* 🌌 Azul Marinho + Roxo + Lilás — moderno e futurista */
+.theme-nebulosa {
+  --bg: #10101F;
+  --bg-elev: #191933;
+  --bg-sunken: #0B0B18;
+  --text: #EDEAFB;
+  --text-dim: #A79FD1;
+  --text-faint: #6C6494;
+  --border: #2A2750;
+  --border-strong: #3B3768;
+  --accent: #8A7CF0;
+  --accent-soft: #292259;
+  --accent-contrast: #FFFFFF;
+  --danger: #E0708A;
+  --danger-soft: #3A1F2C;
+  --success: #6FAE8E;
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 28px rgba(60,40,120,.3);
+  --scrollbar: #3B3768;
+}
+
+/* 📜 Bege + Marrom + Dourado — clássico e elegante */
+.theme-classico {
+  --bg: #F7F1E4;
+  --bg-elev: #FFFBF2;
+  --bg-sunken: #EFE4CC;
+  --text: #3A2D1C;
+  --text-dim: #7A6748;
+  --text-faint: #AC9873;
+  --border: #E3D3AE;
+  --border-strong: #CDB585;
+  --accent: #7A5A0F;
+  --accent-soft: #ECDBAE;
+  --accent-contrast: #FFFFFF;
+  --danger: #A3402A;
+  --danger-soft: #EBD3C6;
+  --success: #5C7A3F;
+  --shadow: 0 1px 2px rgba(50,30,5,.05), 0 8px 24px rgba(50,30,5,.08);
+  --scrollbar: #CDB585;
+}
+
+/* 🌿 Verde Oliva + Creme + Dourado — natural e sofisticado */
+.theme-oliva {
+  --bg: #F7F5EC;
+  --bg-elev: #FFFDF6;
+  --bg-sunken: #ECE8D6;
+  --text: #2E3320;
+  --text-dim: #656B4B;
+  --text-faint: #9AA07B;
+  --border: #DDD8BC;
+  --border-strong: #C5C09C;
+  --accent: #4F5B29;
+  --accent-soft: #E5E4C4;
+  --accent-contrast: #FFFFFF;
+  --danger: #A3402A;
+  --danger-soft: #EBD3C6;
+  --success: #6B7A3A;
+  --shadow: 0 1px 2px rgba(40,40,10,.05), 0 8px 24px rgba(40,40,10,.07);
+  --scrollbar: #C5C09C;
+}
+
+/* 💙 Azul Escuro + Azul Claro + Branco — limpo e profissional */
+.theme-azulcorp {
+  --bg: #F4F8FC;
+  --bg-elev: #FFFFFF;
+  --bg-sunken: #E6EFF7;
+  --text: #142433;
+  --text-dim: #4C6579;
+  --text-faint: #8AA1B4;
+  --border: #D3E1EC;
+  --border-strong: #B4CADD;
+  --accent: #1B4B7A;
+  --accent-soft: #DCE9F5;
+  --accent-contrast: #FFFFFF;
+  --danger: #B3452F;
+  --danger-soft: #F3DAD2;
+  --success: #2E7A5F;
+  --shadow: 0 1px 2px rgba(10,30,50,.05), 0 8px 24px rgba(10,30,50,.07);
+  --scrollbar: #B4CADD;
+}
+
+/* 🖤 Preto + Verde Esmeralda + Branco — premium e marcante */
+.theme-esmeralda {
+  --bg: #0E1210;
+  --bg-elev: #171C19;
+  --bg-sunken: #0A0D0B;
+  --text: #EFF5F1;
+  --text-dim: #9DB0A5;
+  --text-faint: #647A6C;
+  --border: #263029;
+  --border-strong: #37453B;
+  --accent: #2FBF83;
+  --accent-soft: #143327;
+  --accent-contrast: #05130D;
+  --danger: #E0708A;
+  --danger-soft: #3A1F2C;
+  --success: #2FBF83;
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 26px rgba(0,20,10,.3);
+  --scrollbar: #37453B;
+}
+
+/* 🌊 Azul Petróleo + Turquesa + Branco — diferente e bonito */
+.theme-petroleo {
+  --bg: #F2FAFA;
+  --bg-elev: #FFFFFF;
+  --bg-sunken: #E1F2F1;
+  --text: #0F2E2D;
+  --text-dim: #47716F;
+  --text-faint: #85AEAB;
+  --border: #CFE9E7;
+  --border-strong: #ADD6D3;
+  --accent: #0F7C82;
+  --accent-soft: #D6EFEE;
+  --accent-contrast: #FFFFFF;
+  --danger: #B3452F;
+  --danger-soft: #F3DAD2;
+  --success: #17967D;
+  --shadow: 0 1px 2px rgba(0,30,30,.05), 0 8px 24px rgba(0,30,30,.07);
+  --scrollbar: #ADD6D3;
+}
+
+/* 🍂 Terracota + Bege + Marrom — aconchegante */
+.theme-terracota {
+  --bg: #FAF3EC;
+  --bg-elev: #FFFBF7;
+  --bg-sunken: #F1E4D6;
+  --text: #3B2A20;
+  --text-dim: #7C5F4C;
+  --text-faint: #B3947E;
+  --border: #E8D4C0;
+  --border-strong: #D6B99C;
+  --accent: #9C4728;
+  --accent-soft: #F1DACB;
+  --accent-contrast: #FFFFFF;
+  --danger: #9C3A2A;
+  --danger-soft: #EBD3C6;
+  --success: #6B7A3A;
+  --shadow: 0 1px 2px rgba(50,20,5,.05), 0 8px 24px rgba(50,20,5,.08);
+  --scrollbar: #D6B99C;
+}
+
+/* 🌙 Azul Noturno + Verde Esmeralda + Cinza — perfeito para um app de estudo */
+.theme-noturno {
+  --bg: #10161F;
+  --bg-elev: #19212C;
+  --bg-sunken: #0B1017;
+  --text: #E8EDF2;
+  --text-dim: #94A3B3;
+  --text-faint: #5E6C7A;
+  --border: #232D3A;
+  --border-strong: #333F4E;
+  --accent: #35B58A;
+  --accent-soft: #16332A;
+  --accent-contrast: #06140F;
+  --danger: #D97A6A;
+  --danger-soft: #3A2019;
+  --success: #35B58A;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 26px rgba(0,10,20,.3);
+  --scrollbar: #333F4E;
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 8px; }
+
+/* ============ LAYOUT SHELL ============ */
+#app {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* ---- Sidebar (lombada de livro) ---- */
+#sidebar {
+  width: 264px;
+  flex-shrink: 0;
+  background: var(--bg-elev);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+  transition: transform .3s ease;
+}
+#sidebar-header {
+  padding: 22px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
+#sidebar-header .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#sidebar-header .brand-mark {
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+#sidebar-header h1 {
+  font-size: 16.5px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: .01em;
+}
+#sidebar-header .tagline {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  margin-top: 3px;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+
+#nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#nav::-webkit-scrollbar { display: none; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-align: left;
+  width: 100%;
+  transition: background .15s ease, color .15s ease;
+  position: relative;
+}
+.nav-item .ic { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-item:hover { background: var(--bg-sunken); color: var(--text); }
+.nav-item.active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
+}
+.nav-item .count {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-faint);
+  background: var(--bg-sunken);
+  padding: 1px 7px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.nav-item.active .count { background: var(--bg-elev); color: var(--accent); }
+
+#sidebar-footer {
+  padding: 14px 12px 18px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.theme-switcher {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0 6px;
+}
+.theme-dot {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  transition: transform .15s ease, border-color .15s ease;
+  flex-shrink: 0;
+}
+.theme-dot:hover { transform: scale(1.08); }
+.theme-dot.active { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.theme-dot[data-theme="branco"] { background: #FAFAF7; }
+.theme-dot[data-theme="preto"] { background: #121212; }
+.theme-dot[data-theme="roxo"] { background: linear-gradient(135deg,#0F0B14 50%,#9B6FD9 50%); }
+.theme-dot[data-theme="floresta"] { background: linear-gradient(135deg,#1F5E3E 50%,#0B1C2E 50%); }
+.theme-dot[data-theme="nebulosa"] { background: linear-gradient(135deg,#10101F 50%,#8A7CF0 50%); }
+.theme-dot[data-theme="classico"] { background: linear-gradient(135deg,#F7F1E4 50%,#7A5A0F 50%); }
+.theme-dot[data-theme="oliva"] { background: linear-gradient(135deg,#4F5B29 50%,#F7F5EC 50%); }
+.theme-dot[data-theme="azulcorp"] { background: linear-gradient(135deg,#1B4B7A 50%,#F4F8FC 50%); }
+.theme-dot[data-theme="esmeralda"] { background: linear-gradient(135deg,#0E1210 50%,#2FBF83 50%); }
+.theme-dot[data-theme="petroleo"] { background: linear-gradient(135deg,#0F7C82 50%,#F2FAFA 50%); }
+.theme-dot[data-theme="terracota"] { background: linear-gradient(135deg,#9C4728 50%,#FAF3EC 50%); }
+.theme-dot[data-theme="noturno"] { background: linear-gradient(135deg,#10161F 50%,#35B58A 50%); }
+
+.footer-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--text-dim);
+  width: 100%;
+}
+.footer-btn:hover { background: var(--bg-sunken); color: var(--text); }
+
+/* Mobile menu toggle */
+#menu-toggle {
+  display: none;
+  position: fixed;
+  top: 14px; left: 14px;
+  z-index: 40;
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  align-items: center; justify-content: center;
+  font-size: 18px;
+}
+#sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.4);
+  z-index: 15;
+}
+
+/* ---- Main content ---- */
+#main {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legado */
+}
+#main::-webkit-scrollbar { display: none; } /* Chrome/WebView Android */
+
+/* ---- Busca global ---- */
+#global-search-bar {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 40px;
+}
+.gs-input-wrap {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  max-width: 680px;
+}
+.gs-input-wrap:focus-within { border-color: var(--accent); }
+.gs-input-wrap .ic { font-size: 15px; color: var(--text-faint); flex-shrink: 0; }
+#global-search-input {
+  flex: 1; min-width: 0;
+  background: transparent; border: none; outline: none;
+  font-size: 14.5px; color: var(--text);
+}
+#global-search-input::placeholder { color: var(--text-faint); }
+.gs-clear {
+  flex-shrink: 0; background: transparent; border: none;
+  color: var(--text-faint); font-size: 13px; cursor: pointer;
+  width: 22px; height: 22px; border-radius: 50%;
+}
+.gs-clear:hover { background: var(--bg-elev); color: var(--text); }
+.gs-results {
+  display: none;
+  max-width: 680px;
+  margin-top: 8px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  max-height: 60vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.gs-results::-webkit-scrollbar { display: none; }
+.gs-results.show { display: block; }
+.gs-section-label {
+  font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em;
+  color: var(--text-faint);
+  padding: 10px 14px 4px;
+}
+.gs-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  border-top: 1px solid var(--border);
+}
+.gs-item:first-child, .gs-section-label + .gs-item { border-top: none; }
+.gs-item:hover { background: var(--bg-sunken); }
+.gs-item .gs-ic { font-size: 15px; flex-shrink: 0; width: 22px; text-align: center; }
+.gs-item .gs-body { flex: 1; min-width: 0; }
+.gs-item .gs-title { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.gs-item .gs-sub { font-size: 11.5px; color: var(--text-faint); margin-top: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gs-item .gs-tab-tag {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em;
+  color: var(--accent); background: var(--accent-soft);
+  padding: 2px 7px; border-radius: 20px; flex-shrink: 0;
+}
+.gs-empty { padding: 20px 14px; font-size: 13px; color: var(--text-faint); text-align: center; }
+.gs-clear-recent {
+  font-size: 11.5px; color: var(--accent); cursor: pointer; padding: 8px 14px;
+  border-top: 1px solid var(--border);
+}
+.gs-clear-recent:hover { text-decoration: underline; }
+@media (max-width: 860px) {
+  #global-search-bar { padding: 12px 18px 12px 66px; }
+  .gs-input-wrap, .gs-results { max-width: none; }
+}
+.view {
+  display: none;
+  padding: 32px 40px 80px;
+  max-width: 980px;
+  margin: 0 auto;
+  animation: fadeIn .25s ease;
+}
+.view.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
+
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 26px;
+  flex-wrap: wrap;
+}
+.view-header h2 {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+}
+.view-header .sub {
+  color: var(--text-dim);
+  font-size: 13.5px;
+  margin-top: 5px;
+}
+
+/* ============ BOTÕES ============ */
+.btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: all .15s ease;
+  white-space: nowrap;
+}
+.btn-primary { background: var(--accent); color: var(--accent-contrast); }
+.btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.btn-ghost { background: var(--bg-sunken); color: var(--text); border: 1px solid var(--border); }
+.btn-ghost:hover { background: var(--bg-elev); border-color: var(--border-strong); }
+.btn-danger { background: var(--danger-soft); color: var(--danger); }
+.btn-danger:hover { filter: brightness(1.1); }
+.btn-icon {
+  width: 34px; height: 34px;
+  border-radius: 9px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--bg-sunken);
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.btn-icon:hover { background: var(--bg-elev); color: var(--text); border: 1px solid var(--border); }
+.btn-sm { padding: 7px 12px; font-size: 12.5px; border-radius: 8px; }
+
+/* ============ SEARCH BAR ============ */
+.searchbar {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 15px;
+  margin-bottom: 22px;
+}
+.searchbar input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-size: 14px; color: var(--text);
+}
+.searchbar input::placeholder { color: var(--text-faint); }
+.searchbar .ic { color: var(--text-faint); font-size: 15px; }
+
+/* ============ CARDS ============ */
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.card:hover { border-color: var(--border-strong); box-shadow: var(--shadow); }
+
+.category-block { margin-bottom: 28px; }
+.category-head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.category-head h3 {
+  font-size: 15.5px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+}
+.category-head .count-badge {
+  font-size: 11px; color: var(--text-faint); font-weight: 500;
+}
+.category-head .spacer { flex: 1; }
+
+.verse-card {
+  display: flex; gap: 14px;
+  align-items: flex-start;
+}
+.verse-card .fav-btn {
+  font-size: 17px; margin-top: 1px; flex-shrink: 0;
+  color: var(--text-faint);
+  transition: transform .15s ease, color .15s ease;
+}
+.verse-card .fav-btn.is-fav { color: var(--accent); }
+.verse-card .fav-btn:hover { transform: scale(1.15); }
+.verse-card .body { flex: 1; min-width: 0; }
+.verse-card .ref {
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  font-size: 15.5px;
+  margin-bottom: 4px;
+}
+.verse-card .note {
+  font-size: 13.5px;
+  color: var(--text-dim);
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.verse-card .actions {
+  display: flex; gap: 6px; flex-shrink: 0;
+}
+
+/* Favorito destacado */
+.favorite-banner {
+  background: linear-gradient(135deg, var(--accent-soft), var(--bg-elev));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.favorite-banner .label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--accent); font-weight: 700; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.favorite-banner .ref { font-family:'Lora',serif; font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.favorite-banner .note { font-size: 13.5px; color: var(--text-dim); line-height: 1.55; white-space: pre-wrap; }
+.favorite-banner-empty {
+  border: 1.5px dashed var(--border-strong);
+  border-radius: 16px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+  color: var(--text-faint);
+  font-size: 13.5px;
+  text-align: center;
+}
+
+/* ============ EMPTY STATE ============ */
+.empty-state {
+  text-align: center;
+  padding: 70px 20px;
+  color: var(--text-faint);
+}
+.empty-state .ic { font-size: 40px; margin-bottom: 14px; opacity: .7; }
+.empty-state .title { font-size: 15.5px; font-weight: 600; color: var(--text-dim); margin-bottom: 6px; }
+.empty-state .desc { font-size: 13px; max-width: 320px; margin: 0 auto 18px; line-height: 1.6; }
+
+/* ============ MODAL ============ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,8,6,.55);
+  backdrop-filter: blur(3px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 100;
+  padding: 5vh 16px 16px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.modal-overlay::-webkit-scrollbar { display: none; }
+.modal-overlay.active { display: flex; animation: fadeIn .18s ease; }
+.modal {
+  background: var(--bg-elev);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  width: 100%; max-width: 520px;
+  padding: 26px;
+  box-shadow: var(--shadow);
+  margin-bottom: 5vh;
+}
+.modal.modal-lg { max-width: 760px; }
+.modal-title {
+  font-size: 18px; font-weight: 600; margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.modal-title .close-x { color: var(--text-faint); font-size: 20px; padding: 4px; }
+.modal-title .close-x:hover { color: var(--text); }
+
+.field { margin-bottom: 16px; }
+.field label {
+  display: block; font-size: 12.5px; font-weight: 600;
+  color: var(--text-dim); margin-bottom: 7px;
+  text-transform: uppercase; letter-spacing: .04em;
+}
+.field input, .field textarea, .field select {
+  width: 100%;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 13px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .15s ease;
+}
+.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--accent); }
+.field textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+.field .hint { font-size: 11.5px; color: var(--text-faint); margin-top: 5px; }
+.field-row { display: flex; gap: 12px; }
+.field-row .field { flex: 1; }
+
+.modal-actions {
+  display: flex; justify-content: flex-end; gap: 10px; margin-top: 22px;
+}
+
+/* Layout dos modais "Visualizando": linha 1 com Copiar/Fechar/Editar,
+   linha 2 com Compartilhar em destaque, ocupando a largura toda —
+   evita que os botões estourem a largura da tela em telas pequenas. */
+.modal-actions-view {
+  display: flex; flex-direction: column; gap: 10px; margin-top: 22px;
+}
+.modal-actions-view .row-top {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.modal-actions-view .row-top .btn { flex: 1; min-width: 0; justify-content: center; white-space: nowrap; padding-left: 10px; padding-right: 10px; }
+.modal-actions-view .btn-share-full {
+  width: 100%; justify-content: center;
+}
+
+/* ============ CALENDÁRIO ============ */
+.cal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.cal-header h3 { font-size: 18px; font-weight: 600; text-transform: capitalize; }
+.cal-nav { display: flex; gap: 8px; }
+.cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 26px;
+}
+.cal-dow {
+  text-align: center; font-size: 11px; font-weight: 700;
+  color: var(--text-faint); text-transform: uppercase;
+  padding-bottom: 6px;
+}
+.cal-day {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 500;
+  position: relative;
+  cursor: pointer;
+  transition: all .15s ease;
+  min-height: 44px;
+}
+.cal-day:hover { border-color: var(--accent); }
+.cal-day.empty { visibility: hidden; }
+.cal-day.today { border-color: var(--accent); border-width: 2px; font-weight: 700; }
+.cal-day.selected { background: var(--accent); color: var(--accent-contrast); }
+.cal-day .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); position: absolute; bottom: 6px; }
+.cal-day.selected .dot { background: var(--accent-contrast); }
+
+.event-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  margin-bottom: 8px;
+}
+.event-item .check {
+  width: 21px; height: 21px; border-radius: 6px;
+  border: 2px solid var(--border-strong);
+  flex-shrink: 0; margin-top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: transparent;
+  transition: all .15s ease;
+}
+.event-item.done .check { background: var(--success); border-color: var(--success); color: #fff; }
+.event-item.done .ev-title { text-decoration: line-through; color: var(--text-faint); }
+.event-item .body { flex: 1; min-width: 0; }
+.event-item .ev-title { font-weight: 600; font-size: 14px; }
+.event-item .ev-meta { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+.event-item .ev-desc { font-size: 12.5px; color: var(--text-dim); margin-top: 5px; line-height: 1.5; white-space: pre-wrap; }
+.tag-pill {
+  display: inline-block; font-size: 10.5px; font-weight: 700;
+  padding: 2px 8px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: .03em;
+  margin-right: 5px;
+}
+.tag-compromisso { background: #DCE8F5; color: #2C5F8A; }
+.tag-estudo { background: #E4DFF5; color: #5B4C9C; }
+.tag-meta { background: #E1F0DC; color: #3F7A3F; }
+.tag-designacao { background: #F5E1DC; color: #A34E2C; }
+.theme-preto .tag-compromisso, .theme-roxo .tag-compromisso, .theme-nebulosa .tag-compromisso, .theme-esmeralda .tag-compromisso, .theme-noturno .tag-compromisso { background: #1A2E42; color: #7FB4E0; }
+.theme-preto .tag-estudo, .theme-roxo .tag-estudo, .theme-nebulosa .tag-estudo, .theme-esmeralda .tag-estudo, .theme-noturno .tag-estudo { background: #2A2242; color: #B4A3E8; }
+.theme-preto .tag-meta, .theme-roxo .tag-meta, .theme-nebulosa .tag-meta, .theme-esmeralda .tag-meta, .theme-noturno .tag-meta { background: #1F3320; color: #8FCB8A; }
+.theme-preto .tag-designacao, .theme-roxo .tag-designacao, .theme-nebulosa .tag-designacao, .theme-esmeralda .tag-designacao, .theme-noturno .tag-designacao { background: #3D2418; color: #E8A17F; }
+
+/* ============ STATUS BADGES (designações) ============ */
+.status-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; padding: 3px 10px;
+  border-radius: 20px; text-transform: uppercase; letter-spacing: .03em;
+}
+.status-pendente { background: #F6DAD3; color: #9C2C1B; }
+.status-preparando { background: var(--bg-sunken); color: var(--text-dim); border: 1px solid var(--border-strong); }
+.status-concluida { background: #DCF0D8; color: #2E7A34; }
+.theme-preto .status-pendente, .theme-roxo .status-pendente, .theme-nebulosa .status-pendente, .theme-esmeralda .status-pendente, .theme-noturno .status-pendente { background: #3A1D18; color: #E88C78; }
+.theme-preto .status-preparando, .theme-roxo .status-preparando, .theme-nebulosa .status-preparando, .theme-esmeralda .status-preparando, .theme-noturno .status-preparando { background: var(--bg-sunken); color: var(--text-dim); border: 1px solid var(--border-strong); }
+.theme-preto .status-concluida, .theme-roxo .status-concluida, .theme-nebulosa .status-concluida, .theme-esmeralda .status-concluida, .theme-noturno .status-concluida { background: #17301B; color: #7ED384; }
+.list-row.status-border-pendente { border-left: 3px solid var(--danger); }
+.list-row.status-border-concluida { border-left: 3px solid var(--success); }
+.list-row.status-border-preparando { border-left: 3px solid var(--border-strong); }
+
+/* ============ LISTA (personagens / designações / doc list) ============ */
+.list-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 15px 18px;
+  border-radius: 13px;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  margin-bottom: 9px;
+  transition: border-color .15s ease;
+}
+.list-row:hover { border-color: var(--border-strong); }
+.list-row .avatar {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--accent-soft); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Lora', serif; font-weight: 700; font-size: 16px;
+  flex-shrink: 0;
+}
+.list-row .body { flex: 1; min-width: 0; cursor: pointer; }
+.list-row .title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.list-row .name { font-weight: 600; font-size: 14.5px; }
+.list-row .meta { font-size: 12px; color: var(--text-faint); margin-top: 3px; }
+.list-row .snippet { font-size: 12.5px; color: var(--text-dim); margin-top: 5px; line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.list-row .actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* ============ DOCUMENT EDITOR (modais de visualização) ============ */
+.doc-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.doc-meta { font-size: 12px; color: var(--text-faint); margin-bottom: 18px; }
+.doc-view-mode {
+  font-family: 'Lora', serif; font-size: 24px; font-weight: 700;
+  margin-bottom: 4px;
+}
+.doc-view-body {
+  font-size: 14.5px; line-height: 1.8; white-space: pre-wrap;
+  color: var(--text);
+}
+.doc-view-body.is-empty { color: var(--text-faint); font-style: italic; }
+.autosave-indicator {
+  font-size: 11.5px; color: var(--text-faint);
+  display: flex; align-items: center; gap: 6px;
+}
+.autosave-indicator .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
+
+/* ============ REORDENAR ABAS ============ */
+.reorder-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 4px; }
+.reorder-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-sunken);
+  font-size: 13.5px; font-weight: 600;
+}
+.reorder-item .ic { font-size: 15px; }
+.reorder-item .lbl { flex: 1; }
+.reorder-item .reorder-name-input {
+  flex: 1; min-width: 0;
+  padding: 6px 9px; border-radius: 7px;
+  border: 1px solid var(--border); background: var(--bg-elev);
+  color: var(--text); font-size: 13px; font-weight: 600;
+}
+.reorder-item .reorder-name-input:focus { outline: none; border-color: var(--accent); }
+.reorder-item .reorder-btns { display: flex; gap: 4px; }
+.reorder-item .reorder-btns button {
+  width: 26px; height: 26px; border-radius: 7px;
+  background: var(--bg-elev); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.reorder-item .reorder-btns button:hover:not(:disabled) { color: var(--accent); border-color: var(--accent); }
+.reorder-item .reorder-btns button:disabled { opacity: .3; cursor: default; }
+
+/* ============ TOAST ============ */
+#toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120%);
+  background: var(--text); color: var(--bg);
+  padding: 12px 20px; border-radius: 12px;
+  font-size: 13.5px; font-weight: 500;
+  box-shadow: var(--shadow);
+  z-index: 200;
+  transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .3s ease;
+  display: flex; align-items: center; gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+}
+#toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ============ PÁGINA INICIAL ============ */
+.hero-card {
+  background: linear-gradient(135deg, var(--accent-soft), var(--bg-elev) 70%);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 36px 32px;
+  margin-bottom: 26px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-card .hero-icon { font-size: 34px; margin-bottom: 14px; }
+.hero-card .hero-greeting { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); font-weight: 700; margin-bottom: 6px; }
+.hero-card h2 { font-size: 26px; margin-bottom: 8px; }
+.hero-card .hero-sub { font-size: 13.5px; color: var(--text-dim); line-height: 1.6; max-width: 480px; }
+.hero-verse { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); }
+.hero-verse .label { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); font-weight: 700; margin-bottom: 6px; }
+.hero-verse .ref { font-family: 'Lora', serif; font-weight: 700; font-size: 15.5px; }
+
+.stat-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px; margin-bottom: 26px;
+}
+.stat-card {
+  background: var(--bg-elev); border: 1px solid var(--border); border-radius: 14px;
+  padding: 16px 16px;
+}
+.stat-card .num { font-family: 'Lora', serif; font-size: 24px; font-weight: 700; color: var(--accent); }
+.stat-card .lbl { font-size: 11.5px; color: var(--text-faint); margin-top: 2px; text-transform: uppercase; letter-spacing: .03em; }
+
+/* ---- Painéis da página inicial (lembretes, programações, roteiros) ---- */
+.home-panel {
+  background: var(--bg-elev); border: 1px solid var(--border); border-radius: 16px;
+  padding: 18px 20px; margin-bottom: 16px;
+}
+.home-panel-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.home-panel-head h3 { font-size: 14.5px; font-weight: 700; margin: 0; }
+.home-panel-count {
+  font-size: 11.5px; font-weight: 700; color: var(--accent);
+  background: var(--accent-soft); padding: 2px 9px; border-radius: 20px;
+}
+.home-panel-list { display: flex; flex-direction: column; gap: 6px; }
+.home-panel-item {
+  display: flex; align-items: center; gap: 8px;
+  border-radius: 10px;
+}
+.home-panel-item .body {
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 9px 10px; border-radius: 10px; cursor: pointer;
+}
+.home-panel-item .body:hover { background: var(--bg-sunken); }
+.hpi-title {
+  font-size: 13px; font-weight: 600; color: var(--text);
+  flex: 1; min-width: 80px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.hpi-date { font-size: 11.5px; color: var(--text-faint); flex-shrink: 0; }
+.hpi-dismiss {
+  flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+  background: transparent; color: var(--text-faint); font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.hpi-dismiss:hover { background: var(--danger-soft); color: var(--danger); }
+
+.profile-card {
+  background: var(--bg-elev); border: 1px solid var(--border); border-radius: 16px;
+  padding: 22px 24px; margin-bottom: 20px;
+}
+.profile-card .profile-head {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+}
+.profile-card .profile-head h3 { font-size: 15.5px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.profile-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px 20px; }
+.profile-field .k { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--text-faint); font-weight: 700; margin-bottom: 3px; }
+.profile-field .v { font-size: 14.5px; font-weight: 500; }
+.profile-field .v.empty { color: var(--text-faint); font-weight: 400; font-style: italic; }
+
+.quick-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 10px; margin-bottom: 10px; }
+.quick-link {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-elev); border: 1px solid var(--border); border-radius: 13px;
+  padding: 14px 16px; font-size: 13.5px; font-weight: 600;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.quick-link:hover { border-color: var(--accent); transform: translateY(-1px); }
+.quick-link .ic { font-size: 18px; }
+
+/* Onboarding overlay */
+#onboarding-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: var(--bg);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+#onboarding-overlay::-webkit-scrollbar { display: none; }
+#onboarding-overlay.active { display: flex; }
+.onboarding-box {
+  max-width: 460px; width: 100%;
+  margin: auto;
+  padding: 10px 0 40px;
+}
+.onboarding-box .ob-icon { font-size: 40px; margin-bottom: 16px; text-align: center; }
+.onboarding-box h2 { font-size: 22px; text-align: center; margin-bottom: 8px; }
+.onboarding-box .ob-sub { font-size: 13.5px; color: var(--text-dim); text-align: center; margin-bottom: 28px; line-height: 1.6; }
+.onboarding-box .field label { color: var(--text-dim); }
+
+/* ============ RELATÓRIO DE CAMPO ============ */
+.month-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.month-nav h3 { font-size: 17px; font-weight: 600; text-transform: capitalize; }
+.month-summary-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr));
+  gap: 10px; margin-bottom: 24px;
+}
+.month-summary-grid .stat-card { text-align: center; }
+.field-log-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; border-radius: 13px; border: 1px solid var(--border);
+  background: var(--bg-elev); margin-bottom: 8px;
+}
+.field-log-item .fl-date {
+  width: 52px; flex-shrink: 0; text-align: center;
+  background: var(--accent-soft); color: var(--accent);
+  border-radius: 10px; padding: 6px 4px;
+  font-family: 'Lora', serif;
+}
+.field-log-item .fl-date .day { font-size: 17px; font-weight: 700; line-height: 1; }
+.field-log-item .fl-date .mon { font-size: 9.5px; text-transform: uppercase; letter-spacing: .03em; }
+.field-log-item .fl-body { flex: 1; display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; }
+.field-log-item .fl-metric { display: flex; flex-direction: column; }
+.field-log-item .fl-metric .m-num { font-weight: 700; font-size: 14.5px; }
+.field-log-item .fl-metric .m-lbl { font-size: 10.5px; color: var(--text-faint); text-transform: uppercase; letter-spacing: .03em; }
+.field-log-item .actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* Confirm modal customizado */
+.confirm-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+/* ============ SUB-ABAS (dentro de uma mesma view) ============ */
+.subtabs {
+  display: flex; gap: 6px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+.subtab-item {
+  padding: 10px 16px;
+  font-size: 13.5px; font-weight: 600;
+  color: var(--text-dim);
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color .15s ease, border-color .15s ease;
+}
+.subtab-item:hover { color: var(--text); }
+.subtab-item.active { color: var(--accent); border-bottom-color: var(--accent); }
+.subtab-panel { display: none; }
+.subtab-panel.active { display: block; animation: fadeIn .2s ease; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 860px) {
+  #sidebar {
+    position: fixed; inset: 0 auto 0 0;
+    transform: translateX(-100%);
+    height: 100vh;
+    height: 100dvh;
+  }
+  #sidebar.open { transform: translateX(0); }
+  #sidebar-overlay.show { display: block; }
+  #menu-toggle { display: flex; }
+  .view { padding: 74px 18px 70px; }
+  .doc-layout { flex-direction: column; }
+  .doc-sidebar { width: 100%; }
+  .view-header h2 { font-size: 21px; }
+  .cal-day { font-size: 11.5px; }
+  .subtab-item { padding: 9px 12px; font-size: 12.5px; }
+}
+</style>
+</head>
+<body class="theme-branco">
+
+<div id="app">
+
+  <button id="menu-toggle" aria-label="Abrir menu">☰</button>
+  <div id="sidebar-overlay"></div>
+
+  <!-- ================= SIDEBAR ================= -->
+  <nav id="sidebar">
+    <div id="sidebar-header">
+      <div class="brand">
+        <div class="brand-mark">📖</div>
+        <div>
+          <h1>Programação<br>Espiritual</h1>
+        </div>
+      </div>
+    </div>
+
+    <div id="nav"></div>
+
+    <div id="sidebar-footer">
+      <div class="theme-switcher">
+        <button class="theme-dot" data-theme="branco" title="Branco"></button>
+        <button class="theme-dot" data-theme="preto" title="Preto"></button>
+        <button class="theme-dot" data-theme="roxo" title="Roxo"></button>
+        <button class="theme-dot" data-theme="floresta" title="Verde Floresta — moderno e tranquilo"></button>
+        <button class="theme-dot" data-theme="nebulosa" title="Nebulosa — moderno e futurista"></button>
+        <button class="theme-dot" data-theme="classico" title="Clássico — bege, marrom e dourado"></button>
+        <button class="theme-dot" data-theme="oliva" title="Oliva — natural e sofisticado"></button>
+        <button class="theme-dot" data-theme="azulcorp" title="Azul — limpo e profissional"></button>
+        <button class="theme-dot" data-theme="esmeralda" title="Esmeralda — premium e marcante"></button>
+        <button class="theme-dot" data-theme="petroleo" title="Petróleo — diferente e bonito"></button>
+        <button class="theme-dot" data-theme="terracota" title="Terracota — aconchegante"></button>
+        <button class="theme-dot" data-theme="noturno" title="Noturno — ideal para estudo"></button>
+      </div>
+      <button class="footer-btn" id="btn-reorder"><span class="ic">✏️</span> Editar abas</button>
+      <button class="footer-btn" id="btn-export"><span class="ic">⬇️</span> Exportar backup</button>
+      <button class="footer-btn" id="btn-import"><span class="ic">⬆️</span> Importar backup</button>
+      <input type="file" id="import-file" accept=".json" style="display:none">
+      <div class="autosave-indicator"><span class="dot"></span> Salvo automaticamente</div>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN ================= -->
+  <main id="main">
+
+    <!-- ===== BUSCA GLOBAL ===== -->
+    <div id="global-search-bar">
+      <div class="gs-input-wrap">
+        <span class="ic">🔍</span>
+        <input type="text" id="global-search-input" placeholder="Pesquisar em tudo... ex.: exemplos ruins, Noé, discurso 22"
+          autocomplete="off">
+        <button id="gs-clear-btn" class="gs-clear" style="display:none;" title="Limpar">✕</button>
+      </div>
+      <div id="global-search-results" class="gs-results"></div>
+    </div>
+
+    <!-- ===== PÁGINA INICIAL ===== -->
+    <section class="view" id="view-inicio">
+      <div id="inicio-container"></div>
+    </section>
+
+    <!-- ===== RELATÓRIO DE CAMPO ===== -->
+    <section class="view" id="view-campo">
+      <div class="view-header">
+        <div>
+          <h2>Relatório de campo</h2>
+          <div class="sub">Registre seu envolvimento espiritual mês a mês</div>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn btn-ghost" id="btn-share-campo">📤 Compartilhar relatório</button>
+          <button class="btn btn-primary" id="btn-new-campo">+ Registrar dia</button>
+        </div>
+      </div>
+      <div id="campo-summary"></div>
+      <div id="campo-container"></div>
+    </section>
+
+    <!-- ===== TEXTOS IMPORTANTES ===== -->
+    <section class="view" id="view-textos">
+      <div class="view-header">
+        <div>
+          <h2>Textos importantes</h2>
+          <div class="sub">Suas referências e anotações organizadas por categoria</div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button class="btn btn-ghost" id="btn-new-categoria">+ Categoria</button>
+          <button class="btn btn-primary" id="btn-new-texto">+ Texto</button>
+        </div>
+      </div>
+      <div class="searchbar">
+        <span class="ic">🔍</span>
+        <input type="text" id="search-textos" placeholder="Pesquisar por referência, anotação ou categoria...">
+      </div>
+      <div id="favorite-slot"></div>
+      <div id="textos-container"></div>
+    </section>
+
+    <!-- ===== CALENDÁRIO E DESIGNAÇÕES (com sub-abas) ===== -->
+    <section class="view" id="view-calendario">
+      <div class="view-header">
+        <div>
+          <h2>Calendário e designações</h2>
+          <div class="sub">Compromissos, estudos, metas e apresentações</div>
+        </div>
+      </div>
+
+      <div class="subtabs">
+        <button class="subtab-item active" data-subtab="cal-sub-calendario">📅 Calendário</button>
+        <button class="subtab-item" data-subtab="cal-sub-designacoes">🎤 Designações</button>
+      </div>
+
+      <div class="subtab-panel active" id="cal-sub-calendario">
+        <div class="cal-header">
+          <div class="cal-nav">
+            <button class="btn-icon" id="cal-prev">‹</button>
+            <button class="btn-icon" id="cal-today">•</button>
+            <button class="btn-icon" id="cal-next">›</button>
+          </div>
+          <h3 id="cal-month-label"></h3>
+          <button class="btn btn-primary btn-sm" id="btn-new-evento">+ Compromisso</button>
+        </div>
+        <div class="cal-grid" id="cal-dow-row"></div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div id="cal-day-events"></div>
+      </div>
+
+      <div class="subtab-panel" id="cal-sub-designacoes">
+        <div class="view-header" style="margin-bottom:14px;">
+          <div class="sub" style="margin-top:0;">Discursos, leituras e apresentações</div>
+          <button class="btn btn-primary btn-sm" id="btn-new-designacao">+ Designação</button>
+        </div>
+        <div class="searchbar">
+          <span class="ic">🔍</span>
+          <input type="text" id="search-designacoes" placeholder="Pesquisar por título ou observação...">
+        </div>
+        <div id="designacoes-container"></div>
+      </div>
+    </section>
+
+    <!-- ===== PESQUISAS (com sub-abas: pesquisas / exemplos bons / exemplos ruins) ===== -->
+    <section class="view" id="view-pesquisas">
+      <div class="view-header">
+        <div>
+          <h2>Pesquisas</h2>
+          <div class="sub">Estudos completos e exemplos bíblicos</div>
+        </div>
+      </div>
+
+      <div class="subtabs">
+        <button class="subtab-item active" data-subtab="pq-sub-pesquisas">🔎 Pesquisas</button>
+        <button class="subtab-item" data-subtab="pq-sub-bons">🌟 Exemplos bons</button>
+        <button class="subtab-item" data-subtab="pq-sub-ruins">⚠️ Exemplos ruins</button>
+      </div>
+
+      <div class="subtab-panel active" id="pq-sub-pesquisas">
+        <div class="view-header" style="margin-bottom:14px;">
+          <div class="sub" style="margin-top:0;">Estudos de personagens e temas bíblicos</div>
+          <button class="btn btn-primary btn-sm" id="btn-new-pesquisa">+ Nova pesquisa</button>
+        </div>
+        <div class="searchbar">
+          <span class="ic">🔍</span>
+          <input type="text" id="search-pesquisas" placeholder="Pesquisar título, referência ou resumo...">
+        </div>
+        <div id="pesquisas-container"></div>
+      </div>
+
+      <div class="subtab-panel" id="pq-sub-bons">
+        <div class="view-header" style="margin-bottom:14px;">
+          <div class="sub" style="margin-top:0;">Personagens cujas atitudes valem ser imitadas</div>
+          <button class="btn btn-primary btn-sm" id="btn-new-bom">+ Personagem</button>
+        </div>
+        <div class="searchbar">
+          <span class="ic">🔍</span>
+          <input type="text" id="search-bons" placeholder="Pesquisar personagem, referência ou lição...">
+        </div>
+        <div id="bons-container"></div>
+      </div>
+
+      <div class="subtab-panel" id="pq-sub-ruins">
+        <div class="view-header" style="margin-bottom:14px;">
+          <div class="sub" style="margin-top:0;">Personagens cujos erros servem de alerta</div>
+          <button class="btn btn-primary btn-sm" id="btn-new-ruim">+ Personagem</button>
+        </div>
+        <div class="searchbar">
+          <span class="ic">🔍</span>
+          <input type="text" id="search-ruins" placeholder="Pesquisar personagem, referência ou lição...">
+        </div>
+        <div id="ruins-container"></div>
+      </div>
+    </section>
+
+    <!-- ===== ROTEIROS ===== -->
+    <section class="view" id="view-roteiros">
+      <div class="view-header">
+        <div>
+          <h2>Roteiros de apresentações</h2>
+          <div class="sub">Roteiros completos para discursos e partes</div>
+        </div>
+      </div>
+
+      <div class="subtabs">
+        <button class="subtab-item active" data-subtab="rt-sub-roteiros">📝 Roteiros</button>
+        <button class="subtab-item" data-subtab="rt-sub-ilustracoes">🖼️ Ilustrações</button>
+      </div>
+
+      <div class="subtab-panel active" id="rt-sub-roteiros">
+        <div class="view-header" style="margin-bottom:14px;">
+          <div class="sub" style="margin-top:0;">Roteiros completos para discursos e partes</div>
+          <button class="btn btn-primary btn-sm" id="btn-new-roteiro">+ Novo roteiro</button>
+        </div>
+        <div class="searchbar">
+          <span class="ic">🔍</span>
+          <input type="text" id="search-roteiros" placeholder="Pesquisar título ou texto...">
+        </div>
+        <div id="roteiros-container"></div>
+      </div>
+
+      <div class="subtab-panel" id="rt-sub-ilustracoes">
+        <div class="view-header" style="margin-bottom:14px;">
+          <div class="sub" style="margin-top:0;">Ilustrações e histórias para usar em discursos e partes</div>
+          <button class="btn btn-primary btn-sm" id="btn-new-ilustracao">+ Nova ilustração</button>
+        </div>
+        <div class="searchbar">
+          <span class="ic">🔍</span>
+          <input type="text" id="search-ilustracoes" placeholder="Pesquisar título, tema ou resumo...">
+        </div>
+        <div id="ilustracoes-container"></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ================= MODAL GENÉRICO ================= -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-box"></div>
+</div>
+
+<div id="toast"></div>
+
+<!-- ================= ONBOARDING (primeiro uso) ================= -->
+<div id="onboarding-overlay">
+  <div class="onboarding-box">
+    <div class="ob-icon">📖</div>
+    <h2>Bem-vindo(a)!</h2>
+    <div class="ob-sub">Antes de começar, conte um pouco sobre você. Esses dados ficam salvos apenas neste dispositivo.</div>
+    <form id="form-onboarding">
+      <div class="field">
+        <label>Nome completo *</label>
+        <input type="text" id="ob-nome" placeholder="Seu nome completo" required>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>E-mail</label><input type="email" id="ob-email" placeholder="seuemail@exemplo.com"></div>
+        <div class="field"><label>Telefone</label><input type="tel" id="ob-telefone" placeholder="(00) 00000-0000"></div>
+      </div>
+      <div class="field">
+        <label>Data de nascimento</label>
+        <input type="date" id="ob-nascimento">
+      </div>
+      <div class="field">
+        <label>Data de início no app</label>
+        <input type="date" id="ob-inicio">
+        <div class="hint">Preenchida automaticamente com a data de hoje — pode alterar se quiser.</div>
+      </div>
+      <div class="modal-actions" style="justify-content:center;">
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center; padding:13px;">Começar a usar o app</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* =========================================================================
+   PROGRAMAÇÃO ESPIRITUAL — app 100% offline
+   Persistência: localStorage (banco de dados do próprio navegador/dispositivo)
+   ========================================================================= */
+
+// Captura qualquer erro inesperado para nunca deixar o app "travado"
+// silenciosamente sem o usuário entender o que houve.
+window.addEventListener('error', (e) => {
+  console.error('Erro capturado:', e.error || e.message);
+  try { showToast('Ocorreu um erro. Tente novamente.', '⚠️'); } catch (_) {}
+});
+
+const DB_KEY = 'prog_espiritual_db_v1';
+
+const emptyDB = () => ({
+  perfil: null,     // {nome, email, telefone, nascimento, inicioApp}
+  categorias: [],   // {id, nome}
+  textos: [],       // {id, categoriaId, referencia, anotacao, favorito, criadoEm}
+  bons: [],         // {id, nome, referencia, resumo, licoes, criadoEm}
+  ruins: [],        // {id, nome, referencia, resumo, licoes, criadoEm}
+  eventos: [],      // {id, data(YYYY-MM-DD), tipo, titulo, descricao, concluido, repeticao, excecoes, origemDesignacaoId}
+  designacoes: [],  // {id, titulo, data, duracao, observacoes, status}
+  pesquisas: [],    // {id, titulo, referencia, resumo, corpo, criadoEm}
+  roteiros: [],     // {id, titulo, textoCompleto, duracao, ilustracoes, criadoEm}
+  ilustracoes: [],  // {id, titulo, referencia, resumo, corpo, criadoEm}
+  registrosCampo: [], // {id, data, horas, revisitas, estudos, obs, criadoEm}
+  ordemAbas: null,  // array de view ids na ordem escolhida pelo usuário (null = padrão)
+  nomesAbas: null,  // {id: 'Nome customizado'} — null/ausente = usa nome padrão
+  buscasRecentes: [], // array de strings, buscas recentes (mais recente primeiro, máx. 8)
+  lembretesDispensados: [], // array de "eventoId|data" dispensados do painel de lembretes da semana
+  tema: 'branco'
+});
+
+// Detecta se localStorage está realmente disponível e gravável
+// (em modo privado de alguns navegadores, ou em certos WebViews,
+// localStorage existe mas lança erro ao tentar usar — precisamos
+// de um plano B em memória para o app nunca "travar" silenciosamente).
+let storageAvailable = true;
+let memoryFallback = {};
+
+function testStorage() {
+  try {
+    const testKey = '__test_prog_espiritual__';
+    localStorage.setItem(testKey, '1');
+    localStorage.removeItem(testKey);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+storageAvailable = testStorage();
+
+let db = loadDB();
+
+function loadDB() {
+  try {
+    if (!storageAvailable) return emptyDB();
+    const raw = localStorage.getItem(DB_KEY);
+    if (!raw) return emptyDB();
+    const parsed = JSON.parse(raw);
+    return Object.assign(emptyDB(), parsed);
+  } catch (e) {
+    console.error('Erro ao carregar dados, iniciando vazio.', e);
+    return emptyDB();
+  }
+}
+
+function saveDB() {
+  try {
+    if (storageAvailable) {
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
+    } else {
+      memoryFallback = db;
+    }
+    pulseAutosave();
+  } catch (e) {
+    console.error('Erro ao salvar. Tentando modo de memória temporária.', e);
+    storageAvailable = false;
+    memoryFallback = db;
+    showToast('Aviso: não foi possível salvar permanentemente neste navegador', '⚠️');
+  }
+  updateCounts();
+  if (typeof sincronizarNotificacoesComApp === 'function') sincronizarNotificacoesComApp();
+}
+
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+function escapeHTML(str) {
+  if (str == null) return '';
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function nl2br(str) { return escapeHTML(str).replace(/\n/g, '<br>'); }
+
+/* ============================== TOAST ============================== */
+let toastTimer;
+function showToast(msg, icon = '✓') {
+  const t = document.getElementById('toast');
+  t.innerHTML = `<span>${icon}</span><span>${escapeHTML(msg)}</span>`;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+function pulseAutosave() {
+  const el = document.querySelector('.autosave-indicator');
+  if (!el) return;
+  el.style.opacity = '1';
+}
+
+/* ============================== TEMA ============================== */
+function applyTheme(theme) {
+  db.tema = theme;
+  document.body.className = 'theme-' + theme;
+  document.querySelectorAll('.theme-dot').forEach(d => {
+    d.classList.toggle('active', d.dataset.theme === theme);
+  });
+  saveDB();
+}
+document.querySelectorAll('.theme-dot').forEach(dot => {
+  dot.addEventListener('click', () => applyTheme(dot.dataset.theme));
+});
+
+/* ============================== NAVEGAÇÃO ============================== */
+// Definição fixa de todas as 6 abas principais (id, ícone, rótulo, se tem contador)
+const NAV_DEFS = {
+  inicio:     { icon: '🏠', label: 'Página inicial',      count: null },
+  campo:      { icon: '🧭', label: 'Relatório de campo',  count: null },
+  textos:     { icon: '📖', label: 'Textos importantes',  count: 'textos' },
+  calendario: { icon: '📅', label: 'Calendário e designações', count: null },
+  pesquisas:  { icon: '🔎', label: 'Pesquisas',           count: null },
+  roteiros:   { icon: '📝', label: 'Roteiros',            count: 'roteiros' }
+};
+const DEFAULT_ORDER = ['inicio', 'campo', 'textos', 'calendario', 'pesquisas', 'roteiros'];
+const views = DEFAULT_ORDER;
+
+function getTabLabels() {
+  const saved = db.nomesAbas;
+  const labels = {};
+  DEFAULT_ORDER.forEach(id => {
+    labels[id] = (saved && typeof saved[id] === 'string' && saved[id].trim()) ? saved[id].trim() : NAV_DEFS[id].label;
+  });
+  return labels;
+}
+
+function getTabOrder() {
+  const saved = db.ordemAbas;
+  if (Array.isArray(saved) && saved.length) {
+    // garante que todas as abas existam (proteção contra versões antigas salvas)
+    const valid = saved.filter(v => DEFAULT_ORDER.includes(v));
+    const missing = DEFAULT_ORDER.filter(v => !valid.includes(v));
+    return [...valid, ...missing];
+  }
+  return [...DEFAULT_ORDER];
+}
+
+function renderNav() {
+  const nav = document.getElementById('nav');
+  const order = getTabOrder();
+  const labels = getTabLabels();
+  const currentActive = document.querySelector('.nav-item.active')?.dataset.view || 'inicio';
+  nav.innerHTML = order.map(id => {
+    const def = NAV_DEFS[id];
+    const countHTML = def.count ? `<span class="count" id="count-${def.count}">0</span>` : '';
+    return `<button class="nav-item" data-view="${id}"><span class="ic">${def.icon}</span><span>${escapeHTML(labels[id])}</span>${countHTML}</button>`;
+  }).join('');
+  nav.querySelectorAll('.nav-item').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === currentActive);
+    btn.addEventListener('click', () => goToView(btn.dataset.view));
+  });
+  updateCounts();
+  updateViewHeadings(labels);
+}
+
+function updateViewHeadings(labels) {
+  // Atualiza o <h2> de cada view para refletir o nome customizado da aba,
+  // preservando o restante do cabeçalho (subtítulo, botões etc.)
+  Object.keys(labels).forEach(id => {
+    const view = document.getElementById('view-' + id);
+    if (!view) return;
+    const h2 = view.querySelector('.view-header h2');
+    if (h2) h2.textContent = labels[id];
+  });
+}
+
+function goToView(name) {
+  if (!views.includes(name)) {
+    console.warn('goToView: view desconhecida "' + name + '", usando "inicio"');
+    name = 'inicio';
+  }
+  views.forEach(v => {
+    document.getElementById('view-' + v).classList.toggle('active', v === name);
+  });
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === name);
+  });
+  document.getElementById('main').scrollTop = 0;
+  closeSidebarMobile();
+  renderAll();
+}
+
+/* Sub-abas (dentro de Calendário/Designações e Pesquisas/Bons/Ruins) */
+function initSubtabs() {
+  document.querySelectorAll('.subtab-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.subtab;
+      const parent = btn.closest('.view');
+      parent.querySelectorAll('.subtab-item').forEach(b => b.classList.toggle('active', b === btn));
+      parent.querySelectorAll('.subtab-panel').forEach(p => p.classList.toggle('active', p.id === targetId));
+    });
+  });
+}
+
+/* Editar abas (reordenar + renomear) */
+document.getElementById('btn-reorder').addEventListener('click', openReorderModal);
+
+function openReorderModal() {
+  const order = getTabOrder();
+  renderReorderModalContent(order);
+}
+
+function renderReorderModalContent(order) {
+  const labels = getTabLabels();
+  openModal(`
+    <div class="modal-title"><span>Editar abas</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <p style="font-size:12.5px; color:var(--text-dim); margin-bottom:14px;">Use as setas para mudar a posição de cada aba, ou edite o nome como preferir (ex.: trocar "Roteiros" por "Discurso").</p>
+    <div class="reorder-list" id="reorder-list">
+      ${order.map((id, idx) => {
+        const def = NAV_DEFS[id];
+        return `
+        <div class="reorder-item">
+          <span class="ic">${def.icon}</span>
+          <input type="text" class="reorder-name-input" data-tab-id="${id}" value="${escapeHTML(labels[id])}" placeholder="${escapeHTML(def.label)}" maxlength="40">
+          <div class="reorder-btns">
+            <button type="button" onclick="moveTab('${id}', -1)" ${idx === 0 ? 'disabled' : ''} title="Mover para cima">↑</button>
+            <button type="button" onclick="moveTab('${id}', 1)" ${idx === order.length - 1 ? 'disabled' : ''} title="Mover para baixo">↓</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" onclick="resetTabOrder()">Restaurar padrão</button>
+      <button type="button" class="btn btn-primary" onclick="saveTabNamesAndClose()">Concluído</button>
+    </div>
+  `);
+
+  document.querySelectorAll('.reorder-name-input').forEach(input => {
+    input.addEventListener('input', () => {
+      const id = input.dataset.tabId;
+      const nomes = Object.assign({}, db.nomesAbas || {});
+      nomes[id] = input.value;
+      db.nomesAbas = nomes;
+      clearTimeout(saveTabNameTimer);
+      saveTabNameTimer = setTimeout(() => {
+        saveDB();
+        renderNav();
+      }, 300);
+    });
+  });
+}
+let saveTabNameTimer = null;
+
+function saveTabNamesAndClose() {
+  saveDB();
+  renderNav();
+  closeModal();
+}
+
+function moveTab(id, direction) {
+  const order = getTabOrder();
+  const idx = order.indexOf(id);
+  const newIdx = idx + direction;
+  if (newIdx < 0 || newIdx >= order.length) return;
+  [order[idx], order[newIdx]] = [order[newIdx], order[idx]];
+  db.ordemAbas = order;
+  saveDB();
+  renderNav();
+  renderReorderModalContent(order);
+}
+
+function resetTabOrder() {
+  db.ordemAbas = null;
+  db.nomesAbas = null;
+  saveDB();
+  renderNav();
+  renderReorderModalContent(getTabOrder());
+  showToast('Ordem e nomes padrão restaurados');
+}
+
+/* Mobile sidebar */
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('sidebar-overlay');
+document.getElementById('menu-toggle').addEventListener('click', () => {
+  sidebar.classList.add('open');
+  overlay.classList.add('show');
+});
+overlay.addEventListener('click', closeSidebarMobile);
+function closeSidebarMobile() {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+}
+
+/* ============================== MODAL HELPERS ============================== */
+const modalOverlay = document.getElementById('modal-overlay');
+const modalBox = document.getElementById('modal-box');
+
+function openModal(html, opts = {}) {
+  modalBox.className = 'modal' + (opts.large ? ' modal-lg' : '');
+  modalBox.innerHTML = html;
+  modalOverlay.classList.add('active');
+  const firstInput = modalBox.querySelector('input, textarea, select');
+  if (firstInput) setTimeout(() => firstInput.focus(), 50);
+}
+function closeModal() {
+  modalOverlay.classList.remove('active');
+  modalBox.innerHTML = '';
+}
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) closeModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeModal();
+});
+
+// Modal de confirmação próprio (substitui window.confirm, que pode ser
+// bloqueado silenciosamente em alguns navegadores embutidos/PWA).
+function confirmAction(message, onConfirm, opts = {}) {
+  openModal(`
+    <div class="modal-title"><span>${opts.title || 'Confirmar ação'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <p style="font-size:13.5px; color:var(--text-dim); line-height:1.6;">${escapeHTML(message)}</p>
+    <div class="confirm-actions">
+      <button type="button" class="btn btn-ghost" id="confirm-cancel-btn">Cancelar</button>
+      <button type="button" class="btn ${opts.danger === false ? 'btn-primary' : 'btn-danger'}" id="confirm-ok-btn">${opts.okLabel || 'Confirmar'}</button>
+    </div>
+  `);
+  document.getElementById('confirm-cancel-btn').addEventListener('click', closeModal);
+  document.getElementById('confirm-ok-btn').addEventListener('click', () => {
+    closeModal();
+    onConfirm();
+  });
+}
+
+/* ============================== RENDER DISPATCH ============================== */
+function renderAll() {
+  updateCounts();
+  renderInicio();
+  renderCampo();
+  renderTextos();
+  renderBons();
+  renderRuins();
+  renderCalendario();
+  renderDesignacoes();
+  renderPesquisas();
+  renderRoteiros();
+  renderIlustracoes();
+}
+
+function updateCounts() {
+  const elTextos = document.getElementById('count-textos');
+  const elRoteiros = document.getElementById('count-roteiros');
+  if (elTextos) elTextos.textContent = db.textos.length;
+  if (elRoteiros) elRoteiros.textContent = db.roteiros.length;
+}
+
+/* =========================================================================
+   1) TEXTOS IMPORTANTES
+   ========================================================================= */
+let textosSearchTerm = '';
+
+document.getElementById('search-textos').addEventListener('input', (e) => {
+  textosSearchTerm = e.target.value.trim().toLowerCase();
+  renderTextos();
+});
+
+document.getElementById('btn-new-categoria').addEventListener('click', () => {
+  openModal(`
+    <div class="modal-title"><span>Nova categoria</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-categoria">
+      <div class="field">
+        <label>Nome da categoria</label>
+        <input type="text" id="cat-nome" placeholder="Ex.: Promessas para o futuro, Fé, Oração" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Criar categoria</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-categoria').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('cat-nome').value.trim();
+    if (!nome) return;
+    db.categorias.push({ id: uid(), nome });
+    saveDB();
+    closeModal();
+    renderTextos();
+    showToast('Categoria criada');
+  });
+});
+
+document.getElementById('btn-new-texto').addEventListener('click', () => openTextoModal());
+
+function openTextoModal(textoId = null) {
+  const editing = textoId ? db.textos.find(t => t.id === textoId) : null;
+  if (db.categorias.length === 0) {
+    openModal(`
+      <div class="modal-title"><span>Crie uma categoria primeiro</span><button class="close-x" onclick="closeModal()">✕</button></div>
+      <p style="font-size:13.5px; color:var(--text-dim); line-height:1.6;">Antes de adicionar um texto, crie ao menos uma categoria (ex.: Promessas para o futuro, Fé, Oração).</p>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="closeModal(); document.getElementById('btn-new-categoria').click();">Criar categoria</button>
+      </div>
+    `);
+    return;
+  }
+  const catOptions = db.categorias.map(c =>
+    `<option value="${c.id}" ${editing && editing.categoriaId === c.id ? 'selected' : ''}>${escapeHTML(c.nome)}</option>`
+  ).join('');
+
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar texto' : 'Novo texto'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-texto">
+      <div class="field">
+        <label>Categoria</label>
+        <select id="texto-categoria">${catOptions}</select>
+      </div>
+      <div class="field">
+        <label>Referência bíblica</label>
+        <input type="text" id="texto-ref" placeholder="Ex.: Isaías 41:10" value="${escapeHTML(editing?.referencia || '')}" required>
+      </div>
+      <div class="field">
+        <label>Anotação</label>
+        <textarea id="texto-nota" placeholder="Sua anotação, reflexão ou aplicação pessoal...">${escapeHTML(editing?.anotacao || '')}</textarea>
+      </div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deleteTexto('${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `);
+
+  document.getElementById('form-texto').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const categoriaId = document.getElementById('texto-categoria').value;
+    const referencia = document.getElementById('texto-ref').value.trim();
+    const anotacao = document.getElementById('texto-nota').value.trim();
+    if (!referencia) return;
+
+    if (editing) {
+      editing.categoriaId = categoriaId;
+      editing.referencia = referencia;
+      editing.anotacao = anotacao;
+      showToast('Texto atualizado');
+    } else {
+      db.textos.push({
+        id: uid(), categoriaId, referencia, anotacao,
+        favorito: false, criadoEm: Date.now()
+      });
+      showToast('Texto adicionado');
+    }
+    saveDB();
+    closeModal();
+    renderTextos();
+  });
+}
+
+function deleteTexto(id) {
+  confirmAction('Excluir este texto? Essa ação não pode ser desfeita.', () => {
+    db.textos = db.textos.filter(t => t.id !== id);
+    saveDB();
+    renderTextos();
+    showToast('Texto excluído', '🗑️');
+  });
+}
+
+function toggleFavoritoTexto(id) {
+  const alreadyFav = db.textos.find(t => t.id === id)?.favorito;
+  db.textos.forEach(t => t.favorito = false);
+  const t = db.textos.find(t => t.id === id);
+  if (t) t.favorito = !alreadyFav;
+  saveDB();
+  renderTextos();
+}
+
+function renderTextos() {
+  const container = document.getElementById('textos-container');
+  const favSlot = document.getElementById('favorite-slot');
+  const term = textosSearchTerm;
+
+  // favorito banner
+  const fav = db.textos.find(t => t.favorito);
+  if (fav) {
+    const cat = db.categorias.find(c => c.id === fav.categoriaId);
+    favSlot.innerHTML = `
+      <div class="favorite-banner">
+        <div class="label">⭐ Texto favorito ${cat ? '· ' + escapeHTML(cat.nome) : ''}</div>
+        <div class="ref">${escapeHTML(fav.referencia)}</div>
+        ${fav.anotacao ? `<div class="note">${nl2br(fav.anotacao)}</div>` : ''}
+      </div>`;
+  } else if (db.textos.length > 0) {
+    favSlot.innerHTML = `<div class="favorite-banner-empty">Nenhum texto favorito ainda. Toque na estrela de um texto para destacá-lo aqui.</div>`;
+  } else {
+    favSlot.innerHTML = '';
+  }
+
+  if (db.textos.length === 0 && db.categorias.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">📖</div>
+        <div class="title">Sua biblioteca está vazia</div>
+        <div class="desc">Crie categorias como "Promessas para o futuro", "Fé" ou "Oração" e comece a adicionar seus textos importantes.</div>
+      </div>`;
+    return;
+  }
+
+  // filtro
+  const matches = (t, cat) => {
+    if (!term) return true;
+    return t.referencia.toLowerCase().includes(term) ||
+      (t.anotacao || '').toLowerCase().includes(term) ||
+      (cat?.nome || '').toLowerCase().includes(term);
+  };
+
+  let html = '';
+  let anyVisible = false;
+
+  db.categorias.forEach(cat => {
+    const items = db.textos.filter(t => t.categoriaId === cat.id && matches(t, cat));
+    if (term && items.length === 0) return;
+    anyVisible = true;
+    html += `
+      <div class="category-block">
+        <div class="category-head">
+          <h3>📁 ${escapeHTML(cat.nome)} <span class="count-badge">${items.length}</span></h3>
+          <div class="spacer"></div>
+          ${items.length > 0 ? `<button class="btn-icon" onclick="compartilharCategoriaTextos('${cat.id}')" title="Compartilhar todos os textos desta categoria">📤</button>` : ''}
+          <button class="btn-icon" onclick="renameCategoria('${cat.id}')" title="Renomear categoria">✏️</button>
+          <button class="btn-icon" onclick="deleteCategoria('${cat.id}')" title="Excluir categoria">🗑️</button>
+        </div>
+        ${items.length === 0 ? `<div style="font-size:12.5px;color:var(--text-faint);padding:4px 2px 8px;">Nenhum texto nesta categoria ainda.</div>` : ''}
+        ${items.map(t => textoCardHTML(t)).join('')}
+      </div>`;
+  });
+
+  // textos sem categoria (segurança, caso categoria tenha sido apagada)
+  const orfaos = db.textos.filter(t => !db.categorias.find(c => c.id === t.categoriaId) && matches(t));
+  if (orfaos.length) {
+    anyVisible = true;
+    html += `
+      <div class="category-block">
+        <div class="category-head">
+          <h3>📁 Sem categoria <span class="count-badge">${orfaos.length}</span></h3>
+          <div class="spacer"></div>
+          <button class="btn-icon" onclick="compartilharTextosOrfaos()" title="Compartilhar todos estes textos">📤</button>
+        </div>
+        ${orfaos.map(t => textoCardHTML(t)).join('')}
+      </div>`;
+  }
+
+  if (term && !anyVisible) {
+    html = `<div class="empty-state"><div class="ic">🔍</div><div class="title">Nada encontrado</div><div class="desc">Tente pesquisar por outra palavra-chave.</div></div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function textoCardHTML(t) {
+  return `
+    <div class="card verse-card">
+      <button class="fav-btn ${t.favorito ? 'is-fav' : ''}" onclick="toggleFavoritoTexto('${t.id}')" title="Marcar como favorito">${t.favorito ? '★' : '☆'}</button>
+      <div class="body">
+        <div class="ref">${escapeHTML(t.referencia)}</div>
+        ${t.anotacao ? `<div class="note">${nl2br(t.anotacao)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="compartilharTexto('${t.id}')" title="Compartilhar">📤</button>
+        <button class="btn-icon" onclick="openTextoModal('${t.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deleteTexto('${t.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>`;
+}
+
+/* ---------- Compartilhar textos importantes (individual ou por categoria) ---------- */
+function textoDeTextoImportante(t) {
+  const partes = [t.referencia || 'Sem referência'];
+  if (t.anotacao) partes.push('\n' + t.anotacao);
+  return partes.join('\n');
+}
+
+function compartilharTexto(id) {
+  const t = db.textos.find(x => x.id === id);
+  if (!t) return;
+  abrirCompartilharModal(t.referencia || 'Texto', textoDeTextoImportante(t));
+}
+
+function compartilharCategoriaTextos(categoriaId) {
+  const cat = db.categorias.find(c => c.id === categoriaId);
+  if (!cat) return;
+  const itens = db.textos.filter(t => t.categoriaId === categoriaId);
+  if (!itens.length) return;
+  const texto = `${cat.nome}\n\n` + itens.map(t => textoDeTextoImportante(t)).join('\n\n---\n\n');
+  abrirCompartilharModal(cat.nome, texto);
+}
+
+function compartilharTextosOrfaos() {
+  const itens = db.textos.filter(t => !db.categorias.find(c => c.id === t.categoriaId));
+  if (!itens.length) return;
+  const texto = 'Sem categoria\n\n' + itens.map(t => textoDeTextoImportante(t)).join('\n\n---\n\n');
+  abrirCompartilharModal('Textos sem categoria', texto);
+}
+
+function renameCategoria(id) {
+  const cat = db.categorias.find(c => c.id === id);
+  if (!cat) return;
+  openModal(`
+    <div class="modal-title"><span>Renomear categoria</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-rename-cat">
+      <div class="field"><label>Nome da categoria</label><input type="text" id="rename-cat-nome" value="${escapeHTML(cat.nome)}" required></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-rename-cat').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const novoNome = document.getElementById('rename-cat-nome').value.trim();
+    if (!novoNome) return;
+    cat.nome = novoNome;
+    saveDB();
+    closeModal();
+    renderTextos();
+    showToast('Categoria renomeada');
+  });
+}
+
+function deleteCategoria(id) {
+  const qtd = db.textos.filter(t => t.categoriaId === id).length;
+  const msg = qtd > 0
+    ? `Esta categoria tem ${qtd} texto(s). Excluir a categoria também excluirá esses textos. Deseja continuar?`
+    : 'Excluir esta categoria?';
+  confirmAction(msg, () => {
+    db.textos = db.textos.filter(t => t.categoriaId !== id);
+    db.categorias = db.categorias.filter(c => c.id !== id);
+    saveDB();
+    renderTextos();
+    showToast('Categoria excluída', '🗑️');
+  });
+}
+
+/* =========================================================================
+   2) EXEMPLOS BONS  &  3) EXEMPLOS RUINS  (mesmo sistema, tipo parametrizado)
+   ========================================================================= */
+let bonsSearch = '', ruinsSearch = '';
+document.getElementById('search-bons').addEventListener('input', e => { bonsSearch = e.target.value.trim().toLowerCase(); renderBons(); });
+document.getElementById('search-ruins').addEventListener('input', e => { ruinsSearch = e.target.value.trim().toLowerCase(); renderRuins(); });
+document.getElementById('btn-new-bom').addEventListener('click', () => openPersonagemModal('bons'));
+document.getElementById('btn-new-ruim').addEventListener('click', () => openPersonagemModal('ruins'));
+
+function openPersonagemModal(tipo, id = null) {
+  const list = db[tipo];
+  const editing = id ? list.find(p => p.id === id) : null;
+  const isGood = tipo === 'bons';
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar personagem' : (isGood ? 'Novo exemplo bom' : 'Novo exemplo ruim')}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-personagem">
+      <div class="field-row">
+        <div class="field"><label>Nome</label><input type="text" id="pers-nome" placeholder="Ex.: ${isGood ? 'Rute' : 'Acã'}" value="${escapeHTML(editing?.nome || '')}" required></div>
+        <div class="field"><label>Referência</label><input type="text" id="pers-ref" placeholder="Ex.: ${isGood ? 'Rute 1:16' : 'Josué 7'}" value="${escapeHTML(editing?.referencia || '')}"></div>
+      </div>
+      <div class="field"><label>Resumo</label><textarea id="pers-resumo" placeholder="O que aconteceu...">${escapeHTML(editing?.resumo || '')}</textarea></div>
+      <div class="field"><label>${isGood ? 'Lições a imitar' : 'Lições / alertas'}</label><textarea id="pers-licoes" placeholder="${isGood ? 'O que podemos aprender e imitar...' : 'O que devemos evitar...'}">${escapeHTML(editing?.licoes || '')}</textarea></div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deletePersonagem('${tipo}','${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-personagem').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('pers-nome').value.trim();
+    if (!nome) return;
+    const data = {
+      nome,
+      referencia: document.getElementById('pers-ref').value.trim(),
+      resumo: document.getElementById('pers-resumo').value.trim(),
+      licoes: document.getElementById('pers-licoes').value.trim()
+    };
+    if (editing) {
+      Object.assign(editing, data);
+      showToast('Personagem atualizado');
+    } else {
+      list.push({ id: uid(), ...data, criadoEm: Date.now() });
+      showToast('Personagem adicionado');
+    }
+    saveDB();
+    closeModal();
+    tipo === 'bons' ? renderBons() : renderRuins();
+  });
+}
+
+function deletePersonagem(tipo, id) {
+  confirmAction('Excluir este personagem?', () => {
+    db[tipo] = db[tipo].filter(p => p.id !== id);
+    saveDB();
+    tipo === 'bons' ? renderBons() : renderRuins();
+    showToast('Excluído', '🗑️');
+  });
+}
+
+// Modal somente-leitura — abre o texto completo sem campos editáveis
+// e sem acionar o teclado, ideal para reler resumos/lições longas.
+function openPersonagemViewModal(tipo, id) {
+  const p = db[tipo].find(x => x.id === id);
+  if (!p) return;
+  const isGood = tipo === 'bons';
+  openModal(`
+    <div class="modal-title">
+      <span>👁️ Visualizando</span>
+      <button class="close-x" onclick="closeModal()">✕</button>
+    </div>
+    <div class="doc-view-mode">${escapeHTML(p.nome)}</div>
+    ${p.referencia ? `<div class="doc-meta">${escapeHTML(p.referencia)}</div>` : ''}
+    <div style="margin-top:16px;">
+      <div class="field-row" style="margin:0;">
+        <div style="flex:1;">
+          <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:7px; text-transform:uppercase; letter-spacing:.04em;">Resumo</label>
+          <div class="doc-view-body ${!p.resumo ? 'is-empty' : ''}">${p.resumo ? nl2br(p.resumo) : 'Sem resumo.'}</div>
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:7px; text-transform:uppercase; letter-spacing:.04em;">${isGood ? 'Lições a imitar' : 'Lições / alertas'}</label>
+        <div class="doc-view-body ${!p.licoes ? 'is-empty' : ''}">${p.licoes ? nl2br(p.licoes) : 'Sem lições registradas.'}</div>
+      </div>
+    </div>
+    <div class="modal-actions-view">
+      <div class="row-top">
+        <button type="button" class="btn btn-ghost" onclick="copiarPersonagem('${tipo}','${p.id}')">📋 Copiar</button>
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="closeModal(); openPersonagemModal('${tipo}','${p.id}')">✏️ Editar</button>
+      </div>
+      <button type="button" class="btn btn-ghost btn-share-full" onclick="compartilharPersonagem('${tipo}','${p.id}')">📤 Compartilhar</button>
+    </div>
+  `, { large: true });
+}
+
+function textoDoPersonagem(tipo, p) {
+  const partes = [p.nome || 'Sem nome'];
+  if (p.referencia) partes.push(p.referencia);
+  if (p.resumo) partes.push('\nResumo:\n' + p.resumo);
+  if (p.licoes) partes.push('\n' + (tipo === 'bons' ? 'Lições a imitar' : 'Lições / alertas') + ':\n' + p.licoes);
+  return partes.join('\n');
+}
+
+function copiarPersonagem(tipo, id) {
+  const p = db[tipo].find(x => x.id === id);
+  if (!p) return;
+  copiarTexto(textoDoPersonagem(tipo, p), (tipo === 'bons' ? 'Exemplo' : 'Exemplo') + ' copiado!');
+}
+
+function compartilharPersonagem(tipo, id) {
+  const p = db[tipo].find(x => x.id === id);
+  if (!p) return;
+  abrirCompartilharModal(p.nome || 'Personagem', textoDoPersonagem(tipo, p));
+}
+
+function renderPersonagens(tipo, containerId, search) {
+  const container = document.getElementById(containerId);
+  const list = db[tipo];
+  if (list.length === 0) {
+    const isGood = tipo === 'bons';
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">${isGood ? '🌟' : '⚠️'}</div>
+        <div class="title">Nenhum personagem cadastrado</div>
+        <div class="desc">Adicione ${isGood ? 'exemplos bons' : 'exemplos ruins'} da Bíblia com nome, referência, resumo e lições.</div>
+      </div>`;
+    return;
+  }
+  const filtered = list.filter(p =>
+    !search ||
+    p.nome.toLowerCase().includes(search) ||
+    (p.referencia || '').toLowerCase().includes(search) ||
+    (p.resumo || '').toLowerCase().includes(search) ||
+    (p.licoes || '').toLowerCase().includes(search)
+  );
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="ic">🔍</div><div class="title">Nada encontrado</div></div>`;
+    return;
+  }
+  container.innerHTML = filtered.sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR')).map(p => `
+    <div class="list-row">
+      <div class="avatar">${escapeHTML((p.nome[0] || '?').toUpperCase())}</div>
+      <div class="body" onclick="openPersonagemViewModal('${tipo}','${p.id}')">
+        <div class="title-row">
+          <span class="name">${escapeHTML(p.nome)}</span>
+          ${p.referencia ? `<span class="meta">${escapeHTML(p.referencia)}</span>` : ''}
+        </div>
+        ${p.resumo ? `<div class="snippet"><strong>Resumo:</strong> ${escapeHTML(p.resumo)}</div>` : ''}
+        ${p.licoes ? `<div class="snippet"><strong>Lições:</strong> ${escapeHTML(p.licoes)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="openPersonagemViewModal('${tipo}','${p.id}')" title="Visualizar">👁️</button>
+        <button class="btn-icon" onclick="openPersonagemModal('${tipo}','${p.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deletePersonagem('${tipo}','${p.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+function renderBons() { renderPersonagens('bons', 'bons-container', bonsSearch); }
+function renderRuins() { renderPersonagens('ruins', 'ruins-container', ruinsSearch); }
+
+/* =========================================================================
+   4) CALENDÁRIO & PROGRAMAÇÃO ESPIRITUAL
+   ========================================================================= */
+let calViewDate = new Date();
+let calSelectedDate = fmtDate(new Date());
+
+function fmtDate(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+/* ---------------------------------------------------------------------
+   Expansão de compromissos recorrentes
+   -----------------------------------------------------------------------
+   Cada evento em db.eventos com repeticao !== 'nenhuma' é uma "série":
+   sua data original é a âncora (dia da semana / dia do mês / dia+mês).
+   Esta função gera as ocorrências virtuais dentro de um intervalo de datas,
+   aplicando exceções (edição ou exclusão de uma data específica) quando
+   existirem. Ocorrências virtuais recebem __ocorrenciaData com a data real
+   dessa instância, para diferenciar da data-âncora ao editar/excluir.
+   --------------------------------------------------------------------- */
+function getEventosNoIntervalo(dataInicioStr, dataFimStr) {
+  const inicio = new Date(dataInicioStr + 'T00:00:00');
+  const fim = new Date(dataFimStr + 'T00:00:00');
+  const resultado = [];
+
+  db.eventos.forEach(ev => {
+    const anchor = new Date(ev.data + 'T00:00:00');
+    const repeticao = ev.repeticao || 'nenhuma';
+
+    if (repeticao === 'nenhuma') {
+      if (ev.data >= dataInicioStr && ev.data <= dataFimStr) {
+        resultado.push(Object.assign({}, ev, { __ocorrenciaData: ev.data }));
+      }
+      return;
+    }
+
+    // Gera cada ocorrência da série dentro do intervalo pedido
+    let cursor = new Date(anchor);
+    // Anda o cursor até alcançar perto do início do intervalo, para não iterar desde o ano 1
+    if (cursor < inicio) {
+      if (repeticao === 'semanal') {
+        const diffDias = Math.floor((inicio - cursor) / 86400000);
+        const semanas = Math.floor(diffDias / 7);
+        cursor.setDate(cursor.getDate() + semanas * 7);
+      } else if (repeticao === 'mensal') {
+        let meses = (inicio.getFullYear() - cursor.getFullYear()) * 12 + (inicio.getMonth() - cursor.getMonth());
+        if (meses > 0) cursor.setMonth(cursor.getMonth() + meses);
+      } else if (repeticao === 'anual') {
+        let anos = inicio.getFullYear() - cursor.getFullYear();
+        if (anos > 0) cursor.setFullYear(cursor.getFullYear() + anos);
+      }
+    }
+
+    let guard = 0;
+    while (cursor <= fim && guard < 400) {
+      guard++;
+      if (cursor >= inicio) {
+        const dataStr = fmtDate(cursor);
+        const excecao = (ev.excecoes || {})[dataStr];
+        if (!(excecao && excecao.excluida)) {
+          const base = Object.assign({}, ev, excecao || {}, { data: dataStr, __ocorrenciaData: dataStr });
+          resultado.push(base);
+        }
+      }
+      if (repeticao === 'semanal') cursor.setDate(cursor.getDate() + 7);
+      else if (repeticao === 'mensal') cursor.setMonth(cursor.getMonth() + 1);
+      else if (repeticao === 'anual') cursor.setFullYear(cursor.getFullYear() + 1);
+      else break;
+    }
+  });
+
+  return resultado;
+}
+
+document.getElementById('cal-prev').addEventListener('click', () => { calViewDate.setMonth(calViewDate.getMonth()-1); renderCalendario(); });
+document.getElementById('cal-next').addEventListener('click', () => { calViewDate.setMonth(calViewDate.getMonth()+1); renderCalendario(); });
+document.getElementById('cal-today').addEventListener('click', () => { calViewDate = new Date(); calSelectedDate = fmtDate(new Date()); renderCalendario(); });
+
+document.getElementById('btn-new-evento').addEventListener('click', () => openEventoModal());
+
+const DOW = ['dom','seg','ter','qua','qui','sex','sáb'];
+const MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+
+function renderCalendario() {
+  document.getElementById('cal-month-label').textContent = `${MESES[calViewDate.getMonth()]} de ${calViewDate.getFullYear()}`;
+  const dowRow = document.getElementById('cal-dow-row');
+  dowRow.innerHTML = DOW.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+  const year = calViewDate.getFullYear();
+  const month = calViewDate.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const todayStr = fmtDate(new Date());
+
+  const inicioMes = `${year}-${String(month+1).padStart(2,'0')}-01`;
+  const fimMes = `${year}-${String(month+1).padStart(2,'0')}-${String(daysInMonth).padStart(2,'0')}`;
+  const eventosDoMes = getEventosNoIntervalo(inicioMes, fimMes);
+  const diasComEvento = new Set(eventosDoMes.map(e => e.data));
+
+  let cells = '';
+  for (let i = 0; i < firstDay; i++) cells += `<div class="cal-day empty"></div>`;
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const hasEvents = diasComEvento.has(dateStr);
+    const isToday = dateStr === todayStr;
+    const isSelected = dateStr === calSelectedDate;
+    cells += `<div class="cal-day ${isToday?'today':''} ${isSelected?'selected':''}" onclick="selectCalDay('${dateStr}')">
+      <span>${day}</span>
+      ${hasEvents ? '<span class="dot"></span>' : ''}
+    </div>`;
+  }
+  document.getElementById('cal-grid').innerHTML = cells;
+  renderDayEvents();
+}
+
+function selectCalDay(dateStr) {
+  calSelectedDate = dateStr;
+  renderCalendario();
+}
+
+function renderDayEvents() {
+  const container = document.getElementById('cal-day-events');
+  const events = getEventosNoIntervalo(calSelectedDate, calSelectedDate)
+    .sort((a,b) => (a.criadoEm||0)-(b.criadoEm||0));
+
+  const [y,m,d] = calSelectedDate.split('-').map(Number);
+  const label = new Date(y, m-1, d).toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+
+  let html = `<h3 style="font-size:14px; font-weight:600; color:var(--text-dim); margin-bottom:12px; text-transform:capitalize;">${label}</h3>`;
+
+  if (events.length === 0) {
+    html += `<div class="empty-state" style="padding:36px 20px;"><div class="ic">📅</div><div class="title">Nenhum compromisso neste dia</div><div class="desc">Toque em "+ Compromisso" para adicionar um estudo, meta ou compromisso espiritual.</div></div>`;
+  } else {
+    html += events.map(ev => `
+      <div class="event-item ${ev.concluido ? 'done' : ''}">
+        <div class="check" onclick="toggleEventoConcluido('${ev.id}','${ev.__ocorrenciaData}')">${ev.concluido ? '✓' : ''}</div>
+        <div class="body" onclick="openEventoModalOcorrencia('${ev.id}','${ev.__ocorrenciaData}')">
+          <div class="ev-title">
+            <span class="tag-pill tag-${ev.tipo}">${tipoLabel(ev.tipo)}</span>${escapeHTML(ev.titulo)}
+            ${ev.repeticao && ev.repeticao !== 'nenhuma' ? `<span class="meta" style="margin-left:6px;" title="Compromisso recorrente">🔁</span>` : ''}
+            ${ev.origemDesignacaoId ? `<span class="meta" style="margin-left:6px;" title="Vinculado a uma designação">🎤</span>` : ''}
+          </div>
+          ${ev.descricao ? `<div class="ev-desc">${nl2br(ev.descricao)}</div>` : ''}
+        </div>
+        <div class="actions">
+          <button class="btn-icon" onclick="deleteEvento('${ev.id}','${ev.__ocorrenciaData}')" title="Excluir">🗑️</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  container.innerHTML = html;
+}
+
+function tipoLabel(t) {
+  return { compromisso: 'Compromisso', estudo: 'Estudo', meta: 'Meta', designacao: 'Designação' }[t] || t;
+}
+
+// Marca uma ocorrência (data específica) como concluída/pendente.
+// Para eventos recorrentes, isso vira uma exceção — não afeta a série toda.
+function toggleEventoConcluido(id, ocorrenciaData) {
+  const ev = db.eventos.find(e => e.id === id);
+  if (!ev) return;
+  const isRecorrente = ev.repeticao && ev.repeticao !== 'nenhuma';
+  if (isRecorrente && ocorrenciaData && ocorrenciaData !== ev.data) {
+    if (!ev.excecoes) ev.excecoes = {};
+    const atual = ev.excecoes[ocorrenciaData] || {};
+    const concluidoAtual = ('concluido' in atual) ? atual.concluido : ev.concluido;
+    ev.excecoes[ocorrenciaData] = Object.assign({}, atual, { concluido: !concluidoAtual });
+  } else {
+    ev.concluido = !ev.concluido;
+  }
+  saveDB();
+  renderCalendario();
+}
+
+// Abre o modal de edição para uma ocorrência específica, marcando de qual
+// data ela veio (para permitir a pergunta "só esta data ou toda a série").
+// Se o evento for originado de uma designação, edita a designação em vez do
+// evento cru, para manter os dois sincronizados.
+function openEventoModalOcorrencia(id, ocorrenciaData) {
+  const ev = db.eventos.find(e => e.id === id);
+  if (ev && ev.origemDesignacaoId) {
+    openDesignacaoModal(ev.origemDesignacaoId);
+    return;
+  }
+  openEventoModal(id, ocorrenciaData);
+}
+
+function deleteEvento(id, ocorrenciaData) {
+  const ev = db.eventos.find(e => e.id === id);
+  if (ev && ev.origemDesignacaoId) {
+    deleteDesignacao(ev.origemDesignacaoId);
+    return;
+  }
+  const isRecorrente = ev && ev.repeticao && ev.repeticao !== 'nenhuma';
+  if (isRecorrente && ocorrenciaData) {
+    confirmActionChoice('Este compromisso se repete. Excluir apenas esta data ou toda a série?', [
+      { label: 'Só esta data', action: () => {
+          aplicarExcecaoEvento(id, ocorrenciaData, { excluida: true });
+          saveDB(); renderCalendario();
+          showToast('Removido apenas nesta data', '🗑️');
+        }
+      },
+      { label: 'Toda a série', action: () => {
+          db.eventos = db.eventos.filter(e => e.id !== id);
+          saveDB(); renderCalendario();
+          showToast('Série excluída', '🗑️');
+        }
+      }
+    ]);
+  } else {
+    confirmAction('Excluir este compromisso?', () => {
+      db.eventos = db.eventos.filter(e => e.id !== id);
+      saveDB();
+      renderCalendario();
+      showToast('Excluído', '🗑️');
+    });
+  }
+}
+
+function openEventoModal(id = null, ocorrenciaData = null) {
+  const editing = id ? db.eventos.find(e => e.id === id) : null;
+  // Se veio de uma ocorrência recorrente específica, mescla a exceção (se existir)
+  // por cima dos dados da série, só para preencher o formulário.
+  let editingView = editing;
+  if (editing && ocorrenciaData) {
+    const excecao = (editing.excecoes || {})[ocorrenciaData];
+    editingView = Object.assign({}, editing, excecao || {}, { data: ocorrenciaData });
+  }
+  const valorData = editingView?.data || calSelectedDate;
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar compromisso' : 'Novo compromisso'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-evento">
+      <div class="field-row">
+        <div class="field"><label>Data</label><input type="date" id="ev-data" value="${valorData}" required></div>
+        <div class="field"><label>Tipo</label>
+          <select id="ev-tipo">
+            <option value="compromisso" ${editingView?.tipo==='compromisso'?'selected':''}>Compromisso</option>
+            <option value="estudo" ${editingView?.tipo==='estudo'?'selected':''}>Estudo</option>
+            <option value="meta" ${editingView?.tipo==='meta'?'selected':''}>Meta espiritual</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Título</label><input type="text" id="ev-titulo" placeholder="Ex.: Leitura da Bíblia — Salmos" value="${escapeHTML(editingView?.titulo || '')}" required></div>
+      <div class="field"><label>Repetição</label>
+        <select id="ev-repeticao">
+          <option value="nenhuma" ${(!editing || editing.repeticao==='nenhuma' || !editing.repeticao)?'selected':''}>Não repetir</option>
+          <option value="semanal" ${editing?.repeticao==='semanal'?'selected':''}>Toda semana, neste dia</option>
+          <option value="mensal" ${editing?.repeticao==='mensal'?'selected':''}>Todo mês, neste dia</option>
+          <option value="anual" ${editing?.repeticao==='anual'?'selected':''}>Todo ano, nesta data</option>
+        </select>
+        <div style="font-size:11.5px; color:var(--text-faint); margin-top:5px;">Compromissos recorrentes ficam ativos até você mudar o dia/horário novamente.</div>
+      </div>
+      <div class="field"><label>Observações</label><textarea id="ev-desc" placeholder="Detalhes, objetivo, notas...">${escapeHTML(editingView?.descricao || '')}</textarea></div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="closeModal(); deleteEvento('${editing.id}', '${ocorrenciaData || editing.data}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-evento').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = document.getElementById('ev-data').value;
+    const tipo = document.getElementById('ev-tipo').value;
+    const titulo = document.getElementById('ev-titulo').value.trim();
+    const descricao = document.getElementById('ev-desc').value.trim();
+    const repeticao = document.getElementById('ev-repeticao').value;
+    if (!titulo || !data) return;
+
+    if (editing) {
+      const novosDados = { data, tipo, titulo, descricao, repeticao };
+      const eraRecorrente = editing.repeticao && editing.repeticao !== 'nenhuma';
+
+      if (eraRecorrente && ocorrenciaData) {
+        // Pergunta: essa edição vale só para esta data, ou para toda a série?
+        closeModal();
+        confirmActionChoice(
+          'Este compromisso se repete. Você quer alterar apenas esta ocorrência ou toda a série (a partir de agora)?',
+          [
+            { label: 'Só esta data', action: () => {
+                aplicarExcecaoEvento(editing.id, ocorrenciaData, novosDados);
+                saveDB(); renderCalendario();
+                showToast('Alterado somente nesta data');
+              }
+            },
+            { label: 'Toda a série', action: () => {
+                const real = db.eventos.find(ev => ev.id === editing.id);
+                if (real) Object.assign(real, novosDados);
+                saveDB(); renderCalendario();
+                showToast('Série de compromissos atualizada');
+              }
+            }
+          ]
+        );
+        return;
+      } else {
+        Object.assign(editing, novosDados);
+        showToast('Compromisso atualizado');
+      }
+    } else {
+      db.eventos.push({ id: uid(), data, tipo, titulo, descricao, repeticao, concluido: false, excecoes: {}, criadoEm: Date.now() });
+      showToast('Compromisso adicionado');
+    }
+    calSelectedDate = data;
+    calViewDate = new Date(data + 'T00:00:00');
+    saveDB();
+    closeModal();
+    renderCalendario();
+  });
+}
+
+// Aplica uma alteração (ou marca como excluída) só para UMA ocorrência de um
+// compromisso recorrente, sem afetar a série. Guardada em ev.excecoes[dataStr].
+function aplicarExcecaoEvento(eventoId, dataOcorrencia, dadosOuNull) {
+  const ev = db.eventos.find(e => e.id === eventoId);
+  if (!ev) return;
+  if (!ev.excecoes) ev.excecoes = {};
+  ev.excecoes[dataOcorrencia] = dadosOuNull || { excluida: true };
+}
+
+// Modal de confirmação com múltiplas opções de ação (usado para recorrência)
+function confirmActionChoice(message, choices) {
+  openModal(`
+    <div class="modal-title"><span>Compromisso recorrente</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <p style="font-size:13.5px; color:var(--text-dim); line-height:1.6;">${escapeHTML(message)}</p>
+    <div class="confirm-actions" style="flex-wrap:wrap;">
+      <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      ${choices.map((c, i) => `<button type="button" class="btn ${i === choices.length-1 ? 'btn-primary' : 'btn-ghost'}" id="choice-btn-${i}">${escapeHTML(c.label)}</button>`).join('')}
+    </div>
+  `);
+  choices.forEach((c, i) => {
+    document.getElementById(`choice-btn-${i}`).addEventListener('click', () => {
+      closeModal();
+      c.action();
+    });
+  });
+}
+
+/* =========================================================================
+   5) PRÓXIMAS DESIGNAÇÕES
+   ========================================================================= */
+let designacoesSearch = '';
+document.getElementById('search-designacoes').addEventListener('input', e => { designacoesSearch = e.target.value.trim().toLowerCase(); renderDesignacoes(); });
+document.getElementById('btn-new-designacao').addEventListener('click', () => openDesignacaoModal());
+
+function openDesignacaoModal(id = null) {
+  const editing = id ? db.designacoes.find(d => d.id === id) : null;
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar designação' : 'Nova designação'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-designacao">
+      <div class="field"><label>Título</label><input type="text" id="des-titulo" placeholder="Ex.: Discurso — A fé que agrada a Deus" value="${escapeHTML(editing?.titulo || '')}" required></div>
+      <div class="field-row">
+        <div class="field"><label>Data</label><input type="date" id="des-data" value="${editing?.data || ''}"></div>
+        <div class="field"><label>Duração</label><input type="text" id="des-duracao" placeholder="Ex.: 15 min" value="${escapeHTML(editing?.duracao || '')}"></div>
+      </div>
+      <div class="field"><label>Status</label>
+        <select id="des-status">
+          <option value="pendente" ${editing?.status==='pendente'?'selected':''}>Pendente</option>
+          <option value="preparando" ${editing?.status==='preparando'?'selected':''}>Preparando</option>
+          <option value="concluida" ${editing?.status==='concluida'?'selected':''}>Concluída</option>
+        </select>
+      </div>
+      <div class="field"><label>Observações</label><textarea id="des-obs" placeholder="Material de apoio, pontos principais...">${escapeHTML(editing?.observacoes || '')}</textarea></div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deleteDesignacao('${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-designacao').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const titulo = document.getElementById('des-titulo').value.trim();
+    if (!titulo) return;
+    const data = {
+      titulo,
+      data: document.getElementById('des-data').value,
+      duracao: document.getElementById('des-duracao').value.trim(),
+      status: document.getElementById('des-status').value,
+      observacoes: document.getElementById('des-obs').value.trim()
+    };
+    let designacaoId;
+    if (editing) {
+      Object.assign(editing, data);
+      designacaoId = editing.id;
+      showToast('Designação atualizada');
+    } else {
+      designacaoId = uid();
+      db.designacoes.push({ id: designacaoId, ...data, criadoEm: Date.now() });
+      showToast('Designação adicionada');
+    }
+    sincronizarEventoDaDesignacao(designacaoId);
+    saveDB();
+    closeModal();
+    renderDesignacoes();
+    renderCalendario();
+  });
+}
+
+// Mantém um evento de calendário em sincronia com uma designação:
+// cria, atualiza ou remove o evento vinculado (origemDesignacaoId) conforme
+// a designação tenha ou não uma data preenchida.
+function sincronizarEventoDaDesignacao(designacaoId) {
+  const d = db.designacoes.find(x => x.id === designacaoId);
+  if (!d) return;
+  let evento = db.eventos.find(e => e.origemDesignacaoId === designacaoId);
+
+  if (!d.data) {
+    // Sem data: remove o evento vinculado, se existir
+    if (evento) db.eventos = db.eventos.filter(e => e.id !== evento.id);
+    return;
+  }
+
+  const descricaoPartes = [];
+  if (d.duracao) descricaoPartes.push('Duração: ' + d.duracao);
+  if (d.observacoes) descricaoPartes.push(d.observacoes);
+  const descricao = descricaoPartes.join('\n');
+
+  if (evento) {
+    Object.assign(evento, { data: d.data, titulo: d.titulo, descricao, tipo: 'designacao' });
+  } else {
+    db.eventos.push({
+      id: uid(), data: d.data, tipo: 'designacao', titulo: d.titulo, descricao,
+      concluido: d.status === 'concluida', repeticao: 'nenhuma', excecoes: {},
+      origemDesignacaoId: designacaoId, criadoEm: Date.now()
+    });
+  }
+}
+
+function deleteDesignacao(id) {
+  confirmAction('Excluir esta designação?', () => {
+    db.designacoes = db.designacoes.filter(d => d.id !== id);
+    db.eventos = db.eventos.filter(e => e.origemDesignacaoId !== id);
+    saveDB();
+    renderDesignacoes();
+    renderCalendario();
+    showToast('Excluída', '🗑️');
+  });
+}
+
+function statusLabel(s) {
+  return { pendente: 'Pendente', preparando: 'Preparando', concluida: 'Concluída' }[s] || s;
+}
+
+function renderDesignacoes() {
+  const container = document.getElementById('designacoes-container');
+  if (db.designacoes.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">🎤</div>
+        <div class="title">Nenhuma designação registrada</div>
+        <div class="desc">Registre discursos, leituras e apresentações com data, duração e status.</div>
+      </div>`;
+    return;
+  }
+  const term = designacoesSearch;
+  const filtered = db.designacoes.filter(d =>
+    !term || d.titulo.toLowerCase().includes(term) || (d.observacoes||'').toLowerCase().includes(term)
+  ).sort((a,b) => (a.data||'9999').localeCompare(b.data||'9999'));
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="ic">🔍</div><div class="title">Nada encontrado</div></div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(d => `
+    <div class="list-row status-border-${d.status}">
+      <div class="avatar">🎤</div>
+      <div class="body" onclick="openDesignacaoModal('${d.id}')">
+        <div class="title-row">
+          <span class="name">${escapeHTML(d.titulo)}</span>
+          <span class="status-badge status-${d.status}">${statusLabel(d.status)}</span>
+        </div>
+        <div class="meta">${d.data ? formatDateBR(d.data) : 'Sem data'} ${d.duracao ? '· ' + escapeHTML(d.duracao) : ''}</div>
+        ${d.observacoes ? `<div class="snippet">${escapeHTML(d.observacoes)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="openDesignacaoModal('${d.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deleteDesignacao('${d.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function formatDateBR(iso) {
+  const [y,m,d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+/* =========================================================================
+   6) PESQUISAS   (formulário: título, referência, resumo, texto completo)
+   ========================================================================= */
+let pesquisasSearch = '';
+document.getElementById('search-pesquisas').addEventListener('input', (e) => {
+  pesquisasSearch = e.target.value.trim().toLowerCase();
+  renderPesquisas();
+});
+document.getElementById('btn-new-pesquisa').addEventListener('click', () => openPesquisaModal());
+
+function openPesquisaModal(id = null) {
+  const editing = id ? db.pesquisas.find(p => p.id === id) : null;
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar pesquisa' : 'Nova pesquisa'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-pesquisa">
+      <div class="field-row">
+        <div class="field"><label>Título / Tema</label><input type="text" id="pq-titulo" placeholder="Ex.: A fé de Noé" value="${escapeHTML(editing?.titulo || '')}" required></div>
+        <div class="field"><label>Referência</label><input type="text" id="pq-ref" placeholder="Ex.: Gênesis 6-9" value="${escapeHTML(editing?.referencia || '')}"></div>
+      </div>
+      <div class="field"><label>Resumo</label><textarea id="pq-resumo" placeholder="Resumo curto do estudo...">${escapeHTML(editing?.resumo || '')}</textarea></div>
+      <div class="field"><label>Texto completo</label><textarea id="pq-corpo" rows="8" placeholder="Conteúdo completo da pesquisa...">${escapeHTML(editing?.corpo || '')}</textarea></div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deletePesquisa('${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `, { large: true });
+  document.getElementById('form-pesquisa').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const titulo = document.getElementById('pq-titulo').value.trim();
+    if (!titulo) return;
+    const data = {
+      titulo,
+      referencia: document.getElementById('pq-ref').value.trim(),
+      resumo: document.getElementById('pq-resumo').value.trim(),
+      corpo: document.getElementById('pq-corpo').value.trim()
+    };
+    if (editing) {
+      Object.assign(editing, data);
+      editing.atualizadoEm = Date.now();
+      showToast('Pesquisa atualizada');
+    } else {
+      db.pesquisas.push({ id: uid(), ...data, atualizadoEm: Date.now(), criadoEm: Date.now() });
+      showToast('Pesquisa adicionada');
+    }
+    saveDB();
+    closeModal();
+    renderPesquisas();
+  });
+}
+
+function deletePesquisa(id) {
+  confirmAction('Excluir esta pesquisa? Essa ação não pode ser desfeita.', () => {
+    db.pesquisas = db.pesquisas.filter(p => p.id !== id);
+    saveDB();
+    renderPesquisas();
+    showToast('Pesquisa excluída', '🗑️');
+  });
+}
+
+function openPesquisaViewModal(id) {
+  const p = db.pesquisas.find(x => x.id === id);
+  if (!p) return;
+  openModal(`
+    <div class="modal-title"><span>👁️ Visualizando</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <div class="doc-view-mode">${escapeHTML(p.titulo)}</div>
+    ${p.referencia ? `<div class="doc-meta">${escapeHTML(p.referencia)}</div>` : ''}
+    <div style="margin-top:16px;">
+      <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:7px; text-transform:uppercase; letter-spacing:.04em;">Resumo</label>
+      <div class="doc-view-body ${!p.resumo ? 'is-empty' : ''}">${p.resumo ? nl2br(p.resumo) : 'Sem resumo.'}</div>
+    </div>
+    <div style="margin-top:20px;">
+      <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:7px; text-transform:uppercase; letter-spacing:.04em;">Texto completo</label>
+      <div class="doc-view-body ${!p.corpo ? 'is-empty' : ''}">${p.corpo ? nl2br(p.corpo) : 'Sem texto registrado.'}</div>
+    </div>
+    <div class="modal-actions-view">
+      <div class="row-top">
+        <button type="button" class="btn btn-ghost" onclick="copiarPesquisa('${p.id}')">📋 Copiar</button>
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="closeModal(); openPesquisaModal('${p.id}')">✏️ Editar</button>
+      </div>
+      <button type="button" class="btn btn-ghost btn-share-full" onclick="compartilharPesquisa('${p.id}')">📤 Compartilhar</button>
+    </div>
+  `, { large: true });
+}
+
+function textoDaPesquisa(p) {
+  const partes = [p.titulo || 'Sem título'];
+  if (p.referencia) partes.push(p.referencia);
+  if (p.resumo) partes.push('\nResumo:\n' + p.resumo);
+  if (p.corpo) partes.push('\nTexto completo:\n' + p.corpo);
+  return partes.join('\n');
+}
+
+function copiarPesquisa(id) {
+  const p = db.pesquisas.find(x => x.id === id);
+  if (!p) return;
+  copiarTexto(textoDaPesquisa(p), 'Pesquisa copiada!');
+}
+
+function compartilharPesquisa(id) {
+  const p = db.pesquisas.find(x => x.id === id);
+  if (!p) return;
+  abrirCompartilharModal(p.titulo || 'Pesquisa', textoDaPesquisa(p));
+}
+
+function renderPesquisas() {
+  const container = document.getElementById('pesquisas-container');
+  const list = db.pesquisas;
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">🔎</div>
+        <div class="title">Nenhuma pesquisa criada</div>
+        <div class="desc">Adicione pesquisas com título, referência, resumo e texto completo.</div>
+      </div>`;
+    return;
+  }
+  const search = pesquisasSearch;
+  const filtered = list.filter(p =>
+    !search ||
+    p.titulo.toLowerCase().includes(search) ||
+    (p.referencia || '').toLowerCase().includes(search) ||
+    (p.resumo || '').toLowerCase().includes(search) ||
+    (p.corpo || '').toLowerCase().includes(search)
+  );
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="ic">🔍</div><div class="title">Nada encontrado</div></div>`;
+    return;
+  }
+  container.innerHTML = filtered.sort((a,b) => (b.atualizadoEm||0) - (a.atualizadoEm||0)).map(p => `
+    <div class="list-row">
+      <div class="avatar">${escapeHTML((p.titulo[0] || '?').toUpperCase())}</div>
+      <div class="body" onclick="openPesquisaViewModal('${p.id}')">
+        <div class="title-row">
+          <span class="name">${escapeHTML(p.titulo)}</span>
+          ${p.referencia ? `<span class="meta">${escapeHTML(p.referencia)}</span>` : ''}
+        </div>
+        ${p.resumo ? `<div class="snippet"><strong>Resumo:</strong> ${escapeHTML(p.resumo)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="openPesquisaViewModal('${p.id}')" title="Visualizar">👁️</button>
+        <button class="btn-icon" onclick="openPesquisaModal('${p.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deletePesquisa('${p.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* =========================================================================
+   7) ROTEIROS   (formulário: título, texto, duração recomendada, ilustrações)
+   ========================================================================= */
+let roteirosSearch = '';
+document.getElementById('search-roteiros').addEventListener('input', (e) => {
+  roteirosSearch = e.target.value.trim().toLowerCase();
+  renderRoteiros();
+});
+document.getElementById('btn-new-roteiro').addEventListener('click', () => openRoteiroModal());
+
+function openRoteiroModal(id = null) {
+  const editing = id ? db.roteiros.find(r => r.id === id) : null;
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar roteiro' : 'Novo roteiro'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-roteiro">
+      <div class="field-row">
+        <div class="field"><label>Discurso ou parte</label><input type="text" id="rt-titulo" placeholder="Ex.: A importância da oração" value="${escapeHTML(editing?.titulo || '')}" required></div>
+        <div class="field"><label>Duração recomendada</label><input type="text" id="rt-duracao" placeholder="Ex.: 5 min" value="${escapeHTML(editing?.duracao || '')}"></div>
+      </div>
+      <div class="field"><label>Texto do discurso ou parte</label><textarea id="rt-texto" rows="8" placeholder="Escreva aqui o conteúdo completo...">${escapeHTML(editing?.textoCompleto || '')}</textarea></div>
+      <div class="field"><label>Ilustrações do discurso ou parte</label><textarea id="rt-ilustracoes" rows="4" placeholder="Ilustrações, histórias ou exemplos a usar...">${escapeHTML(editing?.ilustracoes || '')}</textarea></div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deleteRoteiro('${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `, { large: true });
+  document.getElementById('form-roteiro').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const titulo = document.getElementById('rt-titulo').value.trim();
+    if (!titulo) return;
+    const data = {
+      titulo,
+      duracao: document.getElementById('rt-duracao').value.trim(),
+      textoCompleto: document.getElementById('rt-texto').value.trim(),
+      ilustracoes: document.getElementById('rt-ilustracoes').value.trim()
+    };
+    if (editing) {
+      Object.assign(editing, data);
+      editing.atualizadoEm = Date.now();
+      showToast('Roteiro atualizado');
+    } else {
+      db.roteiros.push({ id: uid(), ...data, atualizadoEm: Date.now(), criadoEm: Date.now() });
+      showToast('Roteiro adicionado');
+    }
+    saveDB();
+    closeModal();
+    renderRoteiros();
+  });
+}
+
+function deleteRoteiro(id) {
+  confirmAction('Excluir este roteiro? Essa ação não pode ser desfeita.', () => {
+    db.roteiros = db.roteiros.filter(r => r.id !== id);
+    saveDB();
+    renderRoteiros();
+    showToast('Roteiro excluído', '🗑️');
+  });
+}
+
+function openRoteiroViewModal(id) {
+  const r = db.roteiros.find(x => x.id === id);
+  if (!r) return;
+  openModal(`
+    <div class="modal-title"><span>👁️ Visualizando</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <div class="doc-view-mode">${escapeHTML(r.titulo)}</div>
+    ${r.duracao ? `<div class="doc-meta">Duração recomendada: ${escapeHTML(r.duracao)}</div>` : ''}
+    <div style="margin-top:16px;">
+      <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:7px; text-transform:uppercase; letter-spacing:.04em;">Texto do discurso ou parte</label>
+      <div class="doc-view-body ${!r.textoCompleto ? 'is-empty' : ''}">${r.textoCompleto ? nl2br(r.textoCompleto) : 'Sem texto registrado.'}</div>
+    </div>
+    <div style="margin-top:20px;">
+      <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:7px; text-transform:uppercase; letter-spacing:.04em;">Ilustrações do discurso ou parte</label>
+      <div class="doc-view-body ${!r.ilustracoes ? 'is-empty' : ''}">${r.ilustracoes ? nl2br(r.ilustracoes) : 'Sem ilustrações registradas.'}</div>
+    </div>
+    <div class="modal-actions-view">
+      <div class="row-top">
+        <button type="button" class="btn btn-ghost" onclick="copiarRoteiro('${r.id}')">📋 Copiar</button>
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="closeModal(); openRoteiroModal('${r.id}')">✏️ Editar</button>
+      </div>
+      <button type="button" class="btn btn-ghost btn-share-full" onclick="compartilharRoteiro('${r.id}')">📤 Compartilhar</button>
+    </div>
+  `, { large: true });
+}
+
+function textoDoRoteiro(r) {
+  const partes = [r.titulo || 'Sem título'];
+  if (r.duracao) partes.push('Duração recomendada: ' + r.duracao);
+  if (r.textoCompleto) partes.push('\nTexto:\n' + r.textoCompleto);
+  if (r.ilustracoes) partes.push('\nIlustrações:\n' + r.ilustracoes);
+  return partes.join('\n');
+}
+
+function copiarRoteiro(id) {
+  const r = db.roteiros.find(x => x.id === id);
+  if (!r) return;
+  copiarTexto(textoDoRoteiro(r), 'Roteiro copiado!');
+}
+
+function compartilharRoteiro(id) {
+  const r = db.roteiros.find(x => x.id === id);
+  if (!r) return;
+  abrirCompartilharModal(r.titulo || 'Roteiro', textoDoRoteiro(r));
+}
+
+function renderRoteiros() {
+  const container = document.getElementById('roteiros-container');
+  const list = db.roteiros;
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">📝</div>
+        <div class="title">Nenhum roteiro criado</div>
+        <div class="desc">Adicione roteiros com texto, duração recomendada e ilustrações.</div>
+      </div>`;
+    return;
+  }
+  const search = roteirosSearch;
+  const filtered = list.filter(r =>
+    !search ||
+    r.titulo.toLowerCase().includes(search) ||
+    (r.textoCompleto || '').toLowerCase().includes(search) ||
+    (r.ilustracoes || '').toLowerCase().includes(search)
+  );
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="ic">🔍</div><div class="title">Nada encontrado</div></div>`;
+    return;
+  }
+  container.innerHTML = filtered.sort((a,b) => (b.atualizadoEm||0) - (a.atualizadoEm||0)).map(r => `
+    <div class="list-row">
+      <div class="avatar">${escapeHTML((r.titulo[0] || '?').toUpperCase())}</div>
+      <div class="body" onclick="openRoteiroViewModal('${r.id}')">
+        <div class="title-row">
+          <span class="name">${escapeHTML(r.titulo)}</span>
+          ${r.duracao ? `<span class="meta">${escapeHTML(r.duracao)}</span>` : ''}
+        </div>
+        ${r.textoCompleto ? `<div class="snippet"><strong>Texto:</strong> ${escapeHTML(r.textoCompleto)}</div>` : ''}
+        ${r.ilustracoes ? `<div class="snippet"><strong>Ilustrações:</strong> ${escapeHTML(r.ilustracoes)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="openRoteiroViewModal('${r.id}')" title="Visualizar">👁️</button>
+        <button class="btn-icon" onclick="openRoteiroModal('${r.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deleteRoteiro('${r.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* =========================================================================
+   8) ILUSTRAÇÕES  (formulário: título, tema/referência, resumo, texto completo)
+   ========================================================================= */
+let ilustracoesSearch = '';
+document.getElementById('search-ilustracoes').addEventListener('input', (e) => {
+  ilustracoesSearch = e.target.value.trim().toLowerCase();
+  renderIlustracoes();
+});
+document.getElementById('btn-new-ilustracao').addEventListener('click', () => openIlustracaoModal());
+
+function openIlustracaoModal(id = null) {
+  const editing = id ? db.ilustracoes.find(i => i.id === id) : null;
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar ilustração' : 'Nova ilustração'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-ilustracao">
+      <div class="field-row">
+        <div class="field"><label>Título</label><input type="text" id="il-titulo" placeholder="Ex.: A ovelha perdida" value="${escapeHTML(editing?.titulo || '')}" required></div>
+        <div class="field"><label>Tema / Referência</label><input type="text" id="il-ref" placeholder="Ex.: Perseverança" value="${escapeHTML(editing?.referencia || '')}"></div>
+      </div>
+      <div class="field"><label>Resumo</label><textarea id="il-resumo" placeholder="Resumo curto da ilustração...">${escapeHTML(editing?.resumo || '')}</textarea></div>
+      <div class="field"><label>Texto completo</label><textarea id="il-corpo" rows="8" placeholder="Conteúdo completo da ilustração...">${escapeHTML(editing?.corpo || '')}</textarea></div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deleteIlustracao('${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Adicionar'}</button>
+      </div>
+    </form>
+  `, { large: true });
+  document.getElementById('form-ilustracao').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const titulo = document.getElementById('il-titulo').value.trim();
+    if (!titulo) return;
+    const data = {
+      titulo,
+      referencia: document.getElementById('il-ref').value.trim(),
+      resumo: document.getElementById('il-resumo').value.trim(),
+      corpo: document.getElementById('il-corpo').value.trim()
+    };
+    if (editing) {
+      Object.assign(editing, data);
+      editing.atualizadoEm = Date.now();
+      showToast('Ilustração atualizada');
+    } else {
+      db.ilustracoes.push({ id: uid(), ...data, atualizadoEm: Date.now(), criadoEm: Date.now() });
+      showToast('Ilustração adicionada');
+    }
+    saveDB();
+    closeModal();
+    renderIlustracoes();
+  });
+}
+
+function deleteIlustracao(id) {
+  confirmAction('Excluir esta ilustração? Essa ação não pode ser desfeita.', () => {
+    db.ilustracoes = db.ilustracoes.filter(i => i.id !== id);
+    saveDB();
+    renderIlustracoes();
+    showToast('Ilustração excluída', '🗑️');
+  });
+}
+
+function openIlustracaoViewModal(id) {
+  const i = db.ilustracoes.find(x => x.id === id);
+  if (!i) return;
+  openModal(`
+    <div class="modal-title"><span>👁️ Visualizando</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <div class="doc-view-mode">${escapeHTML(i.titulo)}</div>
+    ${i.referencia ? `<div class="doc-meta">${escapeHTML(i.referencia)}</div>` : ''}
+    <div style="margin-top:16px;">
+      <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:7px; text-transform:uppercase; letter-spacing:.04em;">Resumo</label>
+      <div class="doc-view-body ${!i.resumo ? 'is-empty' : ''}">${i.resumo ? nl2br(i.resumo) : 'Sem resumo.'}</div>
+    </div>
+    <div style="margin-top:20px;">
+      <label style="display:block; font-size:12.5px; font-weight:600; color:var(--text-dim); margin-bottom:7px; text-transform:uppercase; letter-spacing:.04em;">Texto completo</label>
+      <div class="doc-view-body ${!i.corpo ? 'is-empty' : ''}">${i.corpo ? nl2br(i.corpo) : 'Sem texto registrado.'}</div>
+    </div>
+    <div class="modal-actions-view">
+      <div class="row-top">
+        <button type="button" class="btn btn-ghost" onclick="copiarIlustracao('${i.id}')">📋 Copiar</button>
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Fechar</button>
+        <button type="button" class="btn btn-primary" onclick="closeModal(); openIlustracaoModal('${i.id}')">✏️ Editar</button>
+      </div>
+      <button type="button" class="btn btn-ghost btn-share-full" onclick="compartilharIlustracao('${i.id}')">📤 Compartilhar</button>
+    </div>
+  `, { large: true });
+}
+
+function textoDaIlustracao(i) {
+  const partes = [i.titulo || 'Sem título'];
+  if (i.referencia) partes.push(i.referencia);
+  if (i.resumo) partes.push('\nResumo:\n' + i.resumo);
+  if (i.corpo) partes.push('\nTexto completo:\n' + i.corpo);
+  return partes.join('\n');
+}
+
+function copiarIlustracao(id) {
+  const i = db.ilustracoes.find(x => x.id === id);
+  if (!i) return;
+  copiarTexto(textoDaIlustracao(i), 'Ilustração copiada!');
+}
+
+function compartilharIlustracao(id) {
+  const i = db.ilustracoes.find(x => x.id === id);
+  if (!i) return;
+  abrirCompartilharModal(i.titulo || 'Ilustração', textoDaIlustracao(i));
+}
+
+function renderIlustracoes() {
+  const container = document.getElementById('ilustracoes-container');
+  const list = db.ilustracoes;
+  if (list.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">🖼️</div>
+        <div class="title">Nenhuma ilustração criada</div>
+        <div class="desc">Adicione ilustrações com título, tema, resumo e texto completo.</div>
+      </div>`;
+    return;
+  }
+  const search = ilustracoesSearch;
+  const filtered = list.filter(i =>
+    !search ||
+    i.titulo.toLowerCase().includes(search) ||
+    (i.referencia || '').toLowerCase().includes(search) ||
+    (i.resumo || '').toLowerCase().includes(search) ||
+    (i.corpo || '').toLowerCase().includes(search)
+  );
+  if (filtered.length === 0) {
+    container.innerHTML = `<div class="empty-state"><div class="ic">🔍</div><div class="title">Nada encontrado</div></div>`;
+    return;
+  }
+  container.innerHTML = filtered.sort((a,b) => (b.atualizadoEm||0) - (a.atualizadoEm||0)).map(i => `
+    <div class="list-row">
+      <div class="avatar">${escapeHTML((i.titulo[0] || '?').toUpperCase())}</div>
+      <div class="body" onclick="openIlustracaoViewModal('${i.id}')">
+        <div class="title-row">
+          <span class="name">${escapeHTML(i.titulo)}</span>
+          ${i.referencia ? `<span class="meta">${escapeHTML(i.referencia)}</span>` : ''}
+        </div>
+        ${i.resumo ? `<div class="snippet"><strong>Resumo:</strong> ${escapeHTML(i.resumo)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="openIlustracaoViewModal('${i.id}')" title="Visualizar">👁️</button>
+        <button class="btn-icon" onclick="openIlustracaoModal('${i.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deleteIlustracao('${i.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* =========================================================================
+   ONBOARDING (primeiro uso) + PÁGINA INICIAL
+   ========================================================================= */
+function checkOnboarding() {
+  if (!db.perfil) {
+    const overlay = document.getElementById('onboarding-overlay');
+    overlay.classList.add('active');
+    const inicioInput = document.getElementById('ob-inicio');
+    inicioInput.value = fmtDate(new Date());
+    return true;
+  }
+  return false;
+}
+
+document.getElementById('form-onboarding').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const nome = document.getElementById('ob-nome').value.trim();
+  if (!nome) return;
+  db.perfil = {
+    nome,
+    email: document.getElementById('ob-email').value.trim(),
+    telefone: document.getElementById('ob-telefone').value.trim(),
+    nascimento: document.getElementById('ob-nascimento').value,
+    inicioApp: document.getElementById('ob-inicio').value || fmtDate(new Date())
+  };
+  saveDB();
+  document.getElementById('onboarding-overlay').classList.remove('active');
+  renderAll();
+  showToast('Bem-vindo(a), ' + nome.split(' ')[0] + '!', '📖');
+});
+
+function openPerfilModal() {
+  const p = db.perfil || {};
+  openModal(`
+    <div class="modal-title"><span>Editar meus dados</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-perfil">
+      <div class="field">
+        <label>Nome completo *</label>
+        <input type="text" id="perfil-nome" value="${escapeHTML(p.nome || '')}" required>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>E-mail</label><input type="email" id="perfil-email" value="${escapeHTML(p.email || '')}"></div>
+        <div class="field"><label>Telefone</label><input type="tel" id="perfil-telefone" value="${escapeHTML(p.telefone || '')}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Data de nascimento</label><input type="date" id="perfil-nascimento" value="${p.nascimento || ''}"></div>
+        <div class="field"><label>Início no app</label><input type="date" id="perfil-inicio" value="${p.inicioApp || ''}"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-perfil').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nome = document.getElementById('perfil-nome').value.trim();
+    if (!nome) return;
+    db.perfil = {
+      nome,
+      email: document.getElementById('perfil-email').value.trim(),
+      telefone: document.getElementById('perfil-telefone').value.trim(),
+      nascimento: document.getElementById('perfil-nascimento').value,
+      inicioApp: document.getElementById('perfil-inicio').value
+    };
+    saveDB();
+    closeModal();
+    renderInicio();
+    showToast('Dados atualizados');
+  });
+}
+
+function saudacaoPorHorario() {
+  const h = new Date().getHours();
+  if (h < 12) return 'Bom dia';
+  if (h < 18) return 'Boa tarde';
+  return 'Boa noite';
+}
+
+function diasDesde(dataISO) {
+  if (!dataISO) return null;
+  const then = new Date(dataISO + 'T00:00:00');
+  const now = new Date();
+  const diff = Math.floor((now - then) / (1000 * 60 * 60 * 24));
+  return diff >= 0 ? diff : 0;
+}
+
+function renderInicio() {
+  const container = document.getElementById('inicio-container');
+  if (!container) return;
+  const p = db.perfil || {};
+  const primeiroNome = (p.nome || '').split(' ')[0];
+  const dias = diasDesde(p.inicioApp);
+  const fav = db.textos.find(t => t.favorito);
+
+  container.innerHTML = `
+    <div class="hero-card">
+      <div class="hero-icon">📖</div>
+      <div class="hero-greeting">${saudacaoPorHorario()}${primeiroNome ? ', ' + escapeHTML(primeiroNome) : ''}</div>
+      <h2>Programação Espiritual</h2>
+      <div class="hero-sub">Seu espaço pessoal de estudo, organização e crescimento espiritual. Tudo que você registrar aqui fica guardado neste dispositivo, pronto para consultar quando precisar.</div>
+      ${fav ? `
+        <div class="hero-verse">
+          <div class="label">⭐ Seu texto favorito</div>
+          <div class="ref">${escapeHTML(fav.referencia)}</div>
+        </div>` : ''}
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card"><div class="num">${dias !== null ? dias : '—'}</div><div class="lbl">Dias no app</div></div>
+      <div class="stat-card"><div class="num">${db.textos.length}</div><div class="lbl">Textos salvos</div></div>
+      <div class="stat-card"><div class="num">${db.registrosCampo.length}</div><div class="lbl">Dias de campo</div></div>
+    </div>
+
+    <div id="painel-lembretes-semana"></div>
+    <div id="painel-proximas-programacoes"></div>
+    <div id="painel-roteiros-feitos"></div>
+
+    <div class="profile-card">
+      <div class="profile-head">
+        <h3>👤 Meus dados</h3>
+        <button class="btn btn-ghost btn-sm" onclick="openPerfilModal()">✏️ Editar</button>
+      </div>
+      <div class="profile-fields">
+        <div class="profile-field"><div class="k">Nome completo</div><div class="v ${!p.nome ? 'empty' : ''}">${escapeHTML(p.nome) || 'Não informado'}</div></div>
+        <div class="profile-field"><div class="k">E-mail</div><div class="v ${!p.email ? 'empty' : ''}">${escapeHTML(p.email) || 'Não informado'}</div></div>
+        <div class="profile-field"><div class="k">Telefone</div><div class="v ${!p.telefone ? 'empty' : ''}">${escapeHTML(p.telefone) || 'Não informado'}</div></div>
+        <div class="profile-field"><div class="k">Data de nascimento</div><div class="v ${!p.nascimento ? 'empty' : ''}">${p.nascimento ? formatDateBR(p.nascimento) : 'Não informado'}</div></div>
+        <div class="profile-field"><div class="k">Início no app</div><div class="v ${!p.inicioApp ? 'empty' : ''}">${p.inicioApp ? formatDateBR(p.inicioApp) : 'Não informado'}</div></div>
+      </div>
+    </div>
+
+    <div class="quick-links">
+      <button class="quick-link" onclick="goToView('campo')"><span class="ic">🧭</span> Relatório de campo</button>
+      <button class="quick-link" onclick="goToView('textos')"><span class="ic">📖</span> Textos importantes</button>
+      <button class="quick-link" onclick="goToView('calendario')"><span class="ic">📅</span> Calendário</button>
+      <button class="quick-link" onclick="goToView('pesquisas')"><span class="ic">🔎</span> Pesquisas</button>
+    </div>
+  `;
+
+  renderPainelLembretesSemana();
+  renderPainelProximasProgramacoes();
+  renderPainelRoteirosFeitos();
+}
+
+/* ---------- 🔔 Lembretes desta semana ---------- */
+function renderPainelLembretesSemana() {
+  const el = document.getElementById('painel-lembretes-semana');
+  if (!el) return;
+
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const daqui7 = new Date(hoje); daqui7.setDate(daqui7.getDate() + 6);
+  const eventos = getEventosNoIntervalo(fmtDate(hoje), fmtDate(daqui7))
+    .filter(ev => {
+      const chave = ev.id + '|' + ev.__ocorrenciaData;
+      return !db.lembretesDispensados.includes(chave);
+    })
+    .sort((a,b) => a.data.localeCompare(b.data));
+
+  if (eventos.length === 0) {
+    el.innerHTML = `
+      <div class="home-panel">
+        <div class="home-panel-head"><h3>🔔 Lembretes desta semana</h3></div>
+        <div class="empty-state" style="padding:24px 16px;"><div class="ic">✅</div><div class="title">Nada pendente nos próximos 7 dias</div></div>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="home-panel">
+      <div class="home-panel-head"><h3>🔔 Lembretes desta semana</h3><span class="home-panel-count">${eventos.length}</span></div>
+      <div class="home-panel-list">
+        ${eventos.map(ev => `
+          <div class="home-panel-item">
+            <div class="body" onclick="abrirLembreteDaHome('${ev.id}','${ev.__ocorrenciaData}')">
+              <span class="tag-pill tag-${ev.tipo}">${tipoLabel(ev.tipo)}</span>
+              <span class="hpi-title">${escapeHTML(ev.titulo)}</span>
+              <span class="hpi-date">${formatDateBR(ev.data)}</span>
+            </div>
+            <button class="hpi-dismiss" onclick="dispensarLembrete('${ev.id}','${ev.__ocorrenciaData}')" title="Excluir da lista">✕</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+}
+
+function abrirLembreteDaHome(id, ocorrenciaData) {
+  const ev = db.eventos.find(e => e.id === id);
+  if (!ev) return;
+  if (ev.origemDesignacaoId) {
+    goToView('calendario');
+    setTimeout(() => { ativarSubtab('cal-sub-designacoes'); openDesignacaoModal(ev.origemDesignacaoId); }, 150);
+  } else {
+    goToView('calendario');
+    setTimeout(() => {
+      ativarSubtab('cal-sub-calendario');
+      calSelectedDate = ocorrenciaData;
+      calViewDate = new Date(ocorrenciaData + 'T00:00:00');
+      renderCalendario();
+    }, 150);
+  }
+}
+
+function dispensarLembrete(id, ocorrenciaData) {
+  const chave = id + '|' + ocorrenciaData;
+  if (!db.lembretesDispensados.includes(chave)) {
+    db.lembretesDispensados.push(chave);
+    // mantém a lista de dispensados enxuta (remove entradas com mais de 30 dias)
+    saveDB();
+  }
+  renderPainelLembretesSemana();
+}
+
+/* ---------- 📅 Próximas programações ---------- */
+function renderPainelProximasProgramacoes() {
+  const el = document.getElementById('painel-proximas-programacoes');
+  if (!el) return;
+
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const daqui30 = new Date(hoje); daqui30.setDate(daqui30.getDate() + 30);
+  const eventos = getEventosNoIntervalo(fmtDate(hoje), fmtDate(daqui30))
+    .sort((a,b) => a.data.localeCompare(b.data))
+    .slice(0, 6);
+
+  if (eventos.length === 0) {
+    el.innerHTML = `
+      <div class="home-panel">
+        <div class="home-panel-head"><h3>📅 Próximas programações</h3></div>
+        <div class="empty-state" style="padding:24px 16px;"><div class="ic">📅</div><div class="title">Nenhuma programação nos próximos 30 dias</div></div>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="home-panel">
+      <div class="home-panel-head"><h3>📅 Próximas programações</h3><button class="btn btn-ghost btn-sm" onclick="goToView('calendario')">Ver tudo</button></div>
+      <div class="home-panel-list">
+        ${eventos.map(ev => `
+          <div class="home-panel-item">
+            <div class="body" onclick="abrirLembreteDaHome('${ev.id}','${ev.__ocorrenciaData}')">
+              <span class="tag-pill tag-${ev.tipo}">${tipoLabel(ev.tipo)}</span>
+              <span class="hpi-title">${escapeHTML(ev.titulo)}</span>
+              <span class="hpi-date">${formatDateBR(ev.data)}</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+}
+
+/* ---------- 📝 Roteiros feitos ---------- */
+function renderPainelRoteirosFeitos() {
+  const el = document.getElementById('painel-roteiros-feitos');
+  if (!el) return;
+
+  const total = db.roteiros.length;
+  const recentes = [...db.roteiros].sort((a,b) => (b.atualizadoEm||0) - (a.atualizadoEm||0)).slice(0, 5);
+
+  if (total === 0) {
+    el.innerHTML = `
+      <div class="home-panel">
+        <div class="home-panel-head"><h3>📝 Roteiros feitos</h3></div>
+        <div class="empty-state" style="padding:24px 16px;"><div class="ic">📝</div><div class="title">Nenhum roteiro criado ainda</div><div class="desc">Vá em Roteiros para escrever seu primeiro.</div></div>
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="home-panel">
+      <div class="home-panel-head"><h3>📝 Roteiros feitos</h3><span class="home-panel-count">${total}</span></div>
+      <div class="home-panel-list">
+        ${recentes.map(r => `
+          <div class="home-panel-item">
+            <div class="body" onclick="goToView('roteiros'); setTimeout(() => { ativarSubtab('rt-sub-roteiros'); openRoteiroViewModal('${r.id}'); }, 150);">
+              <span class="hpi-title">${escapeHTML(r.titulo)}</span>
+              ${r.duracao ? `<span class="hpi-date">${escapeHTML(r.duracao)}</span>` : ''}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      ${total > 5 ? `<button class="btn btn-ghost btn-sm" style="width:100%; justify-content:center; margin-top:8px;" onclick="goToView('roteiros')">Ver todos os ${total} roteiros</button>` : ''}
+    </div>`;
+}
+
+/* =========================================================================
+   RELATÓRIO DE CAMPO
+   ========================================================================= */
+let campoViewDate = new Date();
+
+document.getElementById('btn-new-campo').addEventListener('click', () => openCampoModal());
+
+function openCampoModal(id = null) {
+  const editing = id ? db.registrosCampo.find(r => r.id === id) : null;
+  openModal(`
+    <div class="modal-title"><span>${editing ? 'Editar registro' : 'Registrar dia de campo'}</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <form id="form-campo">
+      <div class="field-row">
+        <div class="field"><label>Data do campo</label><input type="date" id="campo-data" value="${editing?.data || fmtDate(new Date())}" required></div>
+        <div class="field"><label>Horas feitas no dia</label><input type="number" step="0.25" min="0" id="campo-horas" placeholder="Ex.: 2" value="${editing?.horas ?? ''}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Revisitas</label><input type="number" min="0" id="campo-revisitas" placeholder="0" value="${editing?.revisitas ?? ''}"></div>
+        <div class="field"><label>Estudos</label><input type="number" min="0" id="campo-estudos" placeholder="0" value="${editing?.estudos ?? ''}"></div>
+      </div>
+      <div class="field"><label>Observações</label><textarea id="campo-obs" placeholder="Notas sobre o dia (opcional)...">${escapeHTML(editing?.obs || '')}</textarea></div>
+      <div class="hint" style="margin:-6px 0 16px;">Todos os campos numéricos são opcionais — deixe em branco ou 0 se não se aplicar.</div>
+      <div class="modal-actions">
+        ${editing ? `<button type="button" class="btn btn-danger" style="margin-right:auto" onclick="deleteCampo('${editing.id}')">Excluir</button>` : ''}
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn btn-primary">${editing ? 'Salvar' : 'Registrar'}</button>
+      </div>
+    </form>
+  `);
+  document.getElementById('form-campo').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = document.getElementById('campo-data').value;
+    if (!data) return;
+    const horas = parseFloat(document.getElementById('campo-horas').value) || 0;
+    const revisitas = parseInt(document.getElementById('campo-revisitas').value) || 0;
+    const estudos = parseInt(document.getElementById('campo-estudos').value) || 0;
+    const obs = document.getElementById('campo-obs').value.trim();
+    if (editing) {
+      Object.assign(editing, { data, horas, revisitas, estudos, obs });
+      showToast('Registro atualizado');
+    } else {
+      db.registrosCampo.push({ id: uid(), data, horas, revisitas, estudos, obs, criadoEm: Date.now() });
+      showToast('Dia registrado');
+    }
+    campoViewDate = new Date(data + 'T00:00:00');
+    saveDB();
+    closeModal();
+    renderCampo();
+  });
+}
+
+function deleteCampo(id) {
+  confirmAction('Excluir este registro de campo?', () => {
+    db.registrosCampo = db.registrosCampo.filter(r => r.id !== id);
+    saveDB();
+    renderCampo();
+    showToast('Registro excluído', '🗑️');
+  });
+}
+
+function renderCampo() {
+  const container = document.getElementById('campo-container');
+  const summaryEl = document.getElementById('campo-summary');
+  if (!container || !summaryEl) return;
+
+  const year = campoViewDate.getFullYear();
+  const month = campoViewDate.getMonth();
+  const monthPrefix = `${year}-${String(month + 1).padStart(2, '0')}`;
+
+  const registrosMes = db.registrosCampo
+    .filter(r => r.data && r.data.startsWith(monthPrefix))
+    .sort((a, b) => b.data.localeCompare(a.data));
+
+  const totalHoras = registrosMes.reduce((sum, r) => sum + (r.horas || 0), 0);
+  const totalRevisitas = registrosMes.reduce((sum, r) => sum + (r.revisitas || 0), 0);
+  const totalEstudos = registrosMes.reduce((sum, r) => sum + (r.estudos || 0), 0);
+
+  summaryEl.innerHTML = `
+    <div class="month-nav">
+      <button class="btn-icon" onclick="campoChangeMonth(-1)">‹</button>
+      <h3>${MESES[month]} de ${year}</h3>
+      <button class="btn-icon" onclick="campoChangeMonth(1)">›</button>
+    </div>
+    <div class="month-summary-grid">
+      <div class="stat-card"><div class="num">${formatHoras(totalHoras)}</div><div class="lbl">Horas no mês</div></div>
+      <div class="stat-card"><div class="num">${totalRevisitas}</div><div class="lbl">Revisitas</div></div>
+      <div class="stat-card"><div class="num">${totalEstudos}</div><div class="lbl">Estudos</div></div>
+      <div class="stat-card"><div class="num">${registrosMes.length}</div><div class="lbl">Dias registrados</div></div>
+    </div>
+  `;
+
+  if (registrosMes.length === 0) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="ic">🧭</div>
+        <div class="title">Nenhum registro neste mês</div>
+        <div class="desc">Toque em "+ Registrar dia" para anotar suas horas, revisitas e estudos.</div>
+      </div>`;
+    return;
+  }
+
+  container.innerHTML = registrosMes.map(r => {
+    const [, , d] = r.data.split('-');
+    return `
+    <div class="field-log-item">
+      <div class="fl-date"><div class="day">${d}</div><div class="mon">${MESES[month].slice(0,3)}</div></div>
+      <div class="fl-body" onclick="openCampoModal('${r.id}')" style="cursor:pointer; flex:1;">
+        <div class="fl-metric"><span class="m-num">${formatHoras(r.horas || 0)}</span><span class="m-lbl">Horas</span></div>
+        <div class="fl-metric"><span class="m-num">${r.revisitas || 0}</span><span class="m-lbl">Revisitas</span></div>
+        <div class="fl-metric"><span class="m-num">${r.estudos || 0}</span><span class="m-lbl">Estudos</span></div>
+        ${r.obs ? `<div style="flex-basis:100%; font-size:12.5px; color:var(--text-dim); margin-top:4px;">${escapeHTML(r.obs)}</div>` : ''}
+      </div>
+      <div class="actions">
+        <button class="btn-icon" onclick="openCampoModal('${r.id}')" title="Editar">✏️</button>
+        <button class="btn-icon" onclick="deleteCampo('${r.id}')" title="Excluir">🗑️</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function formatHoras(h) {
+  if (Number.isInteger(h)) return h + 'h';
+  return h.toFixed(2).replace(/\.?0+$/, '') + 'h';
+}
+
+function campoChangeMonth(delta) {
+  campoViewDate.setMonth(campoViewDate.getMonth() + delta);
+  renderCampo();
+}
+
+/* ---------- Compartilhar relatório de campo (dia / mês / ano) ---------- */
+document.getElementById('btn-share-campo').addEventListener('click', () => openCompartilharCampoModal());
+
+function openCompartilharCampoModal() {
+  const hoje = fmtDate(new Date());
+  const anoAtual = campoViewDate.getFullYear();
+  openModal(`
+    <div class="modal-title"><span>📤 Compartilhar relatório</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <p style="font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:16px;">Escolha o período do relatório que deseja compartilhar.</p>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <button type="button" class="btn btn-primary" style="justify-content:center;" onclick="prepararCompartilharCampo('mes')">📆 Relatório do mês (${MESES[campoViewDate.getMonth()]})</button>
+      <button type="button" class="btn btn-ghost" style="justify-content:center;" onclick="prepararCompartilharCampo('dia')">📅 Relatório de um dia específico</button>
+      <button type="button" class="btn btn-ghost" style="justify-content:center;" onclick="prepararCompartilharCampo('ano')">🗓️ Relatório anual (${anoAtual})</button>
+    </div>
+  `);
+}
+
+function prepararCompartilharCampo(periodo) {
+  if (periodo === 'dia') {
+    closeModal();
+    setTimeout(() => abrirSeletorDiaCampo(), 150);
+    return;
+  }
+  closeModal();
+  const texto = periodo === 'mes' ? textoRelatorioCampoMes(campoViewDate) : textoRelatorioCampoAno(campoViewDate.getFullYear());
+  const titulo = periodo === 'mes'
+    ? `Relatório de campo — ${MESES[campoViewDate.getMonth()]} de ${campoViewDate.getFullYear()}`
+    : `Relatório de campo — ${campoViewDate.getFullYear()}`;
+  abrirCompartilharModal(titulo, texto);
+}
+
+function abrirSeletorDiaCampo() {
+  openModal(`
+    <div class="modal-title"><span>Escolha o dia</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <div class="field"><label>Data</label><input type="date" id="campo-share-data" value="${fmtDate(new Date())}"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
+      <button type="button" class="btn btn-primary" onclick="confirmarCompartilharCampoDia()">Continuar</button>
+    </div>
+  `);
+}
+
+function confirmarCompartilharCampoDia() {
+  const data = document.getElementById('campo-share-data').value;
+  if (!data) return;
+  closeModal();
+  const registro = db.registrosCampo.find(r => r.data === data);
+  const [ano, mes, dia] = data.split('-');
+  const titulo = `Relatório de campo — ${dia}/${mes}/${ano}`;
+  const texto = registro
+    ? textoRelatorioCampoDia(registro)
+    : `${titulo}\n\nNenhum registro encontrado para este dia.`;
+  abrirCompartilharModal(titulo, texto);
+}
+
+function textoRelatorioCampoDia(r) {
+  const linhas = [`Relatório de campo — ${formatDateBR(r.data)}`, ''];
+  linhas.push(`Horas: ${formatHoras(r.horas || 0)}`);
+  linhas.push(`Revisitas: ${r.revisitas || 0}`);
+  linhas.push(`Estudos: ${r.estudos || 0}`);
+  if (r.obs) linhas.push('', 'Observações:', r.obs);
+  return linhas.join('\n');
+}
+
+function textoRelatorioCampoMes(dataRef) {
+  const year = dataRef.getFullYear();
+  const month = dataRef.getMonth();
+  const monthPrefix = `${year}-${String(month + 1).padStart(2, '0')}`;
+  const registros = db.registrosCampo
+    .filter(r => r.data && r.data.startsWith(monthPrefix))
+    .sort((a, b) => a.data.localeCompare(b.data));
+
+  const totalHoras = registros.reduce((sum, r) => sum + (r.horas || 0), 0);
+  const totalRevisitas = registros.reduce((sum, r) => sum + (r.revisitas || 0), 0);
+  const totalEstudos = registros.reduce((sum, r) => sum + (r.estudos || 0), 0);
+
+  const linhas = [`Relatório de campo — ${MESES[month]} de ${year}`, ''];
+  linhas.push(`Total de horas: ${formatHoras(totalHoras)}`);
+  linhas.push(`Total de revisitas: ${totalRevisitas}`);
+  linhas.push(`Total de estudos: ${totalEstudos}`);
+  linhas.push(`Dias registrados: ${registros.length}`);
+
+  if (registros.length) {
+    linhas.push('', 'Detalhamento por dia:');
+    registros.forEach(r => {
+      const [, , d] = r.data.split('-');
+      let linha = `${d}/${String(month+1).padStart(2,'0')} — ${formatHoras(r.horas || 0)}`;
+      if (r.revisitas) linha += `, ${r.revisitas} revisita(s)`;
+      if (r.estudos) linha += `, ${r.estudos} estudo(s)`;
+      linhas.push(linha);
+      if (r.obs) linhas.push('   ' + r.obs);
+    });
+  } else {
+    linhas.push('', 'Nenhum registro neste mês.');
+  }
+  return linhas.join('\n');
+}
+
+function textoRelatorioCampoAno(ano) {
+  const prefixo = String(ano);
+  const registros = db.registrosCampo
+    .filter(r => r.data && r.data.startsWith(prefixo))
+    .sort((a, b) => a.data.localeCompare(b.data));
+
+  const totalHoras = registros.reduce((sum, r) => sum + (r.horas || 0), 0);
+  const totalRevisitas = registros.reduce((sum, r) => sum + (r.revisitas || 0), 0);
+  const totalEstudos = registros.reduce((sum, r) => sum + (r.estudos || 0), 0);
+
+  const linhas = [`Relatório de campo — ${ano}`, ''];
+  linhas.push(`Total de horas: ${formatHoras(totalHoras)}`);
+  linhas.push(`Total de revisitas: ${totalRevisitas}`);
+  linhas.push(`Total de estudos: ${totalEstudos}`);
+  linhas.push(`Dias registrados: ${registros.length}`);
+
+  // Resumo mês a mês
+  const porMes = {};
+  registros.forEach(r => {
+    const mesIdx = parseInt(r.data.split('-')[1], 10) - 1;
+    if (!porMes[mesIdx]) porMes[mesIdx] = { horas: 0, revisitas: 0, estudos: 0 };
+    porMes[mesIdx].horas += (r.horas || 0);
+    porMes[mesIdx].revisitas += (r.revisitas || 0);
+    porMes[mesIdx].estudos += (r.estudos || 0);
+  });
+  const mesesComDados = Object.keys(porMes).map(Number).sort((a,b) => a-b);
+  if (mesesComDados.length) {
+    linhas.push('', 'Resumo por mês:');
+    mesesComDados.forEach(mesIdx => {
+      const m = porMes[mesIdx];
+      linhas.push(`${MESES[mesIdx]}: ${formatHoras(m.horas)}, ${m.revisitas} revisita(s), ${m.estudos} estudo(s)`);
+    });
+  } else {
+    linhas.push('', 'Nenhum registro neste ano.');
+  }
+  return linhas.join('\n');
+}
+
+/* =========================================================================
+   EXPORTAR / IMPORTAR BACKUP (extra de segurança, mantém tudo local)
+   -------------------------------------------------------------------------
+   Observação: download de arquivo via Blob + <a download> não funciona de
+   forma confiável dentro de WebViews nativos (ex.: apps gerados no Kodular).
+   Por isso o fluxo principal aqui é copiar/colar o texto do backup, com o
+   download de arquivo como tentativa extra (funciona normal em navegador).
+   ========================================================================= */
+
+function tentarDownloadArquivo(conteudo, nomeArquivo) {
+  try {
+    const blob = new Blob([conteudo], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nomeArquivo;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+function openExportModal() {
+  const conteudo = JSON.stringify(db, null, 2);
+  const dataStr = new Date().toISOString().slice(0,10);
+  const nomeArquivo = `programacao-espiritual-backup-${dataStr}.json`;
+  openModal(`
+    <div class="modal-title"><span>⬇️ Exportar backup</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <p style="font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:10px;">
+      Copie o texto abaixo e guarde em algum lugar seguro (nota, e-mail, Google Drive, WhatsApp para você mesmo etc.).
+      Para restaurar, cole esse mesmo texto em "Importar backup".
+    </p>
+    <textarea id="export-textarea" readonly rows="10" style="width:100%; font-family:monospace; font-size:11.5px; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-sunken); color:var(--text); resize:vertical;">${escapeHTML(conteudo)}</textarea>
+    <div class="confirm-actions" style="margin-top:12px;">
+      <button type="button" class="btn btn-ghost" id="export-download-btn">⬇️ Tentar baixar arquivo</button>
+      <button type="button" class="btn btn-primary" id="export-copy-btn">📋 Copiar tudo</button>
+    </div>
+  `, { large: true });
+
+  document.getElementById('export-copy-btn').addEventListener('click', () => {
+    copiarTexto(conteudo, 'Backup copiado! Cole em um lugar seguro.');
+  });
+  document.getElementById('export-download-btn').addEventListener('click', () => {
+    const ok = tentarDownloadArquivo(conteudo, nomeArquivo);
+    showToast(ok ? 'Download iniciado (se não aparecer, use "Copiar tudo")' : 'Download não suportado aqui — use "Copiar tudo"', ok ? '✓' : '⚠️');
+  });
+}
+
+function openImportModal() {
+  openModal(`
+    <div class="modal-title"><span>⬆️ Importar backup</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <p style="font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:10px;">
+      Cole abaixo o texto de um backup exportado anteriormente por este app.
+      <strong>Isso vai substituir todos os dados atuais.</strong>
+    </p>
+    <textarea id="import-textarea" rows="10" placeholder='{"textos": [...], "personagens": ...}' style="width:100%; font-family:monospace; font-size:11.5px; padding:10px; border-radius:8px; border:1px solid var(--border); background:var(--bg-sunken); color:var(--text); resize:vertical;"></textarea>
+    <p id="import-error" style="display:none; color:var(--danger); font-size:12.5px; margin-top:6px;"></p>
+    <div class="confirm-actions" style="margin-top:12px;">
+      <button type="button" class="btn btn-ghost" id="import-file-btn">📁 Selecionar arquivo</button>
+      <button type="button" class="btn btn-primary" id="import-confirm-btn">Importar</button>
+    </div>
+  `, { large: true });
+
+  document.getElementById('import-file-btn').addEventListener('click', () => {
+    document.getElementById('import-file').click();
+  });
+
+  document.getElementById('import-confirm-btn').addEventListener('click', () => {
+    const raw = document.getElementById('import-textarea').value.trim();
+    const errEl = document.getElementById('import-error');
+    if (!raw) {
+      errEl.textContent = 'Cole o texto do backup antes de importar.';
+      errEl.style.display = 'block';
+      return;
+    }
+    let imported;
+    try {
+      imported = JSON.parse(raw);
+    } catch (err) {
+      errEl.textContent = 'Texto inválido. Confira se copiou o backup completo.';
+      errEl.style.display = 'block';
+      return;
+    }
+    closeModal();
+    confirmAction('Importar este backup vai substituir todos os dados atuais do app. Deseja continuar?', () => {
+      db = Object.assign(emptyDB(), imported);
+      saveDB();
+      applyTheme(db.tema || 'branco');
+      renderAll();
+      showToast('Backup importado com sucesso');
+    });
+  });
+}
+
+document.getElementById('btn-export').addEventListener('click', openExportModal);
+document.getElementById('btn-import').addEventListener('click', openImportModal);
+
+document.getElementById('import-file').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const textarea = document.getElementById('import-textarea');
+    if (textarea) {
+      textarea.value = ev.target.result;
+    } else {
+      try {
+        const imported = JSON.parse(ev.target.result);
+        confirmAction('Importar este backup vai substituir todos os dados atuais do app. Deseja continuar?', () => {
+          db = Object.assign(emptyDB(), imported);
+          saveDB();
+          applyTheme(db.tema || 'branco');
+          renderAll();
+          showToast('Backup importado com sucesso');
+        });
+      } catch (err) {
+        showToast('Arquivo inválido.', '⚠️');
+      }
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
+/* =========================================================================
+   COPIAR TEXTO (função utilitária compartilhada)
+   -------------------------------------------------------------------------
+   Tenta a Clipboard API moderna; se não estiver disponível (comum em
+   WebViews sem permissão/contexto seguro), usa o fallback de
+   document.execCommand('copy') com um textarea temporário.
+   ========================================================================= */
+function copiarTexto(texto, mensagemSucesso) {
+  const fallbackCopy = () => {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = texto;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      ta.style.top = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (ok) {
+        showToast(mensagemSucesso || 'Copiado!', '📋');
+      } else {
+        showToast('Não foi possível copiar automaticamente. Selecione o texto manualmente.', '⚠️');
+      }
+    } catch (err) {
+      showToast('Não foi possível copiar automaticamente. Selecione o texto manualmente.', '⚠️');
+    }
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext) {
+    navigator.clipboard.writeText(texto).then(() => {
+      showToast(mensagemSucesso || 'Copiado!', '📋');
+    }).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+}
+
+/* =========================================================================
+   COMPARTILHAR (texto ou PDF)
+   -------------------------------------------------------------------------
+   Compartilhar como texto: tenta o menu nativo do celular (Web Share API);
+   se não for suportado (comum em WebViews do Kodular), cai automaticamente
+   para copiar o texto. Compartilhar como PDF: abre uma janela de impressão
+   com o conteúdo formatado — o usuário escolhe "Salvar como PDF" no diálogo
+   de impressão do sistema, o que funciona offline e sem bibliotecas externas.
+   ========================================================================= */
+
+function abrirCompartilharModal(titulo, texto) {
+  openModal(`
+    <div class="modal-title"><span>📤 Compartilhar</span><button class="close-x" onclick="closeModal()">✕</button></div>
+    <p style="font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:16px;">Escolha como deseja compartilhar "${escapeHTML(titulo)}".</p>
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <button type="button" class="btn btn-primary" id="share-texto-btn" style="justify-content:center;">💬 Compartilhar como texto</button>
+      <button type="button" class="btn btn-ghost" id="share-pdf-btn" style="justify-content:center;">📄 Compartilhar como PDF</button>
+      <button type="button" class="btn btn-ghost" id="share-copiar-btn" style="justify-content:center;">📋 Só copiar o texto</button>
+    </div>
+  `);
+  document.getElementById('share-texto-btn').addEventListener('click', () => compartilharComoTexto(titulo, texto));
+  document.getElementById('share-pdf-btn').addEventListener('click', () => compartilharComoPDF(titulo, texto));
+  document.getElementById('share-copiar-btn').addEventListener('click', () => {
+    copiarTexto(texto, 'Texto copiado!');
+    closeModal();
+  });
+}
+
+function compartilharComoTexto(titulo, texto) {
+  if (navigator.share) {
+    navigator.share({ title: titulo, text: texto })
+      .then(() => closeModal())
+      .catch((err) => {
+        // Usuário cancelou o compartilhamento — não é erro, só fecha o modal
+        if (err && err.name === 'AbortError') { closeModal(); return; }
+        // Web Share falhou por outro motivo (não suportado no WebView, etc.)
+        copiarTexto(texto, 'Compartilhamento não disponível aqui — texto copiado!');
+        closeModal();
+      });
+  } else {
+    copiarTexto(texto, 'Compartilhamento não disponível aqui — texto copiado!');
+    closeModal();
+  }
+}
+
+function compartilharComoPDF(titulo, texto) {
+  try {
+    const janela = window.open('', '_blank');
+    if (!janela) {
+      showToast('Não foi possível abrir a janela de impressão. Tente "Só copiar o texto".', '⚠️');
+      return;
+    }
+    const dataAtual = new Date().toLocaleDateString('pt-BR');
+    const tagAbre = '<' + 'script>';
+    const tagFecha = '<' + '/script>';
+    const html = `
+      <!DOCTYPE html>
+      <html lang="pt-BR">
+      <head>
+        <meta charset="UTF-8">
+        <title>${escapeHTML(titulo)}</title>
+        <style>
+          body { font-family: Georgia, 'Times New Roman', serif; max-width: 700px; margin: 40px auto; padding: 0 24px; color: #1A1A1A; line-height: 1.7; }
+          h1 { font-size: 22px; margin-bottom: 4px; }
+          .meta { font-size: 12px; color: #888; margin-bottom: 24px; }
+          .conteudo { font-size: 14px; white-space: pre-wrap; }
+          @media print { body { margin: 0; padding: 20px; } }
+        </style>
+      </head>
+      <body>
+        <h1>${escapeHTML(titulo)}</h1>
+        <div class="meta">Gerado em ${dataAtual} — Programação Espiritual</div>
+        <div class="conteudo">${escapeHTML(texto)}</div>
+        ${tagAbre}
+          window.onload = function() { window.print(); };
+        ${tagFecha}
+      </body>
+      </html>
+    `;
+    janela.document.write(html);
+    janela.document.close();
+    closeModal();
+    showToast('Escolha "Salvar como PDF" na janela de impressão', '📄');
+  } catch (err) {
+    showToast('Não foi possível gerar o PDF aqui. Tente "Só copiar o texto".', '⚠️');
+  }
+}
+
+
+/* =========================================================================
+   BUSCA GLOBAL INTELIGENTE
+   -------------------------------------------------------------------------
+   Funciona 100% local (sem internet): normaliza texto (remove acentos,
+   caixa), tolera erros de digitação via distância de Levenshtein por
+   palavra, reconhece intenções/sinônimos por aba (ex.: "pessoas ruins" ->
+   aba Ruins), entende comandos de ação ("abrir X", "ver X", "mostrar X")
+   e busca em todos os tipos de conteúdo do app.
+   ========================================================================= */
+
+function normalizarBusca(str) {
+  return (str || '')
+    .toString()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
+    .toLowerCase()
+    .replace(/[^\w\s]/g, ' ') // remove pontuação
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Palavras muito comuns que não devem, sozinhas, contar como match —
+// evitam falsos positivos tipo "de" batendo com qualquer coisa por fuzzy.
+const STOPWORDS_BUSCA = new Set(['de','da','do','das','dos','a','o','as','os','e','em','para','com','um','uma','que','ver','veja','vê','mostre','mostra','mostrar','abrir','abra','abre','acessar','acesse','acessa','quero','a','ao','na','no','nas','nos']);
+
+function removerStopwords(palavras) {
+  const semStop = palavras.filter(p => p.length > 2 && !STOPWORDS_BUSCA.has(p));
+  return semStop.length ? semStop : palavras; // se sobrar vazio, mantém original
+}
+
+// Distância de Levenshtein simples (número de edições entre duas strings)
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const matrix = Array.from({ length: a.length + 1 }, (_, i) => [i, ...Array(b.length).fill(0)]);
+  for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    for (let j = 1; j <= b.length; j++) {
+      const custo = a[i-1] === b[j-1] ? 0 : 1;
+      matrix[i][j] = Math.min(
+        matrix[i-1][j] + 1,       // remoção
+        matrix[i][j-1] + 1,       // inserção
+        matrix[i-1][j-1] + custo  // substituição
+      );
+    }
+  }
+  return matrix[a.length][b.length];
+}
+
+// Verifica se duas palavras "batem" tolerando erro de digitação.
+// Tolerância cresce com o tamanho da palavra (palavras curtas exigem match mais exato).
+function palavrasBatem(a, b) {
+  if (!a || !b) return false;
+  if (a === b) return true;
+  if (a.length <= 2 || b.length <= 2) return false; // palavras muito curtas: só match exato
+  if (a.length >= 3 && b.length >= 3 && (a.includes(b) || b.includes(a))) return true;
+  const maxLen = Math.max(a.length, b.length);
+  const tolerancia = maxLen <= 3 ? 1 : (maxLen <= 7 ? 2 : 3);
+  return levenshtein(a, b) <= tolerancia;
+}
+
+// Pontua o quanto uma string de busca "bate" com um texto-alvo, somando
+// pontos por palavra da busca encontrada (exata, substring ou fuzzy) no alvo.
+function pontuarMatch(buscaNorm, alvoNorm) {
+  if (!buscaNorm || !alvoNorm) return 0;
+  if (alvoNorm === buscaNorm) return 100;
+  if (alvoNorm.includes(buscaNorm) && buscaNorm.length >= 3) return 60;
+
+  const palavrasBusca = removerStopwords(buscaNorm.split(' ').filter(Boolean));
+  const palavrasAlvo = alvoNorm.split(' ').filter(Boolean);
+  if (!palavrasBusca.length || !palavrasAlvo.length) return 0;
+
+  let pontos = 0;
+  palavrasBusca.forEach(pb => {
+    let melhor = 0;
+    palavrasAlvo.forEach(pa => {
+      if (pa === pb) melhor = Math.max(melhor, 10);
+      else if (pa.length >= 3 && pb.length >= 3 && (pa.includes(pb) || pb.includes(pa))) melhor = Math.max(melhor, 7);
+      else if (palavrasBatem(pa, pb)) melhor = Math.max(melhor, 5);
+    });
+    pontos += melhor;
+  });
+  return pontos;
+}
+
+/* ---------- Dicionário de intenções: frases/sinônimos -> destino ---------- */
+// Cada entrada tem palavras-chave (normalizadas) associadas a uma "aba destino".
+// Quanto mais palavras da entrada baterem com a busca, maior a prioridade.
+const INTENCOES_ABA = [
+  { aba: 'pesquisas', sub: 'pq-sub-ruins', palavras: ['pessoa ruim','pessoas ruins','exemplo ruim','exemplos ruins','exemplo mau','maus exemplos','personagem ruim','erro biblico','erros biblicos','alerta biblico'] },
+  { aba: 'pesquisas', sub: 'pq-sub-bons', palavras: ['pessoa boa','pessoas boas','exemplo bom','exemplos bons','bom exemplo','personagem bom','imitar fe','exemplo a imitar'] },
+  { aba: 'pesquisas', sub: 'pq-sub-pesquisas', palavras: ['pesquisa','pesquisas','estudo biblico','estudos biblicos','tema biblico'] },
+  { aba: 'roteiros', sub: 'rt-sub-roteiros', palavras: ['roteiro','roteiros','discurso','discursos','parte','partes','apresentacao','apresentacoes'] },
+  { aba: 'roteiros', sub: 'rt-sub-ilustracoes', palavras: ['ilustracao','ilustracoes','historia','historias para discurso'] },
+  { aba: 'textos', palavras: ['texto importante','textos importantes','versiculo','versiculos','texto favorito'] },
+  { aba: 'calendario', sub: 'cal-sub-calendario', palavras: ['calendario','compromisso','compromissos','agenda','programacao'] },
+  { aba: 'calendario', sub: 'cal-sub-designacoes', palavras: ['designacao','designacoes','discurso marcado','apresentacao marcada'] },
+  { aba: 'campo', palavras: ['relatorio de campo','campo','pregacao','horas de campo','revisita','revisitas'] },
+  { aba: 'inicio', palavras: ['pagina inicial','inicio','home','painel'] }
+];
+
+function detectarIntencaoAba(buscaNorm) {
+  const { intencao } = detectarIntencaoAbaComForca(buscaNorm);
+  return intencao;
+}
+
+function detectarIntencaoAbaComForca(buscaNorm) {
+  let melhor = null, melhorPontos = 0;
+  INTENCOES_ABA.forEach(intencao => {
+    intencao.palavras.forEach(frase => {
+      const p = pontuarMatch(buscaNorm, normalizarBusca(frase));
+      if (p > melhorPontos) { melhorPontos = p; melhor = intencao; }
+    });
+  });
+  return { intencao: melhorPontos >= 5 ? melhor : null, pontos: melhorPontos };
+}
+
+/* ---------- Índice unificado de conteúdo pesquisável ---------- */
+function construirIndiceBusca() {
+  const itens = [];
+
+  db.textos.forEach(t => itens.push({
+    tipo: 'texto', tipoLabel: 'Texto', icone: '📖',
+    titulo: t.referencia || 'Texto', sub: (t.anotacao || '').slice(0, 60),
+    textoBusca: [t.referencia, t.anotacao].filter(Boolean).join(' '),
+    abrir: () => { goToView('textos'); }
+  }));
+
+  db.bons.forEach(p => itens.push({
+    tipo: 'bons', tipoLabel: 'Exemplo bom', icone: '🌟',
+    titulo: p.nome, sub: p.referencia || p.resumo || '',
+    textoBusca: [p.nome, p.referencia, p.resumo, p.licoes].filter(Boolean).join(' '),
+    abrir: () => { goToView('pesquisas'); ativarSubtab('pq-sub-bons'); setTimeout(() => openPersonagemViewModal('bons', p.id), 150); }
+  }));
+
+  db.ruins.forEach(p => itens.push({
+    tipo: 'ruins', tipoLabel: 'Exemplo ruim', icone: '⚠️',
+    titulo: p.nome, sub: p.referencia || p.resumo || '',
+    textoBusca: [p.nome, p.referencia, p.resumo, p.licoes].filter(Boolean).join(' '),
+    abrir: () => { goToView('pesquisas'); ativarSubtab('pq-sub-ruins'); setTimeout(() => openPersonagemViewModal('ruins', p.id), 150); }
+  }));
+
+  db.pesquisas.forEach(p => itens.push({
+    tipo: 'pesquisas', tipoLabel: 'Pesquisa', icone: '🔎',
+    titulo: p.titulo, sub: p.referencia || p.resumo || '',
+    textoBusca: [p.titulo, p.referencia, p.resumo, p.corpo].filter(Boolean).join(' '),
+    abrir: () => { goToView('pesquisas'); ativarSubtab('pq-sub-pesquisas'); setTimeout(() => openPesquisaViewModal(p.id), 150); }
+  }));
+
+  db.roteiros.forEach(r => itens.push({
+    tipo: 'roteiros', tipoLabel: 'Roteiro', icone: '📝',
+    titulo: r.titulo, sub: r.duracao || '',
+    textoBusca: [r.titulo, r.textoCompleto, r.ilustracoes].filter(Boolean).join(' '),
+    abrir: () => { goToView('roteiros'); ativarSubtab('rt-sub-roteiros'); setTimeout(() => openRoteiroViewModal(r.id), 150); }
+  }));
+
+  db.ilustracoes.forEach(i => itens.push({
+    tipo: 'ilustracoes', tipoLabel: 'Ilustração', icone: '🖼️',
+    titulo: i.titulo, sub: i.referencia || i.resumo || '',
+    textoBusca: [i.titulo, i.referencia, i.resumo, i.corpo].filter(Boolean).join(' '),
+    abrir: () => { goToView('roteiros'); ativarSubtab('rt-sub-ilustracoes'); setTimeout(() => openIlustracaoViewModal(i.id), 150); }
+  }));
+
+  db.designacoes.forEach(d => itens.push({
+    tipo: 'designacoes', tipoLabel: 'Designação', icone: '🎤',
+    titulo: d.titulo, sub: d.data ? formatDateBR(d.data) : 'Sem data',
+    textoBusca: [d.titulo, d.observacoes, d.data].filter(Boolean).join(' '),
+    abrir: () => { goToView('calendario'); ativarSubtab('cal-sub-designacoes'); setTimeout(() => openDesignacaoModal(d.id), 150); }
+  }));
+
+  db.eventos.filter(e => !e.origemDesignacaoId).forEach(ev => itens.push({
+    tipo: 'compromissos', tipoLabel: 'Compromisso', icone: '📅',
+    titulo: ev.titulo, sub: ev.data ? formatDateBR(ev.data) : '',
+    textoBusca: [ev.titulo, ev.descricao].filter(Boolean).join(' '),
+    abrir: () => { goToView('calendario'); ativarSubtab('cal-sub-calendario'); calSelectedDate = ev.data; calViewDate = new Date(ev.data + 'T00:00:00'); setTimeout(() => renderCalendario(), 150); }
+  }));
+
+  return itens;
+}
+
+function ativarSubtab(subtabId) {
+  const btn = document.querySelector(`.subtab-item[data-subtab="${subtabId}"]`);
+  if (btn) btn.click();
+}
+
+/* ---------- Atalhos de navegação direta por aba (sem termo específico) ---------- */
+function itemNavegacaoAba(intencao) {
+  const def = NAV_DEFS[intencao.aba];
+  const labels = getTabLabels();
+  return {
+    ehNavegacao: true,
+    icone: def ? def.icon : '📂',
+    titulo: `Ir para ${labels[intencao.aba] || (def ? def.label : intencao.aba)}`,
+    sub: 'Abrir esta aba',
+    abrir: () => { goToView(intencao.aba); if (intencao.sub) setTimeout(() => ativarSubtab(intencao.sub), 60); }
+  };
+}
+
+/* ---------- Comandos de ação: "abrir X", "ver X", "mostrar X", "acessar X" ---------- */
+const VERBOS_ABERTURA = ['abrir','abra','abre','ver','veja','vê','mostrar','mostre','mostra','acessar','acesse','acessa','quero ver','quero abrir','quero acessar'];
+
+function extrairTermoDeComando(buscaNorm) {
+  // Remove o verbo de abertura do início da frase, se houver, retornando o restante
+  for (const verbo of VERBOS_ABERTURA.sort((a,b) => b.length - a.length)) {
+    const vNorm = normalizarBusca(verbo);
+    if (buscaNorm === vNorm) return '';
+    if (buscaNorm.startsWith(vNorm + ' ')) {
+      return buscaNorm.slice(vNorm.length).trim();
+    }
+  }
+  return null; // não é um comando de abertura reconhecido
+}
+
+/* ---------- Atalhos especiais: "último cadastro" / "registro mais antigo" ---------- */
+function detectarAtalhoEspecial(buscaNorm) {
+  const ultimo = ['ultimo cadastro','ultimo registro','mais recente','cadastrado por ultimo','ultima coisa adicionada'];
+  const antigo = ['registro mais antigo','mais antigo','primeiro cadastro','primeiro registro','cadastrado primeiro'];
+  const pontoUltimo = Math.max(...ultimo.map(f => pontuarMatch(buscaNorm, normalizarBusca(f))));
+  const pontoAntigo = Math.max(...antigo.map(f => pontuarMatch(buscaNorm, normalizarBusca(f))));
+  if (pontoUltimo < 15 && pontoAntigo < 15) return null;
+
+  const indice = construirIndiceBusca();
+  if (!indice.length) return null;
+  // Sem timestamp uniforme entre tipos, usamos a ordem de inserção no índice
+  // como aproximação (itens mais recentes tendem a estar mais ao fim das listas).
+  const alvo = pontoUltimo >= pontoAntigo ? indice[indice.length - 1] : indice[0];
+  return {
+    ehAtalho: true,
+    icone: alvo.icone,
+    titulo: (pontoUltimo >= pontoAntigo ? 'Último cadastro: ' : 'Registro mais antigo: ') + alvo.titulo,
+    sub: alvo.tipoLabel,
+    abrir: alvo.abrir
+  };
+}
+
+/* ---------- Função principal: busca e retorna resultados ranqueados ---------- */
+function executarBuscaGlobal(termoOriginal) {
+  const buscaNorm = normalizarBusca(termoOriginal);
+  if (!buscaNorm) return { tipo: 'vazio' };
+
+  // 1) Atalhos especiais (último/mais antigo cadastro)
+  const atalho = detectarAtalhoEspecial(buscaNorm);
+  if (atalho) return { tipo: 'sugestoes', sugestoes: [atalho] };
+
+  // 2) Comando de abertura explícito ("abrir Noé", "ver exemplos ruins")
+  const termoComando = extrairTermoDeComando(buscaNorm);
+  const termoEfetivo = termoComando !== null ? termoComando : buscaNorm;
+  if (!termoEfetivo) return { tipo: 'vazio' };
+
+  // 2a) Intenção de aba, com sua força de confiança (pontuação normalizada
+  // pelo tamanho do termo — evita que termos longos "diluam" a pontuação
+  // mínima e termos curtos "vazem" com match fraco)
+  const { intencao, pontos: pontosIntencao } = detectarIntencaoAbaComForca(termoEfetivo);
+  const palavrasEfetivas = removerStopwords(termoEfetivo.split(' ').filter(Boolean));
+  const forcaIntencao = palavrasEfetivas.length ? pontosIntencao / palavrasEfetivas.length : 0;
+
+  // 2b) Busca itens de conteúdo que batem com o termo
+  const indice = construirIndiceBusca();
+  const resultados = [];
+  indice.forEach(item => {
+    const pontoTitulo = pontuarMatch(termoEfetivo, normalizarBusca(item.titulo)) * 2;
+    const pontoCorpo = pontuarMatch(termoEfetivo, normalizarBusca(item.textoBusca));
+    const pontos = Math.max(pontoTitulo, pontoCorpo);
+    if (pontos >= 8) resultados.push({ item, pontos });
+  });
+  resultados.sort((a,b) => b.pontos - a.pontos);
+  const topItens = resultados.slice(0, 8).map(r => r.item);
+  const melhorPontoItem = resultados.length ? resultados[0].pontos : 0;
+
+  const sugestoes = [];
+  // Só sugere "ir para a aba X" quando a intenção é forte o bastante — e não
+  // deixa uma intenção fraca disputar posição com um item de conteúdo
+  // claramente melhor (ex.: "noé" deve priorizar o item, não uma aba genérica).
+  const intencaoForte = intencao && forcaIntencao >= 7;
+  const intencaoVenceItens = intencaoForte && (topItens.length === 0 || pontosIntencao >= melhorPontoItem * 0.8);
+  if (intencaoVenceItens) {
+    sugestoes.push(itemNavegacaoAba(intencao));
+  }
+  topItens.forEach(item => sugestoes.push(item));
+
+  if (sugestoes.length === 0 && intencao) {
+    sugestoes.push(itemNavegacaoAba(intencao));
+  }
+
+  return { tipo: 'resultados', sugestoes, semResultado: sugestoes.length === 0 };
+}
+
+/* ---------- Buscas recentes ---------- */
+function registrarBuscaRecente(termo) {
+  const t = termo.trim();
+  if (!t) return;
+  db.buscasRecentes = [t, ...db.buscasRecentes.filter(x => x.toLowerCase() !== t.toLowerCase())].slice(0, 8);
+  saveDB();
+}
+
+function limparBuscasRecentes() {
+  db.buscasRecentes = [];
+  saveDB();
+  renderGlobalSearchResults('');
+}
+
+/* ---------- Renderização da UI de busca ---------- */
+const gsInput = document.getElementById('global-search-input');
+const gsResults = document.getElementById('global-search-results');
+const gsClearBtn = document.getElementById('gs-clear-btn');
+let gsDebounce = null;
+
+function renderGlobalSearchResults(termo) {
+  const termoTrim = termo.trim();
+  gsClearBtn.style.display = termoTrim ? 'flex' : 'none';
+
+  if (!termoTrim) {
+    // Estado vazio: mostra buscas recentes + sugestões de exemplo
+    const recentes = db.buscasRecentes || [];
+    let html = '';
+    if (recentes.length) {
+      html += `<div class="gs-section-label">Últimas pesquisas</div>`;
+      html += recentes.map(r => `
+        <div class="gs-item" onclick="executarClickBuscaRecente('${escapeHTML(r).replace(/'/g,"\\'")}')">
+          <span class="gs-ic">🕘</span>
+          <div class="gs-body"><div class="gs-title">${escapeHTML(r)}</div></div>
+        </div>
+      `).join('');
+      html += `<div class="gs-clear-recent" onclick="limparBuscasRecentes()">Limpar histórico</div>`;
+    }
+    html += `<div class="gs-section-label">Sugestões</div>`;
+    const exemplos = [
+      'exemplos ruins', 'exemplos bons', 'roteiros', 'ilustrações',
+      'quero acessar o último cadastro', 'quero acessar o registro mais antigo'
+    ];
+    html += exemplos.map(ex => `
+      <div class="gs-item" onclick="executarClickBuscaRecente('${escapeHTML(ex).replace(/'/g,"\\'")}')">
+        <span class="gs-ic">💡</span>
+        <div class="gs-body"><div class="gs-title">${escapeHTML(ex)}</div></div>
+      </div>
+    `).join('');
+    gsResults.innerHTML = html;
+    gsResults.classList.toggle('show', document.activeElement === gsInput);
+    return;
+  }
+
+  const resultado = executarBuscaGlobal(termoTrim);
+  let html = '';
+  if (resultado.tipo === 'resultados' && resultado.sugestoes.length) {
+    html += `<div class="gs-section-label">Resultados</div>`;
+    html += resultado.sugestoes.map((s, idx) => `
+      <div class="gs-item" onclick="executarAcaoResultadoBusca(${idx})">
+        <span class="gs-ic">${s.icone || '📄'}</span>
+        <div class="gs-body">
+          <div class="gs-title">${escapeHTML(s.titulo || '')}</div>
+          ${s.sub ? `<div class="gs-sub">${escapeHTML(s.sub)}</div>` : ''}
+        </div>
+        ${s.tipoLabel ? `<span class="gs-tab-tag">${escapeHTML(s.tipoLabel)}</span>` : ''}
+      </div>
+    `).join('');
+    window.__gsResultadosAtuais = resultado.sugestoes;
+  } else {
+    html = `<div class="gs-empty">Nada encontrado para "${escapeHTML(termoTrim)}". Tente outra palavra.</div>`;
+    window.__gsResultadosAtuais = [];
+  }
+  gsResults.innerHTML = html;
+  gsResults.classList.add('show');
+}
+
+function executarAcaoResultadoBusca(idx) {
+  const item = (window.__gsResultadosAtuais || [])[idx];
+  if (!item) return;
+  registrarBuscaRecente(gsInput.value);
+  item.abrir();
+  fecharBuscaGlobal();
+}
+
+function executarClickBuscaRecente(termo) {
+  gsInput.value = termo;
+  renderGlobalSearchResults(termo);
+  gsInput.focus();
+}
+
+function fecharBuscaGlobal() {
+  gsResults.classList.remove('show');
+  gsInput.value = '';
+  gsClearBtn.style.display = 'none';
+  gsInput.blur();
+}
+
+gsInput.addEventListener('input', (e) => {
+  clearTimeout(gsDebounce);
+  const val = e.target.value;
+  gsDebounce = setTimeout(() => renderGlobalSearchResults(val), 120);
+});
+gsInput.addEventListener('focus', () => renderGlobalSearchResults(gsInput.value));
+gsInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    const resultados = window.__gsResultadosAtuais || [];
+    if (resultados.length) executarAcaoResultadoBusca(0);
+  } else if (e.key === 'Escape') {
+    fecharBuscaGlobal();
+  }
+});
+gsClearBtn.addEventListener('click', () => {
+  gsInput.value = '';
+  gsClearBtn.style.display = 'none';
+  renderGlobalSearchResults('');
+  gsInput.focus();
+});
+document.addEventListener('click', (e) => {
+  if (!document.getElementById('global-search-bar').contains(e.target)) {
+    gsResults.classList.remove('show');
+  }
+});
+
+/* =========================================================================
+   NOTIFICAÇÕES (ponte com o app Kodular via WebViewString)
+   -------------------------------------------------------------------------
+   O WebView sozinho não consegue disparar notificações do sistema com o
+   app fechado — isso precisa de blocos nativos no Kodular. O papel deste
+   bloco é calcular TUDO sobre "o que notificar e quando" e escrever isso
+   como um JSON simples em window.AppInventor.setWebViewString(...). O
+   Kodular lê essa string (WebViewString1.Text) e usa um componente de
+   notificação/alarme para realmente agendar cada item.
+
+   Formato do payload (um array de objetos):
+   {
+     id: string único (para o Kodular não duplicar/reagendar a mesma notificação),
+     titulo: string,
+     corpo: string,
+     quando: "YYYY-MM-DDTHH:MM:SS" (data/hora local em que deve disparar),
+     tipo: "designacao_semana" | "designacao_dia" | "compromisso" | "pesquisa_semanal"
+   }
+   ========================================================================= */
+
+// Gera um horário padrão de notificação num dia (9h da manhã).
+// Facilmente ajustável aqui caso queira mudar o horário-padrão de lembrete.
+const HORA_NOTIFICACAO_PADRAO = 9;
+
+function dataHoraISO(dataStr, hora = HORA_NOTIFICACAO_PADRAO, minuto = 0) {
+  return `${dataStr}T${String(hora).padStart(2,'0')}:${String(minuto).padStart(2,'0')}:00`;
+}
+
+// Retorna a segunda-feira da semana que contém a data informada (YYYY-MM-DD)
+function segundaFeiraDaSemana(dataStr) {
+  const d = new Date(dataStr + 'T00:00:00');
+  const diaSemana = d.getDay(); // 0=domingo
+  const diffParaSegunda = diaSemana === 0 ? -6 : (1 - diaSemana);
+  d.setDate(d.getDate() + diffParaSegunda);
+  return fmtDate(d);
+}
+
+// Sorteio semanal estável de uma pesquisa: usa o número da semana do ano
+// como semente, então o mesmo item "sorteado" permanece igual durante toda
+// a semana e muda automaticamente na semana seguinte — sem precisar salvar
+// estado nenhum.
+function numeroDaSemanaISO(data) {
+  const d = new Date(Date.UTC(data.getFullYear(), data.getMonth(), data.getDate()));
+  const diaSemana = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - diaSemana);
+  const inicioAno = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil((((d - inicioAno) / 86400000) + 1) / 7);
+}
+
+function sortearPesquisaDaSemana() {
+  const todas = [...db.pesquisas, ...db.bons, ...db.ruins]
+    .map(item => ({ titulo: item.titulo || item.nome, }))
+    .filter(item => item.titulo);
+  if (!todas.length) return null;
+  const hoje = new Date();
+  const semente = hoje.getFullYear() * 100 + numeroDaSemanaISO(hoje);
+  const indice = semente % todas.length;
+  return todas[indice];
+}
+
+// Próxima segunda-feira a partir de hoje (ou hoje, se hoje já for segunda)
+function proximaSegundaFeira() {
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const diaSemana = hoje.getDay();
+  const diff = diaSemana === 1 ? 0 : ((8 - diaSemana) % 7 || 7);
+  const seg = new Date(hoje); seg.setDate(seg.getDate() + diff);
+  return seg;
+}
+
+function calcularNotificacoesPendentes() {
+  const notificacoes = [];
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const hojeStr = fmtDate(hoje);
+  const limite = new Date(hoje); limite.setDate(limite.getDate() + 60); // horizonte de 60 dias
+  const limiteStr = fmtDate(limite);
+
+  // --- Designações: notifica na semana e no dia ---
+  db.designacoes.forEach(d => {
+    if (!d.data || d.data < hojeStr || d.data > limiteStr) return;
+    const semanaData = segundaFeiraDaSemana(d.data);
+    // Notificação "na semana" — só faz sentido se a segunda-feira daquela
+    // semana ainda não passou (senão dispararia no passado)
+    if (semanaData >= hojeStr) {
+      notificacoes.push({
+        id: 'designacao_semana_' + d.id,
+        titulo: 'Você tem uma designação esta semana',
+        corpo: `${d.titulo}${d.data ? ' — ' + formatDateBR(d.data) : ''}`,
+        quando: dataHoraISO(semanaData),
+        tipo: 'designacao_semana'
+      });
+    }
+    notificacoes.push({
+      id: 'designacao_dia_' + d.id,
+      titulo: 'Designação hoje',
+      corpo: d.titulo + (d.duracao ? ` (${d.duracao})` : ''),
+      quando: dataHoraISO(d.data, 8, 0),
+      tipo: 'designacao_dia'
+    });
+  });
+
+  // --- Compromissos (inclui recorrentes expandidos) ---
+  const eventosProprios = getEventosNoIntervalo(hojeStr, limiteStr)
+    .filter(ev => !ev.origemDesignacaoId); // designações já cobertas acima
+  eventosProprios.forEach(ev => {
+    notificacoes.push({
+      id: 'compromisso_' + ev.id + '_' + ev.__ocorrenciaData,
+      titulo: 'Compromisso hoje',
+      corpo: ev.titulo,
+      quando: dataHoraISO(ev.__ocorrenciaData, 8, 30),
+      tipo: 'compromisso'
+    });
+  });
+
+  // --- Pesquisa semanal aleatória (releitura) ---
+  const sorteada = sortearPesquisaDaSemana();
+  if (sorteada) {
+    const proxSegunda = fmtDate(proximaSegundaFeira());
+    notificacoes.push({
+      id: 'pesquisa_semanal_' + proxSegunda,
+      titulo: 'Releia uma de suas pesquisas',
+      corpo: sorteada.titulo,
+      quando: dataHoraISO(proxSegunda, 9, 0),
+      tipo: 'pesquisa_semanal'
+    });
+  }
+
+  return notificacoes;
+}
+
+// Escreve o payload calculado no WebViewString para o Kodular ler.
+// Chamada sempre que dados relevantes mudam (designações, eventos,
+// pesquisas) e também na inicialização do app.
+function sincronizarNotificacoesComApp() {
+  try {
+    const payload = calcularNotificacoesPendentes();
+    const json = JSON.stringify(payload);
+    if (window.AppInventor && typeof window.AppInventor.setWebViewString === 'function') {
+      window.AppInventor.setWebViewString(json);
+    }
+    // Guarda também em memória/localStorage para depuração e para o caso
+    // de o app querer mostrar "notificações agendadas" em alguma tela futura.
+    window.__notificacoesPendentes = payload;
+  } catch (err) {
+    // Fora do app Kodular (ex.: testando no navegador), window.AppInventor
+    // não existe — não é um erro, apenas não há para onde enviar.
+  }
+}
+
+/* =========================================================================
+   INICIALIZAÇÃO
+   ========================================================================= */
+function migrarDesignacoesParaCalendario() {
+  // Garante que toda designação com data tenha um evento vinculado no
+  // calendário — cobre designações criadas antes desta funcionalidade existir.
+  let mudou = false;
+  db.designacoes.forEach(d => {
+    if (!d.data) return;
+    const jaTemEvento = db.eventos.some(e => e.origemDesignacaoId === d.id);
+    if (!jaTemEvento) {
+      sincronizarEventoDaDesignacao(d.id);
+      mudou = true;
+    }
+  });
+  if (mudou) saveDB();
+}
+
+function init() {
+  applyTheme(db.tema || 'branco');
+  migrarDesignacoesParaCalendario();
+  renderNav();
+  initSubtabs();
+  checkOnboarding();
+  goToView('inicio');
+  sincronizarNotificacoesComApp();
+}
+init();
+
+</script>
+</body>
+</html>
